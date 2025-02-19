@@ -1,0 +1,622 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		960E785C2D5BA2C000E07E5E /* Symbols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 960E785B2D5BA2C000E07E5E /* Symbols.framework */; };
+		963415A92D59056A007CAD13 /* AccessorySetupKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 963415A72D590567007CAD13 /* AccessorySetupKit.framework */; };
+		9637E4042D63708A007D780B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9637E4032D63708A007D780B /* Localizable.xcstrings */; };
+		9637E4082D649E46007D780B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9637E4072D649E45007D780B /* Launch Screen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9634158A2D590552007CAD13 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 963415712D590551007CAD13 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 963415782D590551007CAD13;
+			remoteInfo = "LTS Control";
+		};
+		963415942D590552007CAD13 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 963415712D590551007CAD13 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 963415782D590551007CAD13;
+			remoteInfo = "LTS Control";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		960E785B2D5BA2C000E07E5E /* Symbols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbols.framework; path = System/Library/Frameworks/Symbols.framework; sourceTree = SDKROOT; };
+		963415792D590551007CAD13 /* LTS Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LTS Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		963415892D590552007CAD13 /* LTS ControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LTS ControlTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		963415932D590552007CAD13 /* LTS ControlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LTS ControlUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		963415A72D590567007CAD13 /* AccessorySetupKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AccessorySetupKit.framework; path = System/Library/Frameworks/AccessorySetupKit.framework; sourceTree = SDKROOT; };
+		9637E4032D63708A007D780B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		9637E4072D649E45007D780B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		9634157B2D590551007CAD13 /* LTS Control */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "LTS Control";
+			sourceTree = "<group>";
+		};
+		9634158C2D590552007CAD13 /* LTS ControlTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "LTS ControlTests";
+			sourceTree = "<group>";
+		};
+		963415962D590552007CAD13 /* LTS ControlUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "LTS ControlUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		963415762D590551007CAD13 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				960E785C2D5BA2C000E07E5E /* Symbols.framework in Frameworks */,
+				963415A92D59056A007CAD13 /* AccessorySetupKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		963415862D590552007CAD13 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		963415902D590552007CAD13 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		963415702D590551007CAD13 = {
+			isa = PBXGroup;
+			children = (
+				9637E4072D649E45007D780B /* Launch Screen.storyboard */,
+				9637E4032D63708A007D780B /* Localizable.xcstrings */,
+				9634157B2D590551007CAD13 /* LTS Control */,
+				9634158C2D590552007CAD13 /* LTS ControlTests */,
+				963415962D590552007CAD13 /* LTS ControlUITests */,
+				963415A62D590567007CAD13 /* Frameworks */,
+				9634157A2D590551007CAD13 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9634157A2D590551007CAD13 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				963415792D590551007CAD13 /* LTS Control.app */,
+				963415892D590552007CAD13 /* LTS ControlTests.xctest */,
+				963415932D590552007CAD13 /* LTS ControlUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		963415A62D590567007CAD13 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				960E785B2D5BA2C000E07E5E /* Symbols.framework */,
+				963415A72D590567007CAD13 /* AccessorySetupKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		963415782D590551007CAD13 /* LTS Control */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9634159D2D590552007CAD13 /* Build configuration list for PBXNativeTarget "LTS Control" */;
+			buildPhases = (
+				963415752D590551007CAD13 /* Sources */,
+				963415762D590551007CAD13 /* Frameworks */,
+				963415772D590551007CAD13 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				9634157B2D590551007CAD13 /* LTS Control */,
+			);
+			name = "LTS Control";
+			packageProductDependencies = (
+			);
+			productName = "LTS Control";
+			productReference = 963415792D590551007CAD13 /* LTS Control.app */;
+			productType = "com.apple.product-type.application";
+		};
+		963415882D590552007CAD13 /* LTS ControlTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 963415A02D590552007CAD13 /* Build configuration list for PBXNativeTarget "LTS ControlTests" */;
+			buildPhases = (
+				963415852D590552007CAD13 /* Sources */,
+				963415862D590552007CAD13 /* Frameworks */,
+				963415872D590552007CAD13 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9634158B2D590552007CAD13 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9634158C2D590552007CAD13 /* LTS ControlTests */,
+			);
+			name = "LTS ControlTests";
+			packageProductDependencies = (
+			);
+			productName = "LTS ControlTests";
+			productReference = 963415892D590552007CAD13 /* LTS ControlTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		963415922D590552007CAD13 /* LTS ControlUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 963415A32D590552007CAD13 /* Build configuration list for PBXNativeTarget "LTS ControlUITests" */;
+			buildPhases = (
+				9634158F2D590552007CAD13 /* Sources */,
+				963415902D590552007CAD13 /* Frameworks */,
+				963415912D590552007CAD13 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				963415952D590552007CAD13 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				963415962D590552007CAD13 /* LTS ControlUITests */,
+			);
+			name = "LTS ControlUITests";
+			packageProductDependencies = (
+			);
+			productName = "LTS ControlUITests";
+			productReference = 963415932D590552007CAD13 /* LTS ControlUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		963415712D590551007CAD13 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					963415782D590551007CAD13 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					963415882D590552007CAD13 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 963415782D590551007CAD13;
+					};
+					963415922D590552007CAD13 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 963415782D590551007CAD13;
+					};
+				};
+			};
+			buildConfigurationList = 963415742D590551007CAD13 /* Build configuration list for PBXProject "LTS Control" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				de,
+				en,
+				es,
+				nl,
+				fr,
+				sv,
+				da,
+			);
+			mainGroup = 963415702D590551007CAD13;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9634157A2D590551007CAD13 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				963415782D590551007CAD13 /* LTS Control */,
+				963415882D590552007CAD13 /* LTS ControlTests */,
+				963415922D590552007CAD13 /* LTS ControlUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		963415772D590551007CAD13 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9637E4082D649E46007D780B /* Launch Screen.storyboard in Resources */,
+				9637E4042D63708A007D780B /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		963415872D590552007CAD13 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		963415912D590552007CAD13 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		963415752D590551007CAD13 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		963415852D590552007CAD13 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9634158F2D590552007CAD13 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9634158B2D590552007CAD13 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 963415782D590551007CAD13 /* LTS Control */;
+			targetProxy = 9634158A2D590552007CAD13 /* PBXContainerItemProxy */;
+		};
+		963415952D590552007CAD13 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 963415782D590551007CAD13 /* LTS Control */;
+			targetProxy = 963415942D590552007CAD13 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		9634159B2D590552007CAD13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9634159C2D590552007CAD13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9634159E2D590552007CAD13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LTS Control/Preview Content\"";
+				DEVELOPMENT_TEAM = Y4R8JK38SC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "LTS-Control-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "LTS Control";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Diese App benötigt Bluetooth, um Zubehör zu verbinden.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "LTS-Design.LTS-Control";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9634159F2D590552007CAD13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LTS Control/Preview Content\"";
+				DEVELOPMENT_TEAM = Y4R8JK38SC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "LTS-Control-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "LTS Control";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Diese App benötigt Bluetooth, um Zubehör zu verbinden.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "LTS-Design.LTS-Control";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		963415A12D590552007CAD13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y4R8JK38SC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "LTS-Design.LTS-ControlTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LTS Control.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LTS Control";
+			};
+			name = Debug;
+		};
+		963415A22D590552007CAD13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y4R8JK38SC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "LTS-Design.LTS-ControlTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LTS Control.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LTS Control";
+			};
+			name = Release;
+		};
+		963415A42D590552007CAD13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y4R8JK38SC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "LTS-Design.LTS-ControlUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "LTS Control";
+			};
+			name = Debug;
+		};
+		963415A52D590552007CAD13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y4R8JK38SC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "LTS-Design.LTS-ControlUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "LTS Control";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		963415742D590551007CAD13 /* Build configuration list for PBXProject "LTS Control" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9634159B2D590552007CAD13 /* Debug */,
+				9634159C2D590552007CAD13 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9634159D2D590552007CAD13 /* Build configuration list for PBXNativeTarget "LTS Control" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9634159E2D590552007CAD13 /* Debug */,
+				9634159F2D590552007CAD13 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		963415A02D590552007CAD13 /* Build configuration list for PBXNativeTarget "LTS ControlTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				963415A12D590552007CAD13 /* Debug */,
+				963415A22D590552007CAD13 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		963415A32D590552007CAD13 /* Build configuration list for PBXNativeTarget "LTS ControlUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				963415A42D590552007CAD13 /* Debug */,
+				963415A52D590552007CAD13 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 963415712D590551007CAD13 /* Project object */;
+}

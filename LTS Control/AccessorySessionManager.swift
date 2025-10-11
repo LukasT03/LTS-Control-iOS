@@ -1,0 +1,126 @@
+import Foundation
+import AccessorySetupKit
+import UIKit
+import CoreBluetooth
+
+@MainActor
+@Observable
+final class AccessorySessionManager: NSObject {
+    static let shared = AccessorySessionManager()
+
+    var canConnect: Bool = UserDefaults.standard.string(forKey: "storedAccessoryIdentifier") == nil
+    var lastSelectedUUID: UUID?
+
+    private let storedAccessoryKey = "storedAccessoryIdentifier"
+    private var accessorySession: ASAccessorySession?
+    private let pickerImage = UIImage(named: "RespoolerBright") ?? UIImage()
+
+    override init() {
+        super.init()
+        self.canConnect = UserDefaults.standard.string(forKey: storedAccessoryKey) == nil
+        initializeSession()
+    }
+
+    private func initializeSession() {
+        accessorySession = ASAccessorySession()
+        accessorySession?.activate(on: DispatchQueue.main, eventHandler: { [weak self] event in
+            guard let self else { return }
+            switch event.eventType {
+            case .activated:
+                self.restorePreviousConnection()
+            case .accessoryAdded:
+                if let accessory = event.accessory {
+                    self.saveAccessory(accessory)
+                    self.connectToAccessory(accessory)
+                    DispatchQueue.main.async { BLEManager.shared.isConnected = true }
+                }
+            case .accessoryRemoved, .accessoryChanged, .invalidated:
+                DispatchQueue.main.async { BLEManager.shared.isConnected = false }
+            default:
+                break
+            }
+        })
+    }
+
+    func showAccessoryPicker() {
+        guard let accessorySession else {
+            initializeSession()
+            return
+        }
+        let descriptor = ASDiscoveryDescriptor()
+        descriptor.bluetoothServiceUUID = CBUUID(string: "9E05D06D-68A7-4E1F-A503-AE26713AC101")
+        let displayItem = ASPickerDisplayItem(
+            name: "LTS Respooler",
+            productImage: pickerImage,
+            descriptor: descriptor
+        )
+        accessorySession.showPicker(for: [displayItem], completionHandler: { _ in })
+    }
+
+    func forgetAccessoryWithPolling() {
+        guard let accessory = accessorySession?.accessories.first else { return }
+        accessorySession?.removeAccessory(accessory) { error in
+            if error == nil {
+                Task { @MainActor in
+                    UserDefaults.standard.removeObject(forKey: self.storedAccessoryKey)
+                    self.clearConnectionState()
+                    self.pollAccessoryRemoved(retries: 0)
+                }
+            } else {
+                print("Accessory removal cancelled or failed: \(error!)")
+            }
+        }
+    }
+
+    private func saveAccessory(_ accessory: ASAccessory) {
+        if let uuid = accessory.bluetoothIdentifier?.uuidString {
+            UserDefaults.standard.set(uuid, forKey: storedAccessoryKey)
+            self.canConnect = false
+            UserDefaults.standard.set(true, forKey: "hasCompletedSetup")
+        }
+    }
+
+    private func restorePreviousConnection() {
+        guard let storedUUIDString = UserDefaults.standard.string(forKey: storedAccessoryKey),
+              let storedUUID = UUID(uuidString: storedUUIDString) else { return }
+        lastSelectedUUID = storedUUID
+        self.canConnect = false
+        BLEManager.shared.connectToDevice(with: storedUUID)
+    }
+
+    private func connectToAccessory(_ accessory: ASAccessory) {
+        guard let bluetoothIdentifier = accessory.bluetoothIdentifier else { return }
+        lastSelectedUUID = bluetoothIdentifier
+        BLEManager.shared.connectToDevice(with: bluetoothIdentifier)
+    }
+
+    private var centralManager: CBCentralManager?
+    private var targetPeripheral: CBPeripheral?
+    private var txCharacteristic: CBCharacteristic?
+
+    private func pollAccessoryRemoved(retries: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let stillStored = UserDefaults.standard.string(forKey: self.storedAccessoryKey) != nil
+            if !stillStored {
+                self.canConnect = true
+            } else if retries < 6 {
+                self.pollAccessoryRemoved(retries: retries + 1)
+            } else {
+                self.canConnect = false
+            }
+        }
+    }
+
+    private func clearConnectionState() {
+        if let peripheral = targetPeripheral { centralManager?.cancelPeripheralConnection(peripheral) }
+        centralManager?.stopScan()
+        targetPeripheral = nil
+        txCharacteristic = nil
+        DispatchQueue.main.async {
+            BLEManager.shared.isConnected = false
+            self.canConnect = UserDefaults.standard.string(forKey: self.storedAccessoryKey) == nil
+        }
+        accessorySession = nil
+        initializeSession()
+    }
+}

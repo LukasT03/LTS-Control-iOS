@@ -1,127 +1,438 @@
 import SwiftUI
 
-private let customBlue = Color(red: 1.0/255.0, green: 0.0, blue: 128.0/255.0)
-
 struct SettingsView: View {
-    @StateObject private var accessorySetupManager = AccessorySetupManager()
+    @AppStorage("temperatureInFahrenheit") private var showFahrenheit = false
+    @AppStorage("LiveActivityEnabled") private var liveActivitiesOn: Bool = true
+    @AppStorage("NotificationsEnabled") private var notificationsOn: Bool = false
+    @Environment(BLEManager.self) private var bleManager
+    @Environment(LayoutModel.self) private var layoutModel
+    @State private var showRespoolAmount = false
+    
+    private var stateIconName: String {
+        if !bleManager.isConnected { return "antenna.radiowaves.left.and.right.slash.circle" }
+        switch bleManager.deviceState {
+        case .running:
+            return "play.circle"
+        case .paused:
+            return "pause.circle"
+        case .updating:
+            return "arrow.trianglehead.2.clockwise.rotate.90.circle"
+        case .done:
+            return "checkmark.circle"
+        case .autoStop:
+            return "exclamationmark.circle"
+        case .idle:
+            return "power.circle"
+        }
+    }
 
-    // Zustände für die Toggle-Schalter
-    @AppStorage("useFilamentSensor") private var useFilamentSensor = true
-    @AppStorage("ledsEnabled") private var ledsEnabled = true
-    @AppStorage("notificationsEnabled") private var notificationsEnabled = false
-    @AppStorage("directionSelection") private var directionSelection = 0
-    @AppStorage("motorStrength") private var motorStrength: Double = 100.0 // Standardwert 100%
-    @AppStorage("torqueLimit") private var torqueLimit = 0
+    private var stateIconColor: Color {
+        if !bleManager.isConnected { return .primary }
+        switch bleManager.deviceState {
+        case .running:
+            return .green
+        case .paused:
+            return .orange
+        case .updating:
+            return .indigo
+        case .done:
+            return .green
+        case .autoStop:
+            return .red
+        case .idle:
+            return .ltsBlue
+        }
+    }
 
-    // Auswahl für Verbindungsmethode (Bluetooth oder Wi-Fi)
-    @State private var showImpressum = false
-    @State private var showInstructions = false
+    private var targetWeightText: String {
+        switch bleManager.status.targetWeight {
+        case 0:
+            return NSLocalizedString("Gesamte Spule", comment: "Respool Amount label: entire spool")
+        case 1:
+            return NSLocalizedString("1,0 kg", comment: "Respool Amount label: 1.0 kg")
+        case 2:
+            return NSLocalizedString("0,5 kg", comment: "Respool Amount label: 0.5 kg")
+        case 3:
+            return NSLocalizedString("0,25 kg", comment: "Respool Amount label: 0.25 kg")
+        default:
+            return NSLocalizedString("Gesamte Spule", comment: "Respool Amount label: entire spool")
+        }
+    }
+
+    var body: some View {
+        VStack {
+            List {
+            Section {
+                HStack(spacing: 12) {
+                    HStack(spacing: 8) {
+                        Image(systemName: stateIconName)
+                            .foregroundStyle(stateIconColor)
+                            .font(.system(size: 23.5))
+                            .frame(width: 28, height: 28)
+                            .contentTransition(.symbolEffect(.replace))
+                            .animation(.default, value: bleManager.deviceState)
+
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text("Status")
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                                Text(bleManager.deviceStateText)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                            Spacer()
+                        }
+                        .frame(height: 40, alignment: .center)
+                        .padding(.leading, 12)
+                        .padding(.vertical, 5)
+                        .background(
+                            Capsule()
+                                .fill(Color(UIColor.secondarySystemGroupedBackground))
+                        )
+                        .frame(height: 50)
+                        .contentShape(Capsule())
+                    }
+                }
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
+                
+                Section(
+                    header: Text("Konfiguration"), footer: Text("Wenn der Sensor deaktiviert ist, wird nicht auf den Verlust von Filament reagiert.")) {
+                        Picker(
+                            "Ton bei Fertigstellung",
+                            selection: Binding(
+                                get: { bleManager.status.jingleStyle },
+                                set: { new in
+                                    bleManager.status.jingleStyle = new
+                                    bleManager.setJingleStyle(new)
+                                }
+                            )
+                        ) {
+                            Text("Aus").tag(0)
+                            Text("Einfach").tag(1)
+                            Text("Glissando").tag(2)
+                            Text("Star Wars").tag(3)
+                        }
+                        Stepper(
+                            value: Binding(
+                                get: { bleManager.status.ledBrightness },
+                                set: { new in
+                                    bleManager.status.ledBrightness = new
+                                    bleManager.setLED(new)
+                                }
+                            ),
+                            in: 0...100,
+                            step: 10
+                        ) {
+                            Text("LED Helligkeit: \(bleManager.status.ledBrightness) %")
+                                .monospacedDigit()
+                        }
+                        
+                        if layoutModel.isCompactWidth {
+                            NavigationLink {
+                                RespoolAmountView(
+                                    targetWeight: Binding(
+                                        get: { bleManager.status.targetWeight },
+                                        set: { new in
+                                            bleManager.status.targetWeight = new
+                                            bleManager.setTargetWeight(new)
+                                        }
+                                    )
+                                )
+                                .navigationTitle("Respool-Menge")
+                                .navigationBarTitleDisplayMode(.inline)
+                            } label: {
+                                HStack {
+                                    Text("Respool-Menge")
+                                    Spacer()
+                                    Text(targetWeightText)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                        } else {
+                            HStack {
+                                Text("Respool-Menge")
+                                Spacer()
+                                Button {
+                                    showRespoolAmount = true
+                                } label: {
+                                    HStack {
+                                        Text(targetWeightText)
+                                            .foregroundColor(.secondary)
+                                        Image(systemName: "chevron.right")
+                                            .foregroundStyle(.tertiary)
+                                            .font(.system(size: 14))
+                                            .fontWeight(.semibold)
+                                    }
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        
+                        Toggle(
+                            "Filament Sensor nutzen",
+                            isOn: Binding(
+                                get: { bleManager.status.useFilamentSensor },
+                                set: { new in
+                                    bleManager.status.useFilamentSensor = new
+                                    bleManager.setUseFilamentSensor(new)
+                                }
+                            )
+                        )
+                        .tint(.ltsBlue)
+                    }
+
+                Section(header: Text("Motor"), footer: Text("Der Auto-Stopp stoppt den Motor bei Widerstand.")
+                    ) {
+                        Toggle(
+                            "Richtung umkehren",
+                            isOn: Binding(
+                                get: { bleManager.status.directionReversed },
+                                set: { new in
+                                    bleManager.status.directionReversed = new
+                                    bleManager.setDirectionReversed(new)
+                                }
+                            )
+                        )
+                        .tint(.ltsBlue)
+                        Stepper(
+                            value: Binding(
+                                get: { bleManager.status.motorStrength },
+                                set: { new in
+                                    bleManager.status.motorStrength = new
+                                    bleManager.setMotorStrength(new)
+                                }
+                            ),
+                            in: 80...120,
+                            step: 10
+                        ) {
+                            Text("Stärke: \(bleManager.status.motorStrength) %")
+                                .monospacedDigit()
+                        }
+                        Picker(
+                            "Auto-Stopp Empfindlichkeit",
+                            selection: Binding(
+                                get: { bleManager.status.torqueLimit },
+                                set: { new in
+                                    bleManager.status.torqueLimit = new
+                                    bleManager.setTorqueLimit(new)
+                                }
+                            )
+                        ) {
+                            Text("Aus").tag(0)
+                            Text("Gering").tag(1)
+                            Text("Mittel").tag(2)
+                            Text("Hoch").tag(3)
+                        }
+                        .disabled(bleManager.status.highSpeed)
+                    }
+                
+                Section(footer: Text("Der High-Speed Modus erhöht die Geschwindigkeit des Motors. Auto-Stopp ist dabei nicht verfügbar.")
+                    ) {
+                        Toggle(
+                            "High-Speed",
+                            isOn: Binding(
+                                get: { bleManager.status.highSpeed },
+                                set: { new in
+                                    bleManager.status.highSpeed = new
+                                    bleManager.setHighSpeed(new)
+                                }
+                            )
+                        )
+                        .tint(.ltsBlue)
+                    }
+                
+                Section(header: Text("Lüfter"), footer: Text("Der Lüfter schaltet sich standardmäßig 10 Sekunden nach stoppen des Respoolers aus.")
+                ){
+                    Stepper(
+                        value: Binding(
+                            get: { bleManager.status.fanSpeed },
+                            set: { new in
+                                bleManager.status.fanSpeed = new
+                                bleManager.setFanSpeed(new)
+                            }
+                        ),
+                        in: 10...100,
+                        step: 10
+                    ) {
+                        Text("Geschwindigkeit: \(bleManager.status.fanSpeed) %")
+                            .monospacedDigit()
+                    }
+                    Toggle(
+                        "Lüfter immer an",
+                        isOn: Binding(
+                            get: { bleManager.status.fanAlways },
+                            set: { new in
+                                bleManager.status.fanAlways = new
+                                bleManager.setFanAlways(new)
+                            }
+                        )
+                    )
+                    .tint(.ltsBlue)
+                    Picker("Temperatur-Einheit", selection: $showFahrenheit) {
+                        Text("Celsius").tag(false)
+                        Text("Fahrenheit").tag(true)
+                    }
+                    .pickerStyle(.segmented)
+                }
+
+                Section(header: Text("Kalibrierung"), footer: Text("Für genauere Zeitangaben bzw. Respool-Mengen die benötigte Dauer für eine 1\u{00A0}kg Spule bei 80\u{00A0}% Geschwindigkeit messen und hier anpassen.")
+                    ) {
+                    Stepper(
+                        value: Binding(
+                            get: { bleManager.status.durationAt80 },
+                            set: { new in
+                                bleManager.status.durationAt80 = new
+                                bleManager.setDurationAt80(new)
+                            }
+                        ),
+                        in: 5...2000,
+                        step: 5
+                    ) {
+                        let value = bleManager.status.durationAt80
+                        Text("Dauer: \(value / 60)m \(value % 60)s")
+                            .monospacedDigit()
+                    }
+                }
+                
+                Section(header: Text("App"), footer: Text("Erhalte Push-Benachrichtigungen, wenn der Respooler stoppt oder fertig ist.")
+                ) {
+                    Toggle(
+                        "Live-Aktivitäten",
+                        isOn: $liveActivitiesOn
+                    )
+                    .onChange(of: liveActivitiesOn) { _, newValue in
+                        LiveActivityManager.shared.setEnabled(newValue)
+                    }
+                    .tint(.ltsBlue)
+                    Toggle(
+                        "Benachrichtigungen",
+                        isOn: $notificationsOn
+                    )
+                    .onChange(of: notificationsOn) { _, newValue in
+                        if newValue {
+                            LocalNotificationManager.shared.ensureAuthorization { granted in
+                                DispatchQueue.main.async {
+                                    if granted {
+                                        LocalNotificationManager.shared.setEnabled(true)
+                                    } else {
+                                        notificationsOn = false
+                                        LocalNotificationManager.shared.setEnabled(false)
+                                    }
+                                }
+                            }
+                        } else {
+                            LocalNotificationManager.shared.setEnabled(false)
+                        }
+                    }
+                    .onAppear {
+                        if notificationsOn { LocalNotificationManager.shared.requestAuthorizationIfNeeded() }
+                    }
+                    .tint(.ltsBlue)
+                }
+            }
+        }
+        .sheet(isPresented: $showRespoolAmount) {
+            NavigationStack {
+                RespoolAmountView(
+                    targetWeight: Binding(
+                        get: { bleManager.status.targetWeight },
+                        set: { new in
+                            bleManager.status.targetWeight = new
+                            bleManager.setTargetWeight(new)
+                        }
+                    )
+                )
+                .navigationTitle("Respool-Menge")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            showRespoolAmount = false
+                        } label: {
+                            if #available(iOS 26.0, *) {
+                                Image(systemName: "xmark")
+                            } else {
+                                Text(NSLocalizedString("Schließen", comment: "Close sheet"))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+private struct RespoolAmountView: View {
+    @Binding var targetWeight: Int
+
+    private let entireOption: (title: String, tag: Int) = (
+        NSLocalizedString("Gesamte Spule", comment: "Respool Amount option: entire spool"),
+        0
+    )
+    private let weightOptions: [(title: String, tag: Int)] = [
+        (NSLocalizedString("1,0 kg", comment: "Respool Amount option: 1.0 kg"), 1),
+        (NSLocalizedString("0,5 kg", comment: "Respool Amount option: 0.5 kg"), 2),
+        (NSLocalizedString("0,25 kg", comment: "Respool Amount option: 0.25 kg"), 3)
+    ]
 
     var body: some View {
         List {
-            Section(header: Text("Respooler")) {
+            Section(footer: Text("Der Respooler stoppt anhand des Filament Sensors, sobald die obere Spule leer ist. Empfohlen, wenn Filament zwischen zwei 1\u{00A0}kg Spulen übertragen wird.")) {
                 HStack {
-                    Text("Verbindung")
+                    Text(entireOption.title)
                     Spacer()
-                    Text(accessorySetupManager.isConnected ? "Verbunden" : "Getrennt")
-                        .foregroundColor(.gray)
-                        .animation(.default, value: accessorySetupManager.isConnected)
+                    if targetWeight == entireOption.tag {
+                        Image(systemName: "checkmark")
+                            .foregroundStyle(Color.ltsBlue)
+                            .fontWeight(.semibold)
+                    }
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if targetWeight != entireOption.tag {
+                        targetWeight = entireOption.tag
+                    }
                 }
             }
-            
-            
-            
-            // KONFIGURATIONS-SECTION
-            Section(header: Text("Konfiguration"), footer: Text("Der Auto-Stopp stoppt den Motor bei Widerstand.")
-                .font(.footnote)
-                .foregroundColor(.gray)) {
-                Picker("Richtung", selection: $directionSelection) {
-                    Text("Drehrichtung 1").tag(0)
-                    Text("Drehrichtung 2").tag(1)
-                }
-                .pickerStyle(.segmented) // Native SegmentedControl
-                .padding(.vertical, 3)
 
-                // Picker für Torque-Limit
-                Picker("Auto-Stopp Empfindlichkeit", selection: $torqueLimit) {
-                    Text("aus").tag(0)
-                    Text("gering").tag(1)
-                    Text("mittel").tag(2)
-                    Text("hoch").tag(3)
-                }
-                .tint(Color(UIColor.label))
-                    
-                Toggle("LED Feedback", isOn: $ledsEnabled)
-                    .tint(customBlue)
-                    
-                Toggle("Filament Sensor nutzen", isOn: $useFilamentSensor)
-                    .tint(customBlue)
-                
-                Toggle("Benachrichtigungen", isOn: $notificationsEnabled)
-                    .tint(customBlue)
-            }
-            // Motor-Stärke Slider
-            Section(header: Text("Motor-Stärke")) {
-                HStack {
-                    Text("80%") // Linke Begrenzung
-                        .font(.footnote)
-                        .foregroundColor(.gray)
+            Section(footer:
+                Text("""
+                    \( NSLocalizedString("Der Respooler stoppt anhand der übertragenen Menge. Empfohlen, wenn die obere Spule größer als 1\u{00A0}kg ist.", comment: "Respool Amount explanatory footer for fixed weights") )
 
-                    Slider(value: $motorStrength, in: 80...120, step: 1)
-                        .tint(customBlue) // Farbige Anpassung des Sliders
-
-                    Text("120%") // Rechte Begrenzung
-                        .font(.footnote)
-                        .foregroundColor(.gray)
-                }
-            }
-            
-            Section(header: Text("Verbindung"), footer: Text("Bei Verbindungsproblemen das gespeicherte Gerät entfernen und die Verbindung neu aufbauen.")
-                .font(.footnote)
-                .foregroundColor(.gray)) {
-
-                Button(action: {
-                    accessorySetupManager.forgetAccessory()
-                }) {
-                    Text("Gespeichertes Gerät entfernen")
-                }
-                .foregroundColor(.red)
-
-                Button(action: {
-                    accessorySetupManager.showAccessoryPicker()
-                }) {
-                    Text("Verbindung herstellen")
-                }
-                .disabled(UserDefaults.standard.string(forKey: "storedAccessoryIdentifier") != nil)
-                
-            }
-
-            // INFO
-            Section(header: Text("Informationen"), footer: Text("© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Deutschland, info@lts-design.com")
-                .font(.footnote)
-                .foregroundColor(.gray)) {
-                Button(action: {
-                    showInstructions = true // Öffnet das Sheet
-                }) {
-                    Label("Hinweise", systemImage: "info.circle")
-                        .foregroundColor(Color(UIColor { $0.userInterfaceStyle == .dark ? .white : .black }))
+                    Das Stoppen funktioniert auf Basis des dynamisch berechneten Fortschritts. Die Genauigkeit kann je nach Material variieren.
+                    """)
+            ) {
+                ForEach(weightOptions, id: \.tag) { opt in
+                    HStack {
+                        Text(opt.title)
+                        Spacer()
+                        if targetWeight == opt.tag {
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(Color.ltsBlue)
+                                .fontWeight(.semibold)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        if targetWeight != opt.tag {
+                            targetWeight = opt.tag
+                        }
+                    }
                 }
             }
         }
-        .navigationTitle("Einstellungen")
-        .navigationBarTitleDisplayMode(.large)
-
-        .sheet(isPresented: $showInstructions) {
-            InstructionsView()
-                .presentationDetents([.large])
-        }
+        .navigationTitle("Respool-Menge")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SettingsView()
-        }
+#if DEBUG
+#Preview("Settings") {
+    NavigationStack {
+        SettingsView()
+            .environment(BLEManager())
     }
 }
+#endif
+

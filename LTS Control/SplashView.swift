@@ -1,26 +1,23 @@
 import SwiftUI
 
-// Hilfs-Konstante für die Wunschfarbe (#010080)
-private let customBlue = Color(red: 1.0/255.0, green: 0.0, blue: 128.0/255.0)
-
 struct SplashView: View {
-    @StateObject private var accessorySetupManager = AccessorySetupManager()
+    @Environment(AccessorySessionManager.self) private var accessorySessionManager
 
     var body: some View {
         GeometryReader { geometry in
-            VStack {
-                Spacer()
-                Spacer()
+            ZStack(alignment: .topTrailing) {
+                VStack {
+                    
+                    Spacer(minLength: 60)
                 
-                // Logo über der Überschrift
-                Image("Logo")
+                Image("AppIconSquare")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 130)
+                    .shadow(color: Color.black.opacity(0.1), radius: 12)
                 
                 Spacer()
                 
-                // Begrüßungstext
                 HStack {
                     Text("Willkommen bei LTS Control")
                         .font(.largeTitle)
@@ -28,56 +25,55 @@ struct SplashView: View {
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 40)
                 }
-                .frame(minHeight: 100)
-                
+                .frame(maxWidth: 500)
+            
                 Spacer()
                 
-                // Feature-Liste mit Icons
-                VStack(alignment: .leading, spacing: 22) {
+                VStack(alignment: .leading, spacing: 27) {
                     FeatureRow(
-                        icon: "wrench",
+                        icon: "gearshape",
                         title: "Funktion",
-                        description: "Um das Respooler Control Board mit der App zu steuern, musst du es zuerst mit deinem iPhone verbinden."
+                        description: "Um das Respooler Board mit der App zu steuern, musst du es zuerst mit deinem \(UIDevice.current.userInterfaceIdiom == .pad ? "iPad" : "iPhone") verbinden."
                     )
                     FeatureRow(
                         icon: "antenna.radiowaves.left.and.right",
                         title: "Verbinden",
-                        description: "Stelle sicher, dass das Control Board eingeschaltet ist und starte die Kopplung über den Button unten."
+                        description: "Stelle sicher, dass das Board eingeschaltet ist und starte die Kopplung über den Button unten."
                     )
-
                 }
-                .padding(.leading, 28)
+                .padding(.leading, 30)
                 .padding(.trailing, 42)
                 
                 Spacer()
-                Spacer()
         
-                
-                // Nativer Button für die Verbindung
                 Button(action: {
-                    accessorySetupManager.showAccessoryPicker()
+                    accessorySessionManager.showAccessoryPicker()
                 }) {
-                    Text("Control Board verbinden").frame(minWidth: 0, maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 320 : .infinity)
+                    Text("Respooler verbinden")
                         .fontWeight(.semibold)
-                }.buttonStyle(.borderedProminent)
-                .controlSize(.large)
-                .cornerRadius(14)
-                .tint(customBlue)
-                .padding(.horizontal, 24)
-                Spacer()
-                Spacer()
-
-            }
-            .frame(width: geometry.size.width, height: geometry.size.height)
-            .background(Color(.systemBackground))
-            .onAppear {
-                accessorySetupManager.activateSession()
+                        .frame(minWidth: 0, maxWidth: 360)
+                }
+                .focusable(false)
+                .padding(.vertical, 15)
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .padding(.horizontal, 26)
+                .padding(.bottom, 38)
+                }
             }
         }
+        .frame(minWidth: 0, maxWidth: {
+            return UIDevice.current.userInterfaceIdiom == .pad ? 480 : 393
+        }(), minHeight: 23)
     }
 }
 
-/// FeatureRow mit Icon und Text, wobei das Icon vertikal zentriert zum Text ausgerichtet ist.
+#Preview {
+    SplashView()
+        .environment(AccessorySessionManager())
+}
+
 struct FeatureRow: View {
     let icon: String
     let title: LocalizedStringKey
@@ -88,21 +84,15 @@ struct FeatureRow: View {
             Image(systemName: icon)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 35, height: 35)
-                .fontWeight(.semibold)
+                .frame(width: 36, height: 36)
             VStack(alignment: .leading) {
                 Text(title)
-                    .fontWeight(.semibold)
+                    .font(.headline)
+                    .bold()
                 Text(description)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.secondary)
             }
             .fixedSize(horizontal: false, vertical: true)
         }
-    }
-}
-
-struct SplashView_Previews: PreviewProvider {
-    static var previews: some View {
-        SplashView()
     }
 }

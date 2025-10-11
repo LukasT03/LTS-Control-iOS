@@ -1,0 +1,149 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "51F9A415",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "1C62B0B2",
+      "localizations" : [
+        {
+          "description" : "Buy me a Coffe! :)",
+          "displayName" : "☕",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "smallTip",
+      "referenceName" : "Small Tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "53AC9D78",
+      "localizations" : [
+        {
+          "description" : "Buy me two Coffees :)",
+          "displayName" : "☕☕",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "mediumTip",
+      "referenceName" : "Medium Tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "E77FE3F0",
+      "localizations" : [
+        {
+          "description" : "Buy me three Coffees :)",
+          "displayName" : "☕☕☕",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "bigTip",
+      "referenceName" : "Big Tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "3.99",
+      "familyShareable" : false,
+      "internalID" : "E3B9FFC5",
+      "localizations" : [
+        {
+          "description" : "Buy me four Coffees :)",
+          "displayName" : "☕ ☕ ☕ ☕",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "biggerTip",
+      "referenceName" : "Bigger Tip",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "D171B389",
+      "localizations" : [
+        {
+          "description" : "Buy me five Coffees :)",
+          "displayName" : "☕ ☕ ☕ ☕ ☕",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "biggestTip",
+      "referenceName" : "Biggest Tip",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "DEU",
+    "_storeKitErrors" : [
+      {
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ],
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

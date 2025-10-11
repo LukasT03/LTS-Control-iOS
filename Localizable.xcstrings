@@ -1,53 +1,69 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%lld%%" : {
+    " " : {
+      "shouldTranslate" : false
+    },
+    "%@\n\nDas Stoppen funktioniert auf Basis des dynamisch berechneten Fortschritts. Die Genauigkeit kann je nach Material variieren." : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld%%"
+            "value" : "%@\n\nStop foregår på baggrund af den dynamisk beregnede fremgang. Nøjagtigheden kan variere afhængigt af materialet."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld%%"
+            "value" : "%@\n\nDas Stoppen funktioniert auf Basis des dynamisch berechneten Fortschritts. Die Genauigkeit kann je nach Material variieren."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld%%"
+            "value" : "%@\n\nStopping works based on the dynamically calculated progress. Accuracy may vary by material."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld%%"
+            "value" : "%@\n\nLa parada se basa en el progreso calculado dinámicamente. La precisión puede variar según el material."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld%%"
+            "value" : "%@\n\nL’arrêt fonctionne sur la base de la progression calculée dynamiquement. La précision peut varier selon le matériau."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld%%"
+            "value" : "%@\n\nHet stoppen gebeurt op basis van de dynamisch berekende voortgang. De nauwkeurigheid kan variëren afhankelijk van het materiaal."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld%%"
+            "value" : "%@\n\nStoppet sker baserat på den dynamiskt beräknade utvecklingen. Noggrannheten kan variera beroende på materialet."
           }
         }
       }
     },
+    "%lld" : {
+      "shouldTranslate" : false
+    },
+    "%lld %%" : {
+      "shouldTranslate" : false
+    },
+    "%lld%%" : {
+      "shouldTranslate" : false
+    },
+    "•" : {
+      "shouldTranslate" : false
+    },
     "© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Deutschland, info@lts-design.com" : {
+      "comment" : "about footer",
       "localizations" : {
         "da" : {
           "stringUnit" : {
@@ -93,140 +109,515 @@
         }
       }
     },
-    "80%" : {
+    "☕️" : {
+      "shouldTranslate" : false
+    },
+    "0,5 kg" : {
+      "comment" : "Respool Amount label: 0.5 kg\nRespool Amount option: 0.5 kg",
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "80%"
+            "value" : "0,5 kg"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "80%"
+            "value" : "0,5 kg"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "80%"
+            "value" : "0.5 kg"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "80%"
+            "value" : "0,5 kg"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "80%"
+            "value" : "0,5 kg"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "80%"
+            "value" : "0,5 kg"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "80%"
+            "value" : "0,5 kg"
           }
         }
       }
     },
-    "120%" : {
+    "0,25 kg" : {
+      "comment" : "Respool Amount label: 0.25 kg\nRespool Amount option: 0.25 kg",
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "120%"
+            "value" : "0,25 kg"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "120%"
+            "value" : "0,25 kg"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "120%"
+            "value" : "0.25 kg"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "120%"
+            "value" : "0,25 kg"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "120%"
+            "value" : "0,25 kg"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "120%"
+            "value" : "0,25 kg"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "120%"
+            "value" : "0,25 kg"
           }
         }
       }
     },
-    "aus" : {
+    "1,0 kg" : {
+      "comment" : "Respool Amount label: 1.0 kg\nRespool Amount option: 1.0 kg",
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "slukket"
+            "value" : "1,0 kg"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aus"
+            "value" : "1,0 kg"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "off"
+            "value" : "1.0 kg"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "apagado"
+            "value" : "1,0 kg"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "désactivée"
+            "value" : "1,0 kg"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "uit"
+            "value" : "1,0 kg"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "av"
+            "value" : "1,0 kg"
+          }
+        }
+      }
+    },
+    "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sørg for, at Respooler Board er tændt, og at den nyeste firmware er installeret."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure the Respooler Board is turned on and the latest firmware is installed."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asegúrate de que el Respooler Board esté encendido y que el firmware más reciente esté instalado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assurez‑vous que le Respooler Board est allumé et que le dernier firmware est installé."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zorg ervoor dat het Respooler Board is ingeschakeld en dat de nieuwste firmware is geïnstalleerd."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se till att Respooler Board är påslaget och att den senaste firmware är installerad."
+          }
+        }
+      }
+    },
+    "An: %lld %%" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Til: %lld %%"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An: %lld %%"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On: %lld %%"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encendido: %lld %%"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marche: %lld %%"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aan: %lld %%"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "På: %lld %%"
+          }
+        }
+      }
+    },
+    "Änderungen anzeigen" : {
+      "comment" : "Show changelog",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vis ændringer"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Änderungen anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Changes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar cambios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveautés"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wijzigingen weergeven"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visa ändringar"
+          }
+        }
+      }
+    },
+    "App" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        }
+      }
+    },
+    "App Version: %@" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App‑version: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Version: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Version: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión de la app: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version de l’app : %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App‑versie: %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appversion: %@"
+          }
+        }
+      }
+    },
+    "Aus" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fra"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apagado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désactivé"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uit"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Av"
+          }
+        }
+      }
+    },
+    "Auswählen (%lld)" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vælg (%lld)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auswählen (%lld)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select (%lld)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar (%lld)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sélectionner (%lld)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecteren (%lld)"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Välj (%lld)"
+          }
+        }
+      }
+    },
+    "Auto-Stopp" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stopp"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop"
           }
         }
       }
@@ -235,44 +626,90 @@
       "localizations" : {
         "da" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Auto-Stop følsomhed"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Auto-Stopp Empfindlichkeit"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Auto-Stop sensitivity"
+            "value" : "Auto-Stop Sensitivity"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sensibilidad Auto-stop"
+            "state" : "translated",
+            "value" : "Sensibilidad Auto-Stop"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sensibilité Auto-stop"
+            "state" : "translated",
+            "value" : "Sensibilité Auto-Stop"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Auto-Stop gevoeligheid"
           }
         },
         "sv" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Auto-stop känslighet"
+          }
+        }
+      }
+    },
+    "Auto-Stopp!" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stopp!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop!"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-stopp!"
           }
         }
       }
@@ -328,7 +765,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Meddelelser"
+            "value" : "Notifikationer"
           }
         },
         "de" : {
@@ -364,53 +801,472 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Meddelanden"
+            "value" : "Notiser"
           }
         }
       }
     },
-    "Control Board verbinden" : {
+    "Bluetooth" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Forbind med Control Board"
+            "value" : "Bluetooth"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Control Board verbinden"
+            "value" : "Bluetooth"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connect Control Board"
+            "value" : "Bluetooth"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conectar a Control Board"
+            "value" : "Bluetooth"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connecter le Control Board"
+            "value" : "Bluetooth"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verbinden met Control Board"
+            "value" : "Bluetooth"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anslut med Control Board"
+            "value" : "Bluetooth"
+          }
+        }
+      }
+    },
+    "Board Firmware" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board‑firmware"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board Firmware"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board Firmware"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firmware del Board"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firmware du Board"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board‑firmware"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board‑firmware"
+          }
+        }
+      }
+    },
+    "Board Update" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board‑opdatering"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board Update"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board Update"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualización del Board"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mise à jour du Board"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board‑update"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board‑uppdatering"
+          }
+        }
+      }
+    },
+    "Board Version: %@" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board‑version: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board Version: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board Version: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión del Board: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version du Board : %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board‑versie: %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Board‑version: %@"
+          }
+        }
+      }
+    },
+    "CBV4-FREE" : {
+      "shouldTranslate" : false
+    },
+    "Celsius" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celsius"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celsius"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celsius"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celsius"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celsius"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celsius"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celsius"
+          }
+        }
+      }
+    },
+    "Chip: %@" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chip: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chip: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chip: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chip: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puce : %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chip: %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chip: %@"
+          }
+        }
+      }
+    },
+    "Da das V3 Control Board nur in begrenzter Stückzahl verkauft wurde und nicht alle Funktionen unterstützt, wird es dafür **keine weiteren Firmware-Updates** mehr geben.\n\nAlle momentan vorhandenen Funktionen bleiben bestehen." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Da V3 Control Board kun blev solgt i begrænset antal og ikke understøtter alle funktioner, vil der **ikke komme yderligere firmwareopdateringer**.\n\nAlle nuværende funktioner forbliver tilgængelige."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Da das V3 Control Board nur in begrenzter Stückzahl verkauft wurde und nicht alle Funktionen unterstützt, wird es dafür **keine weiteren Firmware-Updates** mehr geben.\n\nAlle momentan vorhandenen Funktionen bleiben bestehen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Since the V3 Control Board was only sold in limited quantities and does not support all features, there will be **no further firmware updates**.\n\nAll currently available functions will remain."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dado que el V3 Control Board se vendió solo en cantidades limitadas y no admite todas las funciones, **no habrá más actualizaciones de firmware**.\n\nTodas las funciones actualmente disponibles se mantendrán."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comme le V3 Control Board n’a été vendu qu’en quantité limitée et ne prend pas en charge toutes les fonctions, il n’y aura **aucune mise à jour supplémentaire du firmware**.\n\nToutes les fonctions actuellement disponibles resteront."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omdat het V3 Control Board slechts in beperkte oplage is verkocht en niet alle functies ondersteunt, zullen er **geen verdere firmware-updates** komen.\n\nAlle momenteel beschikbare functies blijven behouden."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eftersom V3 Control Board endast såldes i begränsat antal och inte stöder alla funktioner, kommer det **inga fler firmwareuppdateringar**.\n\nAlla nuvarande funktioner förblir tillgängliga."
+          }
+        }
+      }
+    },
+    "Das OTA-Update ist fehlgeschlagen. Stelle sicher, dass das verbundene WLAN über eine funktionierende Internetverbindung verfügt." : {
+      "comment" : "OTA result alert message",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OTA-opdateringen mislykkedes. Sørg for, at det tilsluttede Wi-Fi har en fungerende internetforbindelse."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das OTA-Update ist fehlgeschlagen. Stelle sicher, dass das verbundene WLAN über eine funktionierende Internetverbindung verfügt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The OTA update failed. Make sure the connected Wi‑Fi has a working internet connection."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La actualización OTA falló. Asegúrate de que la red Wi‑Fi conectada tenga conexión a Internet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La mise à jour OTA a échoué. Assurez‑vous que le Wi‑Fi connecté dispose d’une connexion Internet fonctionnelle."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De OTA‑update is mislukt. Zorg ervoor dat het verbonden wifi‑netwerk een werkende internetverbinding heeft."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OTA‑uppdateringen misslyckades. Kontrollera att det anslutna Wi‑Fi‑nätverket har en fungerande internetanslutning."
+          }
+        }
+      }
+    },
+    "Das OTA-Update war erfolgreich." : {
+      "comment" : "OTA result alert message",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OTA-opdateringen var vellykket."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das OTA-Update war erfolgreich."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The OTA update was successful."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La actualización OTA fue correcta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La mise à jour OTA a réussi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De OTA-update is geslaagd."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OTA-uppdateringen lyckades."
+          }
+        }
+      }
+    },
+    "Dauer: %lldm %llds" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varighed: %lldm %llds"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dauer: %lldm %llds"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duration: %1$lldm %2$llds"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duración: %lldm %llds"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durée: %lldm %llds"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duur: %lldm %llds"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varaktighet: %lldm %llds"
           }
         }
       }
@@ -419,13 +1275,13 @@
       "localizations" : {
         "da" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Auto-Stop stopper motoren i tilfælde af modstand."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Der Auto-Stopp stoppt den Motor bei Widerstand."
           }
         },
@@ -437,118 +1293,443 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "El Auto-stop detiene el motor en caso de resistencia."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "L' Auto-stop arrête le moteur en cas de résistance."
+            "state" : "translated",
+            "value" : "L’Auto-stop arrête le moteur en cas de résistance."
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "De Auto-stop stopt de motor bij weerstand."
           }
         },
         "sv" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Auto-stop stoppar motorn vid motstånd."
           }
         }
       }
     },
-    "Drehrichtung 1" : {
+    "Der High-Speed Modus erhöht die Geschwindigkeit des Motors. Auto-Stopp ist dabei nicht verfügbar." : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drejeretning 1"
+            "value" : "High-Speed-tilstanden øger motorens hastighed. Auto-Stop er ikke tilgængelig, når den er aktiv."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drehrichtung 1"
+            "value" : "Der High-Speed Modus erhöht die Geschwindigkeit des Motors. Auto-Stopp ist dabei nicht verfügbar."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Direction 1"
+            "value" : "The High-Speed mode increases the speed of the motor. Auto-Stop is not available when active."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sentido de giro 1"
+            "value" : "El modo High-Speed aumenta la velocidad del motor. El Auto-Stop no está disponible cuando está activo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sens de rotation 1"
+            "value" : "Le mode High-Speed augmente la vitesse du moteur. L’Auto-Stop n’est pas disponible lorsqu’il est actif."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Draairichting 1"
+            "value" : "De High-Speed modus verhoogt de snelheid van de motor. Auto-Stop is niet beschikbaar wanneer deze actief is."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rotationsriktning 1"
+            "value" : "High-Speed-läget ökar motorns hastighet. Auto-Stop är inte tillgängligt när det är aktivt."
           }
         }
       }
     },
-    "Drehrichtung 2" : {
+    "Der Lüfter schaltet sich standardmäßig 10 Sekunden nach stoppen des Respoolers aus." : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drejeretning 2"
+            "value" : "Som standard slukker ventilatoren 10 sekunder efter, at Respooler er stoppet."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drehrichtung 2"
+            "value" : "Der Lüfter schaltet sich standardmäßig 10 Sekunden nach stoppen des Respoolers aus."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Direction 2"
+            "value" : "By default, the fan switches off 10 seconds after the Respooler is stopped."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sentido de giro 2"
+            "value" : "Por defecto, el ventilador se apaga 10 segundos después de que el Respooler se detiene."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sens de rotation 2"
+            "value" : "Par défaut, le ventilateur s’éteint 10 secondes après l’arrêt du Respooler."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Draairichting 2"
+            "value" : "Standaard schakelt de ventilator 10 seconden nadat de Respooler is gestopt uit."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rotationsriktning 2"
+            "value" : "Som standard stängs fläkten av 10 sekunder efter att Respooler har stoppats."
+          }
+        }
+      }
+    },
+    "Der Quellcode sowie alle weiteren Dateien sind Open Source und können auf [GitHub](https://github.com/LukasT03/LTS-Respooler) heruntergeladen werden." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kildekoden og alle yderligere filer er open source og kan downloades fra [GitHub](https://github.com/LukasT03/LTS-Respooler)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Quellcode sowie alle weiteren Dateien sind Open Source und können auf [GitHub](https://github.com/LukasT03/LTS-Respooler) heruntergeladen werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The source code and all additional files are open source and can be downloaded from [GitHub](https://github.com/LukasT03/LTS-Respooler)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El código fuente y todos los archivos adicionales son de código abierto y se pueden descargar desde [GitHub](https://github.com/LukasT03/LTS-Respooler)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le code source et tous les fichiers supplémentaires sont open source et peuvent être téléchargés depuis [GitHub](https://github.com/LukasT03/LTS-Respooler)."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De broncode en alle aanvullende bestanden zijn open source en kunnen worden gedownload van [GitHub](https://github.com/LukasT03/LTS-Respooler)."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Källkoden och alla ytterligare filer är öppen källkod och kan laddas ner från [GitHub](https://github.com/LukasT03/LTS-Respooler)."
+          }
+        }
+      }
+    },
+    "Der Respooler hat automatisch angehalten. Überprüfe, ob der Motor blockiert ist." : {
+      "comment" : "Notification body when Auto-Stop",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooleren er stoppet automatisk. Tjek om motoren er blokeret."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Respooler hat automatisch angehalten. Überprüfe, ob der Motor blockiert ist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Respooler stopped automatically. Check if the motor is blocked."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El Respooler se ha detenido automáticamente. Comprueba si el motor está bloqueado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le Respooler s’est arrêté automatiquement. Vérifie si le moteur est bloqué."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De Respooler is automatisch gestopt. Controleer of de motor geblokkeerd is."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respoolern har stoppat automatiskt. Kontrollera om motorn är blockerad."
+          }
+        }
+      }
+    },
+    "Der Respooler stoppt anhand der übertragenen Menge. Empfohlen, wenn die obere Spule größer als 1 kg ist." : {
+      "comment" : "Respool Amount explanatory footer for fixed weights",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooleren stopper baseret på den overførte mængde. Anbefales, hvis den øverste spole er større end 1 kg."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Respooler stoppt anhand der übertragenen Menge. Empfohlen, wenn die obere Spule größer als 1 kg ist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Respooler stops based on the transferred amount. Recommended if the top spool is bigger than 1 kg."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El Respooler se detiene en función de la cantidad transferida. Recomendado si la bobina superior es mayor de 1 kg."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le respooler s’arrête en fonction de la quantité transférée. Recommandé si la bobine supérieure est supérieure à 1 kg."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De Respooler stopt op basis van de overgedragen hoeveelheid. Aanbevolen als de bovenste spoel groter is dan 1 kg."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respoolern stoppar baserat på den överförda mängden. Rekommenderas om den övre spolen är större än 1 kg."
+          }
+        }
+      }
+    },
+    "Der Respooler stoppt anhand des Filament Sensors, sobald die obere Spule leer ist. Empfohlen, wenn Filament zwischen zwei 1 kg Spulen übertragen wird." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooleren stopper via filamentsensoren, så snart den øverste spole er tom. Anbefales, når filament overføres mellem to 1 kg spoler."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Respooler stoppt anhand des Filament Sensors, sobald die obere Spule leer ist. Empfohlen, wenn Filament zwischen zwei 1 kg Spulen übertragen wird."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Respooler stops using the filament sensor as soon as the top spool is empty. Recommended when filament is transferred between two 1 kg spools."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El Respooler se detiene mediante el sensor de filamento en cuanto la bobina superior esté vacía. Recomendado cuando se transfiere filamento entre dos bobinas de 1 kg."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le Respooler s’arrête grâce au capteur de filament dès que la bobine supérieure est vide. Recommandé lors du transfert de filament entre deux bobines de 1 kg."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De Respooler stopt via de filamentsensor zodra de bovenste spoel leeg is. Aanbevolen bij het overzetten van filament tussen twee 1 kg-spoelen."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respoolern stoppar med hjälp av filamentsensorn så snart den övre spolen är tom. Rekommenderas när filament överförs mellan två 1 kg-spolar."
+          }
+        }
+      }
+    },
+    "Der Spulvorgang wurde erfolgreich fertiggestellt." : {
+      "comment" : "Notification body when Respooler is done",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spoleprocessen blev fuldført med succes."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Spulvorgang wurde erfolgreich fertiggestellt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The spooling process was completed successfully."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El proceso de bobinado se completó correctamente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le processus de bobinage s’est terminé avec succès."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het spoelproces is succesvol voltooid."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spolningen har slutförts framgångsrikt."
+          }
+        }
+      }
+    },
+    "Die Empfindlichkeit hängt vom Netzteil ab. Wenn der Motor zu oft stoppt, verringere die Empfindlichkeit in den Einstellungen." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Følsomheden kan også afhænge af strømforsyningen. Hvis motoren stopper for ofte, skal du reducere følsomheden i indstillingerne."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Empfindlichkeit hängt vom Netzteil ab. Wenn der Motor zu oft stoppt, verringere die Empfindlichkeit in den Einstellungen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sensitivity may also depend on the power supply. If the motor stops too often, decrease the sensitivity in the settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sensibilidad también puede depender de la fuente de alimentación. Si el motor se detiene demasiado a menudo, disminuye la sensibilidad en los ajustes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sensibilité peut également dépendre de l’alimentation électrique. Si le moteur s’arrête trop souvent, réduisez la sensibilité dans les réglages."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De gevoeligheid kan ook afhangen van de voeding. Als de motor te vaak stopt, verlaag dan de gevoeligheid in de instellingen."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Känsligheten kan också bero på nätaggregatet. Om motorn stannar för ofta, minska känsligheten i inställningarna."
+          }
+        }
+      }
+    },
+    "Einfach" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enkel"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einfach"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simple"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sencillo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simple"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eenvoudig"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enkel"
           }
         }
       }
@@ -599,12 +1780,58 @@
         }
       }
     },
+    "Erhalte Push-Benachrichtigungen, wenn der Respooler stoppt oder fertig ist." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modtag push-notifikationer, når Respooleren stopper eller er færdig."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erhalte Push-Benachrichtigungen, wenn der Respooler stoppt oder fertig ist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receive push notifications when the Respooler stops or finishes."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recibe notificaciones push cuando el Respooler se detenga o haya terminado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recevez des notifications push lorsque le Respooler s’arrête ou est terminé."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontvang pushmeldingen wanneer de Respooler stopt of klaar is."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Få pushnotiser när Respoolern stoppar eller är klar."
+          }
+        }
+      }
+    },
     "Erkannt" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opdaget"
+            "value" : "Registreret"
           }
         },
         "de" : {
@@ -634,7 +1861,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Herkend"
+            "value" : "Gedetecteerd"
           }
         },
         "sv" : {
@@ -645,48 +1872,280 @@
         }
       }
     },
-    "Falls dein Motor zu heiß wird oder vibriert, passe die Stärke über den Slider in den Einstellungen an." : {
+    "Fahrenheit" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hvis din motor bliver for varm eller vibrerer, skal du justere styrken ved hjælp af skyderen i indstillingerne."
+            "value" : "Fahrenheit"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Falls dein Motor zu heiß wird oder vibriert, passe die Stärke über den Slider in den Einstellungen an."
+            "value" : "Fahrenheit"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If your motor gets too hot or isn’t strong enough, you can adjust the strength using the slider."
+            "value" : "Fahrenheit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Si el motor se calienta demasiado o vibra, ajusta la intensidad con el control deslizante de los ajustes."
+            "value" : "Fahrenheit"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Si ton moteur chauffe trop ou vibre, ajuste la puissance via le curseur dans les paramètres."
+            "value" : "Fahrenheit"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Als je motor te heet wordt of trilt, pas dan de sterkte aan met de schuifknop in de instellingen."
+            "value" : "Fahrenheit"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Om motorn blir för varm eller vibrerar kan du justera styrkan med hjälp av reglaget i inställningarna."
+            "value" : "Fahrenheit"
+          }
+        }
+      }
+    },
+    "Feedback" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comentarios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retour"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        }
+      }
+    },
+    "Fehler beim Kauf: %@" : {
+      "comment" : "Shown when the purchase flow throws an error; includes the error description",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fejl under købet: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler beim Kauf: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error during purchase: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error durante la compra: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur lors de l’achat : %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fout tijdens de aankoop: %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fel vid köpet: %@"
+          }
+        }
+      }
+    },
+    "Fehler: Auto-Stopp!" : {
+      "comment" : "Notification title when Auto-Stop",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fejl: Auto-Stop!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler: Auto-Stopp!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error: Auto-Stop!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error: Auto-Stop!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur : Auto-Stop !"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fout: Auto-Stop!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fel: Auto-Stop!"
+          }
+        }
+      }
+    },
+    "Fehler!" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fejl!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Error!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur!"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fout!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fel!"
+          }
+        }
+      }
+    },
+    "Fertig!" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Færdig!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Hecho!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminé!"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaar!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klart!"
           }
         }
       }
@@ -714,7 +2173,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filament"
+            "value" : "Filamento"
           }
         },
         "fr" : {
@@ -754,13 +2213,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Use Filament sensor"
+            "value" : "Use Filament Sensor"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utilizar sensor de Filament"
+            "value" : "Utilizar sensor de filamento"
           }
         },
         "fr" : {
@@ -779,6 +2238,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Använd Filament sensor"
+          }
+        }
+      }
+    },
+    "Firmware aktualisieren" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opdater firmware"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firmware aktualisieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Firmware"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar firmware"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre à jour le firmware"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firmware bijwerken"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppdatera firmware"
           }
         }
       }
@@ -829,140 +2334,279 @@
         }
       }
     },
-    "Gerät entfernen" : {
+    "Für die WLAN-Verbindung hier nach verfügbaren Netzwerken suchen und das Passwort eingeben. Funktioniert nur mit 2,4 GHz Netzwerken." : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fjern enheden"
+            "value" : "For at oprette en Wi-Fi-forbindelse skal du søge efter tilgængelige netværk og indtaste adgangskoden. Virker kun med 2,4 GHz-netværk."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gerät entfernen"
+            "value" : "Für die WLAN-Verbindung hier nach verfügbaren Netzwerken suchen und das Passwort eingeben. Funktioniert nur mit 2,4 GHz Netzwerken."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remove device"
+            "value" : "To establish a Wi-Fi connection, scan for available networks and enter the password. Only works with 2.4 GHz networks."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quitar dispositivo"
+            "value" : "Para establecer una conexión Wi-Fi, busca redes disponibles e introduce la contraseña. Solo funciona con redes de 2,4 GHz."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Retirer l'appareil"
+            "value" : "Pour établir une connexion Wi-Fi, recherchez les réseaux disponibles et saisissez le mot de passe. Fonctionne uniquement avec les réseaux 2,4 GHz."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apparaat verwijderen"
+            "value" : "Om een Wi-Fi-verbinding tot stand te brengen, zoek naar beschikbare netwerken en voer het wachtwoord in. Werkt alleen met 2,4 GHz-netwerken."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ta bort enheten"
+            "value" : "För att upprätta en Wi-Fi-anslutning, sök efter tillgängliga nätverk och ange lösenordet. Fungerar endast med 2,4 GHz-nätverk."
           }
         }
       }
     },
-    "gering" : {
+    "Für genauere Zeitangaben bzw. Respool-Mengen die benötigte Dauer für eine 1 kg Spule bei 80 % Geschwindigkeit messen und hier anpassen." : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "lav"
+            "value" : "For mere præcise resterende tider og respool-mængder, mål den nødvendige varighed for en 1 kg spole ved 80 % hastighed og justér den her."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "gering"
+            "value" : "Für genauere Zeitangaben bzw. Respool-Mengen die benötigte Dauer für eine 1 kg Spule bei 80 % Geschwindigkeit messen und hier anpassen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "low"
+            "value" : "For more accurate remaining times and respool amounts, measure the required duration for a 1 kg spool at 80 % speed and adjust it here."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "baja"
+            "value" : "Para obtener tiempos restantes y cantidades de rebobinado más precisos, mide la duración necesaria para una bobina de 1 kg al 80 % de velocidad y ajústala aquí."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "faible"
+            "value" : "Pour des temps restants et des quantités de rebobinage plus précis, mesurez la durée nécessaire pour une bobine de 1 kg à 80 % de vitesse et ajustez-la ici."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "laag"
+            "value" : "Voor nauwkeurigere resterende tijden en respool-hoeveelheden, meet de benodigde duur voor een spoel van 1 kg bij 80 % snelheid en pas deze hier aan."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "låg"
+            "value" : "För mer exakta återstående tider och respool-mängder, mät den tid som krävs för en 1 kg-spole vid 80 % hastighet och justera den här."
           }
         }
       }
     },
-    "Geschwindigkeit" : {
+    "Für OTA-Updates muss das Board mit dem lokalen WLAN verbunden sein. Alternativ dazu kann auch der Web Flasher auf der LTS Design Webseite genutzt werden." : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hastighed"
+            "value" : "For OTA-opdateringer skal boardet være forbundet til det lokale Wi-Fi. Alternativt kan Web Flasheren på LTS Design’s hjemmeside bruges."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Geschwindigkeit"
+            "value" : "Für OTA-Updates muss das Board mit dem lokalen WLAN verbunden sein. Alternativ dazu kann auch der Web Flasher auf der LTS Design Webseite genutzt werden."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speed"
+            "value" : "For OTA updates, the board must be connected to the local Wi-Fi network. Alternatively, the Web Flasher on the LTS Design website can also be used."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rapidez"
+            "value" : "Para las actualizaciones OTA, la placa debe estar conectada al Wi-Fi local. Como alternativa se puede utilizar el Web Flasher en la página web de LTS Design."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vitesse"
+            "value" : "Pour les mises à jour OTA, la carte doit être connectée au Wi-Fi local. Alternativement, le Web Flasher sur le site web de LTS Design peut être utilisé."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Snelheid"
+            "value" : "Voor OTA-updates moet het board verbonden zijn met het lokale Wi-Fi. Als alternatief kan de Web Flasher op de LTS Design-website worden gebruikt."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hastighet"
+            "value" : "För OTA-uppdateringar måste kortet vara anslutet till det lokala Wi-Fi-nätet. Alternativt kan Web Flashern på LTS Design-webbplatsen användas."
+          }
+        }
+      }
+    },
+    "Gering" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lav"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gering"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Low"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bajo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faible"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laag"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Låg"
+          }
+        }
+      }
+    },
+    "Gesamte Spule" : {
+      "comment" : "Respool Amount label: entire spool\nRespool Amount option: entire spool",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hel spole"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamte Spule"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entire Spool"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bobina completa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bobine complète"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hele spoel"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hel spole"
+          }
+        }
+      }
+    },
+    "Geschwindigkeit: %lld %%" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ventilatorhastighed: %lld %%"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geschwindigkeit: %lld %%"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fan Speed: %lld%%"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocidad del ventilador: %lld %%"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vitesse du ventilateur : %lld %%"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ventilatorsnelheid: %lld %%"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fläkthastighet: %lld %%"
           }
         }
       }
@@ -984,7 +2628,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remove saved device"
+            "value" : "Remove Saved Device"
           }
         },
         "es" : {
@@ -1018,7 +2662,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Frakoblet"
+            "value" : "Afbrudt"
           }
         },
         "de" : {
@@ -1042,19 +2686,114 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Séparé"
+            "value" : "Déconnecté"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verbroken"
+            "value" : "Ontkoppeld"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Separat"
+            "value" : "Frånkopplad"
+          }
+        }
+      }
+    },
+    "GitHub" : {
+      "shouldTranslate" : false
+    },
+    "Glissando" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glissando"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glissando"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glissando"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glissando"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glissando"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glissando"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glissando"
+          }
+        }
+      }
+    },
+    "High-Speed" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High-Speed"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High-Speed"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High-Speed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High-Speed"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High-Speed"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High-Speed"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High-Speed"
           }
         }
       }
@@ -1064,7 +2803,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instruktioner"
+            "value" : "Vejledning"
           }
         },
         "de" : {
@@ -1082,7 +2821,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instrucciones"
+            "value" : "Guía"
           }
         },
         "fr" : {
@@ -1094,7 +2833,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opmerkingen"
+            "value" : "Uitleg"
           }
         },
         "sv" : {
@@ -1105,94 +2844,186 @@
         }
       }
     },
-    "hoch" : {
+    "Hoch" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "høj"
+            "value" : "Høj"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "hoch"
+            "value" : "Hoch"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "high"
+            "value" : "High"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "alta"
+            "value" : "Alto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "élevée"
+            "value" : "Élevé"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "hoog"
+            "value" : "Hoog"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "hög"
+            "value" : "Hög"
           }
         }
       }
     },
-    "Informationen" : {
+    "Kalibrierung" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Information"
+            "value" : "Kalibrering"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Informationen"
+            "value" : "Kalibrierung"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Information"
+            "value" : "Calibration"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Información"
+            "value" : "Calibración"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Information"
+            "value" : "Calibrage"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Informatie"
+            "value" : "Kalibratie"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Information"
+            "value" : "Kalibrering"
+          }
+        }
+      }
+    },
+    "Keine Updates mehr" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen flere opdateringer"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Updates mehr"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No More Updates"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No más actualizaciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus de mises à jour"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen updates meer"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inga fler uppdateringar"
+          }
+        }
+      }
+    },
+    "Keine WLAN-Verbindung" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen Wi‑Fi‑forbindelse"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine WLAN-Verbindung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Wi-Fi Connection"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin conexión Wi‑Fi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas de connexion Wi‑Fi"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen Wi-Fi‑verbinding"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen Wi‑Fi‑anslutning"
           }
         }
       }
@@ -1243,140 +3074,186 @@
         }
       }
     },
-    "Läuft..." : {
+    "Konnte nicht geladen werden." : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kører..."
+            "value" : "Kunne ikke indlæses."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Läuft..."
+            "value" : "Konnte nicht geladen werden."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Running…"
+            "value" : "Could not be loaded."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Corriendo..."
+            "value" : "No se pudo cargar."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "En cours..."
+            "value" : "N’a pas pu être chargé."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loopt..."
+            "value" : "Kon niet worden geladen."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kör..."
+            "value" : "Kunde inte laddas."
           }
         }
       }
     },
-    "LED Feedback" : {
+    "LED Helligkeit: %lld %%" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LED Feedback"
+            "value" : "LED lysstyrke: %lld %%"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LED Feedback"
+            "value" : "LED Helligkeit: %lld %%"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LED feedback"
+            "value" : "LED Brightness: %lld%%"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LED Feedback"
+            "value" : "Brillo de los LED: %lld %%"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LED Feedback"
+            "value" : "Luminosité de la LED : %lld %%"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LED Feedback"
+            "value" : "Helderheid LED: %lld %%"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LED Feedback"
+            "value" : "LED-ljusstyrka: %lld %%"
           }
         }
       }
     },
-    "Leerlauf" : {
+    "Live-Aktivitäten" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inaktiv"
+            "value" : "Live-aktiviteter"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Leerlauf"
+            "value" : "Live-Aktivitäten"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Idle"
+            "value" : "Live Activities"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ralentí"
+            "value" : "Actividades en tiempo real"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inactif"
+            "value" : "Activités en direct"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inactief"
+            "value" : "Live-activiteiten"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inaktiv"
+            "value" : "Live-aktiviteter"
+          }
+        }
+      }
+    },
+    "LTS Control" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control"
           }
         }
       }
@@ -1427,48 +3304,186 @@
         }
       }
     },
-    "mittel" : {
+    "Lüfter" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "medium"
+            "value" : "Ventilator"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "mittel"
+            "value" : "Lüfter"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "medium"
+            "value" : "Cooling Fan"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "media"
+            "value" : "Ventilador"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "moyenne"
+            "value" : "Ventilateur"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "medium"
+            "value" : "Ventilator"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "medium"
+            "value" : "Fläkt"
+          }
+        }
+      }
+    },
+    "Lüfter immer an" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ventilator altid tændt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lüfter immer an"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fan Always On"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ventilador siempre encendido"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ventilateur toujours activé"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ventilator altijd aan"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fläkt alltid på"
+          }
+        }
+      }
+    },
+    "Mehr" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mere"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mehr"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meer"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mer"
+          }
+        }
+      }
+    },
+    "Mittel" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mellem"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mittel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medium"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moyen"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gemiddeld"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medel"
           }
         }
       }
@@ -1519,48 +3534,232 @@
         }
       }
     },
-    "Motor-Stärke" : {
+    "Motorstärke" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Motorisk styrke"
+            "value" : "Motorstyrke"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Motor-Stärke"
+            "value" : "Motorstärke"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Motor strength"
+            "value" : "Motor Strength"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fuerza motora"
+            "value" : "Potencia del motor"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Force du moteur"
+            "value" : "Puissance moteur"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Motorische kracht"
+            "value" : "Motorkracht"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Motorisk styrka"
+            "value" : "Motorstyrka"
+          }
+        }
+      }
+    },
+    "Nach verfügbaren Netzwerken suchen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Søg efter tilgængelige netværk"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach verfügbaren Netzwerken suchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan for Available Networks"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar redes disponibles"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechercher les réseaux disponibles"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoek naar beschikbare netwerken"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sök efter tillgängliga nätverk"
+          }
+        }
+      }
+    },
+    "Netzwerk" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netværk"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netzwerk"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Network"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Red"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réseau"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netwerk"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nätverk"
+          }
+        }
+      }
+    },
+    "Netzwerk-Scan" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netværksscan"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netzwerk-Scan"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Network Scan"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escaneo de red"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyse du réseau"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netwerkscan"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nätverksskanning"
+          }
+        }
+      }
+    },
+    "Neues Control Board" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nyt Control Board"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neues Control Board"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Control Board"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevo Control Board"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveau Control Board"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuw Control Board"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nytt Control Board"
           }
         }
       }
@@ -1570,7 +3769,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ikke opdaget"
+            "value" : "Ikke registreret"
           }
         },
         "de" : {
@@ -1582,7 +3781,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not detected"
+            "value" : "Not Detected"
           }
         },
         "es" : {
@@ -1600,13 +3799,59 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Niet herkend"
+            "value" : "Niet gedetecteerd"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inte upptäckt"
+          }
+        }
+      }
+    },
+    "Nicht unterstützt" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke understøttet"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht unterstützt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Supported"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No compatible"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non pris en charge"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niet ondersteund"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stöds inte"
           }
         }
       }
@@ -1628,7 +3873,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not connected"
+            "value" : "Not Connected"
           }
         },
         "es" : {
@@ -1657,104 +3902,615 @@
         }
       }
     },
-    "Respooler" : {
+    "OK" : {
+      "comment" : "OK",
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respooler"
+            "value" : "OK"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respooler"
+            "value" : "OK"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respooler"
+            "value" : "OK"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respooler"
+            "value" : "OK"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respooler"
+            "value" : "OK"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respooler"
+            "value" : "OK"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respooler"
+            "value" : "OK"
           }
         }
       }
     },
-    "Richtung" : {
+    "Passe die Motorstärke an, wenn der Motor heiß wird oder vibriert. Auch ein schwaches Netzteil kann die Stärke beeinflussen." : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Retning"
+            "value" : "Juster motorstyrken, hvis motoren bliver varm eller vibrerer. En svag strømforsyning kan også påvirke styrken."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Richtung"
+            "value" : "Passe die Motorstärke an, wenn der Motor heiß wird oder vibriert. Auch ein schwaches Netzteil kann die Stärke beeinflussen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Direction"
+            "value" : "Adjust the motor strength if the motor gets hot or vibrates. A weak power supply can also affect the strength."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dirección"
+            "value" : "Ajusta la potencia del motor si el motor se calienta o vibra. Una fuente de alimentación débil también puede afectar la potencia."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Direction"
+            "value" : "Ajustez la puissance du moteur si celui-ci chauffe ou vibre. Une alimentation faible peut également influencer la puissance."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Richting"
+            "value" : "Pas de motorsterkte aan als de motor heet wordt of trilt. Een zwakke voeding kan de sterkte ook beïnvloeden."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Riktning"
+            "value" : "Justera motorstyrkan om motorn blir varm eller vibrerar. Ett svagt nätaggregat kan också påverka styrkan."
+          }
+        }
+      }
+    },
+    "Passwort" : {
+      "comment" : "Wi‑Fi password placeholder",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adgangskode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passwort"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contraseña"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mot de passe"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wachtwoord"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lösenord"
+          }
+        }
+      }
+    },
+    "Pause" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pauze"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paus"
+          }
+        }
+      }
+    },
+    "Pausiert" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sat på pause"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paused"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En pausa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En pause"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gepauzeerd"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausad"
+          }
+        }
+      }
+    },
+    "Rabatt Code" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabatkode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabatt Code"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discount Code"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código de descuento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code de réduction"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kortingscode"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabattkod"
+          }
+        }
+      }
+    },
+    "Respool-Menge" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overføringsmængde"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respool-Menge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer Amount"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cantidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quantité à transférer"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oprolmengte"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Överföringsmängd"
+          }
+        }
+      }
+    },
+    "Respooler fertig!" : {
+      "comment" : "Notification title when Respooler is done",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler færdig!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler fertig!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler Done!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Respooler listo!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler terminé !"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler klaar!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler klar!"
+          }
+        }
+      }
+    },
+    "Respooler pausieren" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler pauser"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler pausieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause Respooler"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausar Respooler"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre le Respooler en pause"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler pauzeren"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausa Respooler"
+          }
+        }
+      }
+    },
+    "Respooler starten" : {
+      "comment" : "Start motor action",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler starter"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Respooler"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar Respooler"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer le Respooler"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Respooler"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler startar"
+          }
+        }
+      }
+    },
+    "Respooler stoppen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler stopper"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler stoppen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop Respooler"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop Respooler"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter le Respooler"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop Respooler"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler stoppar"
+          }
+        }
+      }
+    },
+    "Respooler verbinden" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilslut Respooler"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler verbinden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect Respooler"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar Respooler"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connecter Respooler"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler verbinden"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anslut Respooler"
+          }
+        }
+      }
+    },
+    "Richtung umkehren" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omvendt retning"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Richtung umkehren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Direction"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar de dirección"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changer de direction"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Richting omkeren"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omvänd riktning"
           }
         }
       }
     },
     "Schließen" : {
+      "comment" : "Close sheet",
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tæt"
+            "value" : "Luk"
           }
         },
         "de" : {
@@ -1790,12 +4546,151 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nära"
+            "value" : "Stäng"
+          }
+        }
+      }
+    },
+    "Sende bei Fragen, Problemen oder Anregungen gerne eine E-Mail an info@lts-design.com." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis du har spørgsmål, problemer eller forslag, er du velkommen til at sende en e-mail til info@lts-design.com."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sende bei Fragen, Problemen oder Anregungen gerne eine E-Mail an info@lts-design.com."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you have any questions, problems or ideas, feel free to send an e-mail to info@lts-design.com."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si tienes preguntas, problemas o sugerencias, no dudes en enviar un correo electrónico a info@lts-design.com."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cas de questions, de problèmes ou de suggestions, n’hésitez pas à envoyer un e-mail à info@lts-design.com."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heb je vragen, problemen of suggesties? Stuur dan gerust een e-mail naar info@lts-design.com."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om du har frågor, problem eller förslag, skicka gärna e-post till info@lts-design.com."
+          }
+        }
+      }
+    },
+    "Star Wars" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Star Wars"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Star Wars"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Star Wars"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Star Wars"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Star Wars"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Star Wars"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Star Wars"
+          }
+        }
+      }
+    },
+    "Stärke: %lld %%" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Styrke: %lld %%"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stärke: %lld %%"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strength: %lld%%"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potencia: %lld %%"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Force : %lld %%"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kracht: %lld %%"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Styrka: %lld %%"
           }
         }
       }
     },
     "Start" : {
+      "comment" : "Motor starten",
       "localizations" : {
         "da" : {
           "stringUnit" : {
@@ -1818,13 +4713,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inicio"
+            "value" : "Iniciar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start"
+            "value" : "Démarrer"
           }
         },
         "nl" : {
@@ -1836,7 +4731,339 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start"
+            "value" : "Starta"
+          }
+        }
+      }
+    },
+    "state.autoStop" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-stop"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stopp"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-Stop"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-stop"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêt auto"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-stop"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-stopp"
+          }
+        }
+      }
+    },
+    "state.disconnected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke forbundet"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht verbunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Connected"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No conectado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non connecté"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niet verbonden"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inte ansluten"
+          }
+        }
+      }
+    },
+    "state.done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Færdig!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Hecho!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminé !"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaar!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Färdig!"
+          }
+        }
+      }
+    },
+    "state.idle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomgang"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leerlauf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idle"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En espera"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ralenti"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stationair"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viloläge"
+          }
+        }
+      }
+    },
+    "state.paused" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sat på pause"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paused"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En pausa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En pause"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gepauzeerd"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausad"
+          }
+        }
+      }
+    },
+    "state.running" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kører…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Läuft…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Running…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En funcionamiento…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cours…"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loopt…"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kör…"
+          }
+        }
+      }
+    },
+    "state.unknown_format" : {
+      "shouldTranslate" : false
+    },
+    "state.updating" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opdaterer…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird aktualisiert…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updating…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizando…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mise à jour…"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bijwerken…"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppdaterar…"
           }
         }
       }
@@ -1858,7 +5085,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "State"
+            "value" : "Status"
           }
         },
         "es" : {
@@ -1887,99 +5114,468 @@
         }
       }
     },
-    "Stelle sicher, dass das Control Board eingeschaltet ist und starte die Kopplung in den Einstellungen." : {
+    "Status: Board nicht verbunden" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sørg for, at Control Board er tændt, og start parringen i indstillingerne."
+            "value" : "Status: Board ikke forbundet"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stelle sicher, dass das Control Board eingeschaltet ist und starte die Kopplung in den Einstellungen."
+            "value" : "Status: Board nicht verbunden"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Make sure that the Control Board is powered on and start the connection in the setting."
+            "value" : "Status: Board Not Connected"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asegúrese de que la Control Board está encendida e inicie el emparejamiento en los ajustes."
+            "value" : "Estado: Board no conectado"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Assure-toi que le Control Board est allumé et démarre le couplage dans les paramètres."
+            "value" : "Statut : Board non connecté"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zorg ervoor dat de Control Board is ingeschakeld en start het koppelen in de instellingen."
+            "value" : "Status: Board niet verbonden"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kontrollera att styrkortet är påslaget och starta parkopplingen i inställningarna."
+            "value" : "Status: Board inte anslutet"
           }
         }
       }
     },
-    "Stelle sicher, dass das Control Board eingeschaltet ist und starte die Kopplung über den Button unten." : {
+    "Status: Erfolgreich!" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sørg for, at Control Board er tændt, og start parringsprocessen ved hjælp af knappen nedenfor."
+            "value" : "Status: lykkedes!"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stelle sicher, dass das Control Board eingeschaltet ist und starte die Kopplung über den Button unten."
+            "value" : "Status: Erfolgreich!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Make sure that the Control Board is powered on and start the connection using the Button below."
+            "value" : "Status: Successful!"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asegúrese de que la Control Board está encendida e inicie el emparejamiento mediante el botón que aparece a continuación."
+            "value" : "Estado: Completado"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Assure-toi que le Control Board est allumé et démarre le couplage en cliquant sur le bouton ci-dessous."
+            "value" : "Statut : Réussi !"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zorg ervoor dat de Control Board is ingeschakeld en start het koppelen via de onderstaande knop."
+            "value" : "Status: Gelukt!"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kontrollera att Control Board är påslagen och starta parkopplingen via knappen nedan."
+            "value" : "Status: lyckades!"
+          }
+        }
+      }
+    },
+    "Status: Fehlgeschlagen!" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Opdatering mislykkedes!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Fehlgeschlagen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Update Failed!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado: ¡Actualización fallida!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statut : Échec de la mise à jour !"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Update mislukt!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Uppdateringen misslyckades!"
+          }
+        }
+      }
+    },
+    "Status: Firmware ist aktuell" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Firmwaren er opdateret"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Firmware ist aktuell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Firmware Is Up to Date"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado: El firmware está actualizado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statut : Le firmware est à jour"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Firmware is up-to-date"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Firmware är uppdaterad"
+          }
+        }
+      }
+    },
+    "Status: Nicht unterstützt" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Ikke understøttet"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Nicht unterstützt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Not Supported"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado: No compatible"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statut : Non pris en charge"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Niet ondersteund"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Stöds inte"
+          }
+        }
+      }
+    },
+    "Status: Verfügbar (%@ → %@)" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Tilgængelig (%@ → %@)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Verfügbar (%@ → %@)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Available (%@ → %@)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado: Disponible (%@ → %@)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statut : Disponible (%@ → %@)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Beschikbaar (%@ → %@)"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Tillgänglig (%@ → %@)"
+          }
+        }
+      }
+    },
+    "Status: Wird aktualisiert..." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Opdaterer…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Wird aktualisiert..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Updating…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado: Actualizando…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statut : Mise à jour…"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Bijwerken…"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: Uppdaterar…"
+          }
+        }
+      }
+    },
+    "Stelle sicher, dass das Board eingeschaltet ist und starte die Kopplung über den Button unten." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sørg for, at Board er tændt, og start parringen via knappen nedenfor."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stelle sicher, dass das Board eingeschaltet ist und starte die Kopplung über den Button unten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure the Board is powered on and start the pairing via the button below."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asegúrate de que el Board esté encendido y comienza el emparejamiento mediante el botón de abajo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assurez-vous que le Board est allumée et lancez l'appairage via le bouton ci-dessous."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zorg ervoor dat het Board is ingeschakeld en start het koppelen via de knop hieronder."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se till att Board är påslaget och starta parningen via knappen nedan."
+          }
+        }
+      }
+    },
+    "Steuert den LTS Respooler." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Styrer LTS Respooler."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steuert den LTS Respooler."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controls the LTS Respooler."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controla el LTS Respooler."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrôle le LTS Respooler."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bedient de LTS Respooler."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Styr LTS Respooler."
+          }
+        }
+      }
+    },
+    "Steuerung" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Styring"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steuerung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commande"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bediening"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Styrning"
           }
         }
       }
     },
     "Stopp" : {
+      "comment" : "Motor stoppen",
       "localizations" : {
         "da" : {
           "stringUnit" : {
@@ -2002,13 +5598,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stop"
+            "value" : "Detener"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stop"
+            "value" : "Arrêter"
           }
         },
         "nl" : {
@@ -2020,145 +5616,516 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stop"
+            "value" : "Stoppa"
           }
         }
       }
     },
-    "Um das Respooler Control Board mit der App zu steuern, musst du es mit deinem iPhone über BLE verbinden." : {
+    "Temperatur" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For at styre Respooler Control Board med appen skal du forbinde den med din iPhone via BLE."
+            "value" : "Temperatur"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Um das Respooler Control Board mit der App zu steuern, musst du es mit deinem iPhone über BLE verbinden."
+            "value" : "Temperatur"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "To configure the Respooler Control Board using the App, you first need to connect it to your iPhone using BLE."
+            "value" : "Temperature"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para controlar el Respooler Control Board con la app, tienes que conectarlo a tu iPhone mediante BLE."
+            "value" : "Temperatura"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pour contrôler le Respooler Control Board avec l'application, tu dois le connecter à ton iPhone via BLE."
+            "value" : "Température"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Om de Respooler Control Board met de app te bedienen, moet je hem via BLE met je iPhone verbinden."
+            "value" : "Temperatuur"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "För att styra Respooler Control Board med appen måste du ansluta den till din iPhone via BLE."
+            "value" : "Temperatur"
           }
         }
       }
     },
-    "Um das Respooler Control Board mit der App zu steuern, musst du es zuerst mit deinem iPhone verbinden." : {
+    "Temperatur-Einheit" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For at styre Respooler Control Board med appen skal du først forbinde den med din iPhone."
+            "value" : "Temperaturenhed"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Um das Respooler Control Board mit der App zu steuern, musst du es zuerst mit deinem iPhone verbinden."
+            "value" : "Temperatur-Einheit"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "To configure the Respooler Control Board using the App, you first need to connect it to your iPhone."
+            "value" : "Temperature Unit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para controlar el Respooler Control Board con la app, primero debes conectarlo a tu iPhone."
+            "value" : "Unidad de temperatura"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pour pouvoir contrôler le Respooler Control Board avec l'application, tu dois d'abord le connecter à ton iPhone."
+            "value" : "Unité de température"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Om de Respooler Control Board met de app te bedienen, moet je hem eerst verbinden met je iPhone."
+            "value" : "Temperatuureenheid"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "För att styra Respooler Control Board med appen måste du först ansluta den till din iPhone."
+            "value" : "Temperaturenhet"
           }
         }
       }
     },
-    "Um erneut eine Verbidung herzustellen, entferne das gemerkte Gerät zunächst über den Button in den Einstellungen." : {
+    "Ton bei Fertigstellung" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For at genoprette forbindelsen skal du først fjerne den gemte enhed ved hjælp af knappen i indstillingerne."
+            "value" : "Afslutningslyd"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Um erneut eine Verbidung herzustellen, entferne das gemerkte Gerät zunächst über den Button in den Einstellungen."
+            "value" : "Ton bei Fertigstellung"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "To establish a new connection, you first need to remove the saved device in the settings."
+            "value" : "Completion Sound"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para volver a conectarse, retire primero el dispositivo memorizado mediante el botón de los ajustes."
+            "value" : "Sonido al finalizar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pour te reconnecter, supprime d'abord l'appareil mémorisé en cliquant sur le bouton dans les paramètres."
+            "value" : "Son de fin"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Om opnieuw verbinding te maken, verwijder je eerst het in het geheugen opgeslagen apparaat met de knop in de instellingen."
+            "value" : "Voltooiingsgeluid"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "För att återansluta måste du först ta bort den memorerade enheten med hjälp av knappen i inställningarna."
+            "value" : "Ljud vid slutförande"
+          }
+        }
+      }
+    },
+    "Trinkgeld" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drikkepenge"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trinkgeld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Propina"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pourboire"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fooi geven"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dricks"
+          }
+        }
+      }
+    },
+    "Trinkgeld senden" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send drikkepenge"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trinkgeld senden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send a Tip"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar propina"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envoyer un pourboire"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fooi geven"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skicka dricks"
+          }
+        }
+      }
+    },
+    "Um das Respooler Board mit der App zu steuern, musst du es zuerst mit deinem %@ verbinden." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For at styre Respooler Board med appen skal du først forbinde det med din %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um das Respooler Board mit der App zu steuern, musst du es zuerst mit deinem %@ verbinden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To control the Respooler Board with the app, you must first connect it to your %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para controlar el Respooler Board con la app, primero debes conectarlo a tu %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour contrôler le Respooler Board avec l’application, vous devez d’abord le connecter à votre %@."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om het Respooler Board met de app te bedienen, moet je het eerst verbinden met je %@."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "För att styra Respooler Board med appen måste du först ansluta det till din %@."
+          }
+        }
+      }
+    },
+    "Unbekannter Fehler beim Kauf." : {
+      "comment" : "Shown for an unknown purchase error",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukendt fejl under købet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbekannter Fehler beim Kauf."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown error during purchase."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error desconocido durante la compra."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur inconnue lors de l’achat."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onbekende fout tijdens de aankoop."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okänt fel vid köpet."
+          }
+        }
+      }
+    },
+    "Unterstützen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Støt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterstützen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apoyar a"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soutenir"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steun"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stöd"
+          }
+        }
+      }
+    },
+    "Unterstützen %@" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Støt %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterstützen %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apoyar a %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soutenir %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steun %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stöd %@"
+          }
+        }
+      }
+    },
+    "Update erfolgreich!" : {
+      "comment" : "OTA result alert title",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opdatering lykkedes!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update erfolgreich!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Successful!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Actualización correcta!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mise à jour réussie !"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update geslaagd!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppdatering lyckades!"
+          }
+        }
+      }
+    },
+    "Update fehlgeschlagen!" : {
+      "comment" : "OTA result alert title",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opdatering mislykkedes!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update fehlgeschlagen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update Failed!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Actualización fallida!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec de la mise à jour !"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update mislukt!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppdatering misslyckades!"
           }
         }
       }
@@ -2168,7 +6135,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vorbinde"
+            "value" : "Forbind"
           }
         },
         "de" : {
@@ -2255,6 +6222,52 @@
         }
       }
     },
+    "Verbindung erneut starten" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genstart forbindelsen"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbindung erneut starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart Connection"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciar la conexión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrer la connexion"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinding opnieuw starten"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starta om anslutningen"
+          }
+        }
+      }
+    },
     "Verbindung herstellen" : {
       "localizations" : {
         "da" : {
@@ -2272,7 +6285,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connect device"
+            "value" : "Connect Device"
           }
         },
         "es" : {
@@ -2297,6 +6310,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Etablera anslutning"
+          }
+        }
+      }
+    },
+    "Verbindungseinstellungen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forbindelsesindstillinger"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbindungseinstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connection Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes de conexión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paramètres de connexion"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbindingsinstellingen"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anslutningsinställningar"
           }
         }
       }
@@ -2347,6 +6406,237 @@
         }
       }
     },
+    "Versionsverlauf" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versionshistorik"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versionsverlauf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version History"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historial de versiones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versions"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versiegeschiedenis"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versionshistorik"
+          }
+        }
+      }
+    },
+    "Vielen Dank für deine Unterstützung!" : {
+      "comment" : "Shown after a successful tip purchase",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tak for din støtte!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vielen Dank für deine Unterstützung!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you for your support!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Gracias por tu apoyo!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Merci pour votre soutien !"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bedankt voor je steun!"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tack för ditt stöd!"
+          }
+        }
+      }
+    },
+    "Wenn der Sensor deaktiviert ist, wird nicht auf den Verlust von Filament reagiert." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Når sensoren er deaktiveret, reagerer Respooleren ikke på tab af filament."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn der Sensor deaktiviert ist, wird nicht auf den Verlust von Filament reagiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When the sensor is deactivated, the Respooler won’t react to the loss of filament."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuando el sensor está desactivado, el respooler no reacciona a la pérdida de filamento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lorsque le capteur est désactivé, le respooler ne réagit pas à la perte de filament."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wanneer de sensor is uitgeschakeld, reageert de respooler niet op het verlies van filament."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "När sensorn är inaktiverad reagerar respoolern inte på förlust av filament."
+          }
+        }
+      }
+    },
+    "Wenn dir die App gefällt, kannst du hier eine kleine Spende leisten. Es werden dadurch keine zusätzlichen Funktionalitäten freigeschaltet." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis du kan lide appen, kan du give et lille bidrag her. Det låser ikke op for yderligere funktioner."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn dir die App gefällt, kannst du hier eine kleine Spende leisten. Es werden dadurch keine zusätzlichen Funktionalitäten freigeschaltet."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you like the app, you can make a small donation here. No additional functionalities will be unlocked."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si te gusta la app, puedes dejar una pequeña propina aquí. No se desbloquearán funciones adicionales."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si vous aimez l’app, vous pouvez laisser un petit pourboire ici. Cela ne débloque aucune fonctionnalité supplémentaire."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als je de app leuk vindt, kun je hier een kleine fooi geven. Dit ontgrendelt geen extra functies."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om du gillar appen kan du lämna ett litet bidrag här. Det låser inte upp några extra funktioner."
+          }
+        }
+      }
+    },
+    "Wenn du **kostenlos** das neue Control Board V4 erhalten möchtest, kannst du den folgenden Code dafür im Store anwenden, sobald es verfügbar ist." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis du vil modtage det nye Control Board V4 **gratis**, kan du anvende følgende kode i butikken, så snart det er tilgængeligt."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du **kostenlos** das neue Control Board V4 erhalten möchtest, kannst du den folgenden Code dafür im Store anwenden, sobald es verfügbar ist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you want to receive the new Control Board V4 **for free**, you can apply the following code in the store as soon as it is available."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si quieres recibir el nuevo Control Board V4 **gratis**, puedes aplicar el siguiente código en la tienda tan pronto como esté disponible."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si vous souhaitez recevoir gratuitement le nouveau Control Board V4, vous pouvez utiliser le code suivant dans la boutique dès qu’il sera disponible."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als je het nieuwe Control Board V4 **gratis** wilt ontvangen, kun je de volgende code in de winkel toepassen zodra deze beschikbaar is."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om du vill få det nya Control Board V4 **gratis** kan du använda följande kod i butiken så snart den är tillgänglig."
+          }
+        }
+      }
+    },
     "Willkommen bei LTS Control" : {
       "localizations" : {
         "da" : {
@@ -2389,6 +6679,238 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Välkommen till LTS Control"
+          }
+        }
+      }
+    },
+    "WLAN" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WLAN"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi"
+          }
+        }
+      }
+    },
+    "x" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "x"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "x"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "x"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "x"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "x"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "x"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "x"
+          }
+        }
+      }
+    },
+    "Zahlung konnte nicht verifiziert werden." : {
+      "comment" : "Shown when the transaction could not be verified",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betalingen kunne ikke verificeres."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zahlung konnte nicht verifiziert werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment could not be verified."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo verificar el pago."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le paiement n’a pas pu être vérifié."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De betaling kon niet worden geverifieerd."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betalningen kunde inte verifieras."
+          }
+        }
+      }
+    },
+    "Zahlung wird verarbeitet..." : {
+      "comment" : "Shown while the payment is pending",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betalingen behandles…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zahlung wird verarbeitet…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment is being processed…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El pago se está procesando…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le paiement est en cours de traitement…"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De betaling wordt verwerkt…"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betalningen bearbetas…"
+          }
+        }
+      }
+    },
+    "Zugangsdaten senden" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send Wi-Fi-oplysninger"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugangsdaten senden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send Credentials"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar credenciales"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envoyer les identifiants"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inloggegevens verzenden"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skicka inloggningsuppgifter"
           }
         }
       }

@@ -2,19 +2,50 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleGetInfoString</key>
+	<string></string>
 	<key>CFBundleURLTypes</key>
 	<array>
-		<dict/>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>LTS Control</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>respooler</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string></string>
+		</dict>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<key>INIntentsSupported</key>
+	<array>
+		<string>StopMotorIntent</string>
+		<string>StartMotorIntent</string>
+	</array>
 	<key>NSAccessorySetupBluetoothServices</key>
 	<array>
-		<string>12345678-1234-1234-1234-1234567890AB</string>
+		<string>9E05D06D-68A7-4E1F-A503-AE26713AC101</string>
 	</array>
 	<key>NSAccessorySetupKitSupports</key>
 	<array>
 		<string>Bluetooth</string>
+	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict/>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
 	</array>
 </dict>
 </plist>

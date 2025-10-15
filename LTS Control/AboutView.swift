@@ -275,7 +275,6 @@ struct AboutView: View {
                                     }
                                 }
                                 .foregroundColor(.secondary)
-
                                 Spacer()
                             }
                             .padding(.horizontal)

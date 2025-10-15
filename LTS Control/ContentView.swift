@@ -154,6 +154,7 @@ struct ContentView: View {
     @State private var isEditingSpeed: Bool = false
     @State private var hasAppeared = false
     @State private var enableStartupAnimations = false
+    @State private var ignoreSpeedSyncUntil: Date = .distantPast
 
     private var tempIcon: String {
         if bleManager.isConnected, let temp = bleManager.status.chipTemperature {
@@ -208,7 +209,7 @@ struct ContentView: View {
                     localSpeedPercent = Double(bleManager.status.speedPercent)
                 }
                 .task(id: bleManager.status.speedPercent) {
-                    if !isEditingSpeed {
+                    if !isEditingSpeed && Date() >= ignoreSpeedSyncUntil {
                         localSpeedPercent = Double(bleManager.status.speedPercent)
                     }
                 }
@@ -435,13 +436,12 @@ struct ContentView: View {
                 Slider(
                     value: $localSpeedPercent,
                     in: 50...100,
-                    step: 1,
                     onEditingChanged: { editing in
                         isEditingSpeed = editing
                         if !editing {
-                            let spd = Int(localSpeedPercent)
-                            bleManager.status.speedPercent = spd
+                            let spd = Int(localSpeedPercent.rounded())
                             bleManager.sendPacket(settings: ["SPD": spd])
+                            ignoreSpeedSyncUntil = Date().addingTimeInterval(1.0)
                         }
                     }
                 )

@@ -34,8 +34,9 @@ struct AboutView: View {
     @State private var updateButtonDisabledUntil: Date? = nil
     @State private var boardFirmwareVersion = "–"
     @State private var latestFirmwareVersion = "–"
+    @State private var holdUpdateAvailableUntil: Date? = nil
+    @State private var hasAppliedFirstUpdateAvailableDelay: Bool = false
     @State private var firmwareTimer: Timer? = nil
-    @State private var allowUpdateCheck = false
     @State private var showTipsView = false
     @State private var footerHeight: CGFloat = 0
     @State private var boardVersion: String? = UserDefaults.standard.string(forKey: "boardVersion")
@@ -242,12 +243,13 @@ struct AboutView: View {
                         VStack(alignment: .leading) {
                             let effectiveBoardVersion = bleManager.status.firmwareVersion ?? boardFirmwareVersion
                             let v3Blocked = isV3Board && effectiveBoardVersion == "1.0.0"
-                            let isUpdateAvailable = allowUpdateCheck
-                            && latestFirmwareVersion != "–"
+                            let isUpdateAvailable = latestFirmwareVersion != "–"
                             && effectiveBoardVersion != "–"
                             && isNewerVersion(latestFirmwareVersion, than: effectiveBoardVersion)
+                            let now = Date()
+                            let isUpdateAvailableDisplayed = isUpdateAvailable && (holdUpdateAvailableUntil.map { now >= $0 } ?? true)
                             let delayActive = updateButtonDisabledUntil.map { Date() < $0 } ?? false
-                            let isUpdateButtonEnabled = isUpdateAvailable && isWiFiConnected && !delayActive
+                            let isUpdateButtonEnabled = isUpdateAvailableDisplayed && isWiFiConnected && !delayActive
                             
                             VStack(alignment: .leading) {
                                 Text("Board Update")
@@ -255,21 +257,21 @@ struct AboutView: View {
 
                                 Group {
                                     if v3Blocked {
-                                        Text("Status: Nicht unterstützt")
+                                        Text("Updates nicht unterstützt")
                                     } else if !bleManager.isConnected {
-                                        Text("Status: Board nicht verbunden")
+                                        Text("Board nicht verbunden")
                                     } else if bleManager.deviceState == .updating {
-                                        Text("Status: Wird aktualisiert...")
+                                        Text("Firmware wird aktualisiert...")
                                     } else if bleManager.status.otaSuccess == true {
-                                        Text("Status: Erfolgreich!")
+                                        Text("Firmware ist aktuell")
                                     } else if bleManager.status.otaSuccess == false {
-                                        Text("Status: Fehlgeschlagen!")
-                                    } else if isUpdateAvailable {
+                                        Text("Update fehlgeschlagen!")
+                                    } else if isUpdateAvailableDisplayed {
                                         let from = bleManager.status.firmwareVersion ?? boardFirmwareVersion
                                         let to = latestFirmwareVersion
-                                        Text("Status: Verfügbar (\(from) → \(to))")
+                                        Text("Update verfügbar (\(from) → \(to))")
                                     } else {
-                                        Text("Status: Firmware ist aktuell")
+                                        Text("Firmware ist aktuell")
                                     }
                                 }
                                 .foregroundColor(.secondary)
@@ -291,7 +293,7 @@ struct AboutView: View {
                                         .controlSize(.regular)
                                         .tint(.secondary)
                                         .frame(maxWidth: .infinity, maxHeight: 21)
-                                } else if isUpdateAvailable && !isWiFiConnected && bleManager.isConnected {
+                                } else if isUpdateAvailableDisplayed && !isWiFiConnected && bleManager.isConnected {
                                     Text("Keine WLAN-Verbindung")
                                         .frame(maxWidth: .infinity, maxHeight: 21)
                                 } else {
@@ -359,16 +361,15 @@ struct AboutView: View {
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
                 .onAppear {
-                    allowUpdateCheck = false
                     if let storedFW = UserDefaults.standard.string(forKey: "boardFirmwareVersion") {
                         boardFirmwareVersion = storedFW
                     }
                     if let storedBoard = UserDefaults.standard.string(forKey: "boardVersion") { boardVersion = storedBoard }
+                    if let cachedLatest = UserDefaults.standard.string(forKey: "latestBoardFirmwareVersion"), !cachedLatest.isEmpty {
+                        latestFirmwareVersion = cachedLatest
+                    }
                     self.fetchLatestFirmwareVersion()
                     self.startFirmwareTimer()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        allowUpdateCheck = true
-                    }
                 }
                 .onDisappear {
                     self.invalidateFirmwareTimer()
@@ -377,6 +378,12 @@ struct AboutView: View {
                     guard let fw = newValue, !fw.isEmpty else { return }
                     boardFirmwareVersion = fw
                     UserDefaults.standard.set(fw, forKey: "boardFirmwareVersion")
+                }
+                .onChange(of: latestFirmwareVersion) { _, _ in
+                    scheduleFirstUpdateAvailableDelayIfNeeded()
+                }
+                .onChange(of: boardFirmwareVersion) { _, _ in
+                    scheduleFirstUpdateAvailableDelayIfNeeded()
                 }
                 .onChange(of: bleManager.isConnected) { _, newValue in
                     if newValue == true {
@@ -430,8 +437,25 @@ struct AboutView: View {
                   !versionString.isEmpty else { return }
             DispatchQueue.main.async {
                 self.latestFirmwareVersion = versionString
+                UserDefaults.standard.set(versionString, forKey: "latestBoardFirmwareVersion")
             }
         }.resume()
+    }
+
+    private func scheduleFirstUpdateAvailableDelayIfNeeded() {
+        if hasAppliedFirstUpdateAvailableDelay { return }
+        let effectiveBoardVersion = bleManager.status.firmwareVersion ?? boardFirmwareVersion
+        let isAvail = latestFirmwareVersion != "–"
+            && effectiveBoardVersion != "–"
+            && isNewerVersion(latestFirmwareVersion, than: effectiveBoardVersion)
+        guard isAvail else { return }
+        hasAppliedFirstUpdateAvailableDelay = true
+        holdUpdateAvailableUntil = Date().addingTimeInterval(0.5)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+            if let until = self.holdUpdateAvailableUntil, Date() >= until {
+                self.holdUpdateAvailableUntil = nil
+            }
+        }
     }
 
     private func startFirmwareTimer() {

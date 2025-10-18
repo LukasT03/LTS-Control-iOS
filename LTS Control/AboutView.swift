@@ -14,8 +14,10 @@ struct AboutView: View {
 
     struct UpdateButtonStyle: ButtonStyle {
         @Environment(\.isEnabled) private var isEnabled
+        @Environment(\.colorScheme) private var colorScheme
+        
         var enabledFill: Color = Color.green
-        var disabledFill: Color = Color.gray.opacity(0.17)
+        var disabledFill: Color { Color.gray.opacity(colorScheme == .dark ? 0.24 : 0.16) }
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .padding(.vertical, 15)
@@ -25,7 +27,7 @@ struct AboutView: View {
                         .fill(isEnabled ? enabledFill.opacity(configuration.isPressed ? 0.15 : 0.2)
                                          : disabledFill)
                 )
-                .foregroundStyle(isEnabled ? (configuration.isPressed ? Color.green.opacity(0.75) : Color.green.opacity(1.0)) : Color.gray.opacity(0.4))
+                .foregroundStyle(isEnabled ? (configuration.isPressed ? Color.green.opacity(0.75) : Color.green.opacity(1.0)) : Color.gray.opacity(colorScheme == .dark ? 0.45 : 0.4))
                 .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
         }
     }
@@ -40,6 +42,7 @@ struct AboutView: View {
     @State private var showTipsView = false
     @State private var footerHeight: CGFloat = 0
     @State private var boardVersion: String? = UserDefaults.standard.string(forKey: "boardVersion")
+    @State private var didAppear: Bool = false
 
     @Binding var presentedSheet: AboutSheet?
     @Binding var wifiSSID: String
@@ -60,6 +63,11 @@ struct AboutView: View {
     var body: some View {
         let isBLEConnected = bleManager.isConnected
         let isWiFiConnected = (isBLEConnected && (bleManager.status.wifiConnected ?? false))
+        let effectiveBoardFW: String = {
+            if bleManager.isConnected, let fw = bleManager.status.firmwareVersion, !fw.isEmpty { return fw }
+            if !boardFirmwareVersion.isEmpty { return boardFirmwareVersion }
+            return "–"
+        }()
         let (alertTitle, alertMessage): (String, String) = {
             if bleManager.status.otaSuccess == true {
                 return (
@@ -105,8 +113,8 @@ struct AboutView: View {
                             .font(.subheadline)
                             .foregroundColor(Color(UIColor.secondaryLabel))
                         
-                        if (bleManager.status.firmwareVersion ?? boardFirmwareVersion) != "–" {
-                            Text("Board Version: \(bleManager.status.firmwareVersion ?? boardFirmwareVersion)")
+                        if effectiveBoardFW != "–" {
+                            Text("Board Version: \(effectiveBoardFW)")
                                 .font(.subheadline)
                                 .foregroundColor(Color(UIColor.secondaryLabel))
                         }
@@ -241,11 +249,10 @@ struct AboutView: View {
                         }
                         
                         VStack(alignment: .leading) {
-                            let effectiveBoardVersion = bleManager.status.firmwareVersion ?? boardFirmwareVersion
-                            let v3Blocked = isV3Board && effectiveBoardVersion == "1.0.0"
+                            let v3Blocked = isV3Board && effectiveBoardFW == "1.0.0"
                             let isUpdateAvailable = latestFirmwareVersion != "–"
-                            && effectiveBoardVersion != "–"
-                            && isNewerVersion(latestFirmwareVersion, than: effectiveBoardVersion)
+                                && effectiveBoardFW != "–"
+                                && isNewerVersion(latestFirmwareVersion, than: effectiveBoardFW)
                             let now = Date()
                             let isUpdateAvailableDisplayed = isUpdateAvailable && (holdUpdateAvailableUntil.map { now >= $0 } ?? true)
                             let delayActive = updateButtonDisabledUntil.map { Date() < $0 } ?? false
@@ -267,7 +274,7 @@ struct AboutView: View {
                                     } else if bleManager.status.otaSuccess == false {
                                         Text("Update fehlgeschlagen!")
                                     } else if isUpdateAvailableDisplayed {
-                                        let from = bleManager.status.firmwareVersion ?? boardFirmwareVersion
+                                        let from = effectiveBoardFW
                                         let to = latestFirmwareVersion
                                         Text("Update verfügbar (\(from) → \(to))")
                                     } else {
@@ -304,7 +311,7 @@ struct AboutView: View {
                             .padding(.bottom)
                             .buttonStyle(UpdateButtonStyle(enabledFill: .green))
                             .animation(.default, value: bleManager.deviceState == .updating)
-                            .animation(isUpdateButtonEnabled ? .default : nil, value: isUpdateButtonEnabled)
+                            .animation(didAppear ? (isUpdateButtonEnabled ? .default : nil) : nil, value: isUpdateButtonEnabled)
                             .disabled(v3Blocked || !isUpdateButtonEnabled || bleManager.deviceState == .updating)
                         }
                         .background(
@@ -360,6 +367,7 @@ struct AboutView: View {
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
                 .onAppear {
+                    didAppear = true
                     if let storedFW = UserDefaults.standard.string(forKey: "boardFirmwareVersion") {
                         boardFirmwareVersion = storedFW
                     }
@@ -393,6 +401,11 @@ struct AboutView: View {
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
                     boardVersion = UserDefaults.standard.string(forKey: "boardVersion")
+                    if let storedFW = UserDefaults.standard.string(forKey: "boardFirmwareVersion"), !storedFW.isEmpty {
+                        boardFirmwareVersion = storedFW
+                    } else {
+                        boardFirmwareVersion = "–"
+                    }
                 }
             }
         }

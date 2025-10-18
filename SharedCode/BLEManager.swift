@@ -22,7 +22,7 @@ class DeviceStatus {
     var wifiSSID: String? = nil
     var wifiConnected: Bool? = nil
     var wifiLastResult: Bool? = nil
-    var firmwareVersion: String? = nil
+    var firmwareVersion: String? = UserDefaults.standard.string(forKey: "boardFirmwareVersion")
     var boardVersion: String? = UserDefaults.standard.string(forKey: "boardVersion")
     var otaSuccess: Bool? = nil
     var wifiConnectionResult: Bool? = nil
@@ -69,6 +69,9 @@ class DeviceStatus {
             UserDefaults.standard.set(boardVersion, forKey: "boardVersion")
         } else {
             UserDefaults.standard.removeObject(forKey: "boardVersion")
+        }
+        if let firmwareVersion {
+            UserDefaults.standard.set(firmwareVersion, forKey: "boardFirmwareVersion")
         }
     }
 }
@@ -234,6 +237,11 @@ nonisolated(unsafe) extension BLEManager: CBCentralManagerDelegate, CBPeripheral
             self.ssidList.availableSSIDs = nil
             UserDefaults.standard.set(p.identifier.uuidString, forKey: "lastPeripheralUUID")
             self.didInitialSync = false
+            if self.status.firmwareVersion == nil,
+               let cachedFW = UserDefaults.standard.string(forKey: "boardFirmwareVersion"),
+               !cachedFW.isEmpty {
+                self.status.firmwareVersion = cachedFW
+            }
             self.wifiStatusHoldUntil = Date().addingTimeInterval(2)
             self.status.wifiConnected = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
@@ -256,6 +264,15 @@ nonisolated(unsafe) extension BLEManager: CBCentralManagerDelegate, CBPeripheral
             self.deviceStateText = L("state.disconnected")
             self.status.progress = 0.0
             self.status.remainingTime = nil
+            self.status.hasFilament = false
+            self.status.chipTemperature = nil
+            self.status.wifiSSID = nil
+            self.status.wifiConnected = nil
+            self.status.wifiLastResult = nil
+            self.status.wifiConnectionResult = nil
+            self.status.isFanOn = false
+            self.pendingWiFiConnected = nil
+            self.temperatureHistory.removeAll()
             self.ssidList.availableSSIDs = nil
             LiveActivityManager.shared.sync(
                 state: self.deviceState,

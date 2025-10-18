@@ -35,7 +35,30 @@ final class AccessorySessionManager: NSObject {
                     DispatchQueue.main.async { BLEManager.shared.isConnected = true }
                 }
             case .accessoryRemoved, .accessoryChanged, .invalidated:
-                DispatchQueue.main.async { BLEManager.shared.isConnected = false }
+                DispatchQueue.main.async {
+                    let ble = BLEManager.shared
+                    ble.isConnected = false
+                    ble.deviceState = .idle
+                    ble.deviceStateText = self.L("state.disconnected")
+                    ble.status.progress = 0.0
+                    ble.status.remainingTime = nil
+                    ble.status.hasFilament = false
+                    ble.status.chipTemperature = nil
+                    ble.status.wifiSSID = nil
+                    ble.status.wifiConnected = nil
+                    ble.status.wifiLastResult = nil
+                    ble.status.wifiConnectionResult = nil
+                    ble.status.isFanOn = false
+                    ble.ssidList.availableSSIDs = nil
+                    ble.isScanningForSSIDs = false
+                    ble.showOTAAlert = ble.status.otaSuccess != nil
+                    LiveActivityManager.shared.sync(
+                        state: ble.deviceState,
+                        isConnected: ble.isConnected,
+                        progress: ble.status.progress,
+                        remainingTime: ble.status.remainingTime
+                    )
+                }
             default:
                 break
             }
@@ -97,6 +120,10 @@ final class AccessorySessionManager: NSObject {
     private var centralManager: CBCentralManager?
     private var targetPeripheral: CBPeripheral?
     private var txCharacteristic: CBCharacteristic?
+    
+    private func L(_ key: String) -> String {
+        NSLocalizedString(key, comment: "")
+    }
 
     private func pollAccessoryRemoved(retries: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -117,7 +144,33 @@ final class AccessorySessionManager: NSObject {
         targetPeripheral = nil
         txCharacteristic = nil
         DispatchQueue.main.async {
-            BLEManager.shared.isConnected = false
+            let ble = BLEManager.shared
+            ble.isConnected = false
+            ble.deviceState = .idle
+            ble.deviceStateText = self.L("state.disconnected")
+            ble.status.progress = 0.0
+            ble.status.remainingTime = nil
+            ble.status.hasFilament = false
+            ble.status.chipTemperature = nil
+            ble.status.wifiSSID = nil
+            ble.status.wifiConnected = nil
+            ble.status.wifiLastResult = nil
+            ble.status.firmwareVersion = nil
+            ble.status.boardVersion = nil
+            UserDefaults.standard.removeObject(forKey: "boardVersion")
+            UserDefaults.standard.removeObject(forKey: "boardFirmwareVersion")
+            ble.status.wifiConnectionResult = nil
+            ble.status.isFanOn = false
+            ble.ssidList.availableSSIDs = nil
+            ble.isScanningForSSIDs = false
+            ble.showOTAAlert = ble.status.otaSuccess != nil
+            ble.status.saveSettings()
+            LiveActivityManager.shared.sync(
+                state: ble.deviceState,
+                isConnected: ble.isConnected,
+                progress: ble.status.progress,
+                remainingTime: ble.status.remainingTime
+            )
             self.canConnect = UserDefaults.standard.string(forKey: self.storedAccessoryKey) == nil
         }
         accessorySession = nil

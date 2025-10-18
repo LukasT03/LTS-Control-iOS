@@ -2720,7 +2720,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fan Speed: %lld%%"
+            "value" : "Fan Speed: %lld %%"
           }
         },
         "es" : {
@@ -3275,7 +3275,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LED Brightness: %lld%%"
+            "value" : "LED Brightness: %lld %%"
           }
         },
         "es" : {
@@ -4798,7 +4798,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Strength: %lld%%"
+            "value" : "Strength: %lld %%"
           }
         },
         "es" : {

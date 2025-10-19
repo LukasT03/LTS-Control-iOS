@@ -212,7 +212,7 @@ struct ContentView: View {
                 }
                 .onAppear {
                     localSpeedPercent = lastLocalSpeedExact
-                    displayedSpeedInt = Int(lastLocalSpeedExact.rounded(.down))
+                    displayedSpeedInt = Int(lastLocalSpeedExact.rounded())
                 }
                 .task(id: bleManager.status.speedPercent) {
                     if !isEditingSpeed && Date() >= ignoreSpeedSyncUntil && bleManager.isConnected {
@@ -243,7 +243,7 @@ struct ContentView: View {
                 }
                 .onChange(of: localSpeedPercent) { _, newValue in
                     if isEditingSpeed {
-                        displayedSpeedInt = Int(newValue.rounded(.down))
+                        displayedSpeedInt = Int(newValue.rounded())
                     }
                 }
                 .onChange(of: bleManager.isConnected) { _, newValue in
@@ -488,7 +488,8 @@ struct ContentView: View {
                         isEditingSpeed = editing
                         if editing { userAdjustedSpeed = true }
                         if !editing {
-                            let spd = Int(localSpeedPercent.rounded(.down))
+                            let spd = Int(localSpeedPercent.rounded())
+                            localSpeedPercent = Double(spd)
                             if bleManager.isConnected {
                                 bleManager.sendPacket(settings: ["SPD": spd])
                                 ignoreSpeedSyncUntil = Date().addingTimeInterval(1.2)
@@ -498,7 +499,7 @@ struct ContentView: View {
                                 awaitingEcho = false
                                 lastSentSpeedInt = nil
                             }
-                            lastLocalSpeedExact = localSpeedPercent
+                            lastLocalSpeedExact = Double(spd)
                             userAdjustedSpeed = true
                             displayedSpeedInt = spd
                         }

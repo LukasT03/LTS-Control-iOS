@@ -42,7 +42,7 @@ class DeviceStatus {
     var targetWeight: Int = UserDefaults.standard.integer(forKey: "targetWeight")
 
     init() {
-        if speedPercent == 0 { speedPercent = 80 }
+        if speedPercent == 0 { speedPercent = 85 }
         if jingleStyle == 0 { jingleStyle = 0 }
         if ledBrightness == 0 { ledBrightness = 50 }
         if fanSpeed == 0 { fanSpeed = 60 }

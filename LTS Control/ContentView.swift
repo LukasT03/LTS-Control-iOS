@@ -151,6 +151,8 @@ struct ContentView: View {
     @AppStorage("temperatureInFahrenheit") private var showFahrenheit = false
     @State private var motorStartTime: Date = .distantPast
     @State private var localSpeedPercent: Double = 80
+    @AppStorage("lastLocalSpeedExact") private var lastLocalSpeedExact: Double = 80
+    @State private var userAdjustedSpeed: Bool = false
     @State private var isEditingSpeed: Bool = false
     @State private var hasAppeared = false
     @State private var enableStartupAnimations = false
@@ -206,11 +208,12 @@ struct ContentView: View {
                     )
                 }
                 .onAppear {
-                    localSpeedPercent = Double(bleManager.status.speedPercent)
+                    localSpeedPercent = lastLocalSpeedExact
                 }
                 .task(id: bleManager.status.speedPercent) {
-                    if !isEditingSpeed && Date() >= ignoreSpeedSyncUntil {
+                    if !isEditingSpeed && Date() >= ignoreSpeedSyncUntil && !userAdjustedSpeed {
                         localSpeedPercent = Double(bleManager.status.speedPercent)
+                        lastLocalSpeedExact = localSpeedPercent
                     }
                 }
                 .onChange(of: bleManager.isConnected) { _, newValue in
@@ -438,10 +441,13 @@ struct ContentView: View {
                     in: 50...100,
                     onEditingChanged: { editing in
                         isEditingSpeed = editing
+                        if editing { userAdjustedSpeed = true }
                         if !editing {
-                            let spd = Int(localSpeedPercent.rounded())
+                            let spd = Int(localSpeedPercent.rounded(.down))
                             bleManager.sendPacket(settings: ["SPD": spd])
-                            ignoreSpeedSyncUntil = Date().addingTimeInterval(1.0)
+                            lastLocalSpeedExact = localSpeedPercent
+                            userAdjustedSpeed = true
+                            ignoreSpeedSyncUntil = Date().addingTimeInterval(1.2)
                         }
                     }
                 )
@@ -452,7 +458,7 @@ struct ContentView: View {
                     }
                 }
                 .accentColor(.secondary)
-                Text("\(Int(localSpeedPercent)) %")
+                Text("\(Int(localSpeedPercent.rounded(.down))) %")
                     .monospacedDigit()
                     .foregroundColor(.gray)
                     .frame(width: 51, alignment: .trailing)

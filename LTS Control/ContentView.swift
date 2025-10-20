@@ -212,7 +212,7 @@ struct ContentView: View {
                 }
                 .onAppear {
                     localSpeedPercent = lastLocalSpeedExact
-                    displayedSpeedInt = Int(lastLocalSpeedExact.rounded())
+                    displayedSpeedInt = Int(lastLocalSpeedExact.rounded(.down))
                 }
                 .task(id: bleManager.status.speedPercent) {
                     if !isEditingSpeed && Date() >= ignoreSpeedSyncUntil && bleManager.isConnected {
@@ -243,7 +243,7 @@ struct ContentView: View {
                 }
                 .onChange(of: localSpeedPercent) { _, newValue in
                     if isEditingSpeed {
-                        displayedSpeedInt = Int(newValue.rounded())
+                        displayedSpeedInt = Int(newValue.rounded(.down))
                     }
                 }
                 .onChange(of: bleManager.isConnected) { _, newValue in
@@ -488,18 +488,17 @@ struct ContentView: View {
                         isEditingSpeed = editing
                         if editing { userAdjustedSpeed = true }
                         if !editing {
-                            let spd = Int(localSpeedPercent.rounded())
-                            localSpeedPercent = Double(spd)
+                            let spd = Int(localSpeedPercent.rounded(.down))
                             if bleManager.isConnected {
                                 bleManager.sendPacket(settings: ["SPD": spd])
-                                ignoreSpeedSyncUntil = Date().addingTimeInterval(1.2)
+                                ignoreSpeedSyncUntil = Date().addingTimeInterval(0.6)
                                 lastSentSpeedInt = spd
                                 awaitingEcho = true
                             } else {
                                 awaitingEcho = false
                                 lastSentSpeedInt = nil
                             }
-                            lastLocalSpeedExact = Double(spd)
+                            lastLocalSpeedExact = localSpeedPercent
                             userAdjustedSpeed = true
                             displayedSpeedInt = spd
                         }
@@ -728,4 +727,5 @@ extension ContentView {
     .environment(\.locale, .init(identifier: "en"))
 }
 #endif
+
 

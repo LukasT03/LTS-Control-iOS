@@ -525,7 +525,7 @@ struct ContentView: View {
                     RoundedRectangle(cornerRadius: 36, style: .continuous)
                         .fill(Color(UIColor.secondarySystemGroupedBackground))
                 } else {
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    RoundedRectangle(cornerRadius: 19, style: .continuous)
                         .fill(Color(UIColor.secondarySystemGroupedBackground))
                 }
             }

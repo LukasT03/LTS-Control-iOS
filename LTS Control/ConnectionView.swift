@@ -91,6 +91,15 @@ struct StatusHeaderView: View {
     }
 }
 
+#Preview("Connection – Example") {
+    ConnectionView(
+        wifiSSID: .constant(""),
+        wifiPassword: .constant(""),
+        scanSessionID: .constant(0)
+    )
+    .environment(LayoutModel())
+    .environment(BLEManager())
+}
 
 struct SSIDPickerView: View, Equatable {
     let ssids: [String]

@@ -40,6 +40,10 @@ class DeviceStatus {
     var highSpeed: Bool = UserDefaults.standard.object(forKey: "highSpeed") as? Bool ?? false
     var durationAt80: Int = UserDefaults.standard.integer(forKey: "durationAt80")
     var targetWeight: Int = UserDefaults.standard.integer(forKey: "targetWeight")
+    var servoAngleR: Int = UserDefaults.standard.integer(forKey: "servoAngleR")
+    var servoAngleL: Int = UserDefaults.standard.integer(forKey: "servoAngleL")
+    var servoStepMm: Double = UserDefaults.standard.double(forKey: "servoStepMm")
+    var servoHome: String = UserDefaults.standard.string(forKey: "servoHome") ?? "R"
 
     init() {
         if speedPercent == 0 { speedPercent = 85 }
@@ -50,6 +54,11 @@ class DeviceStatus {
         if torqueLimit == 0 { torqueLimit = 0 }
         if durationAt80 == 0 { durationAt80 = 895 }
         if targetWeight == 0 { targetWeight = 0 }
+        // Servo settings sensible defaults
+        if servoAngleR == 0 { servoAngleR = 5 }
+        if servoAngleL == 0 { servoAngleL = 175 }
+        if servoStepMm == 0 { servoStepMm = 1.75 }
+        if servoHome != "R" && servoHome != "L" { servoHome = "R" }
     }
 
     func saveSettings() {
@@ -65,6 +74,11 @@ class DeviceStatus {
         UserDefaults.standard.set(highSpeed, forKey: "highSpeed")
         UserDefaults.standard.set(durationAt80, forKey: "durationAt80")
         UserDefaults.standard.set(targetWeight, forKey: "targetWeight")
+        // Servo settings persistence
+        UserDefaults.standard.set(servoAngleR, forKey: "servoAngleR")
+        UserDefaults.standard.set(servoAngleL, forKey: "servoAngleL")
+        UserDefaults.standard.set(servoStepMm, forKey: "servoStepMm")
+        UserDefaults.standard.set(servoHome, forKey: "servoHome")
         if let boardVersion {
             UserDefaults.standard.set(boardVersion, forKey: "boardVersion")
         } else {
@@ -543,6 +557,37 @@ extension BLEManager {
                 status.targetWeight = wgt
             }
         }
+        // ---- Servo settings ----
+        if let r = dict["SV_R"] as? Int {
+            let t = lastLocalSettingChange["servoAngleR"] ?? .distantPast
+            let age = Date().timeIntervalSince(t)
+            if age > 0.5 {
+                status.servoAngleR = r
+            }
+        }
+        if let l = dict["SV_L"] as? Int {
+            let t = lastLocalSettingChange["servoAngleL"] ?? .distantPast
+            let age = Date().timeIntervalSince(t)
+            if age > 0.5 {
+                status.servoAngleL = l
+            }
+        }
+        if let raw = dict["SV_STP"],
+           let value = (raw as? Double) ?? (raw as? Int).map(Double.init) {
+
+            let t = lastLocalSettingChange["servoStepMm"] ?? .distantPast
+            if Date().timeIntervalSince(t) > 0.5 {
+                status.servoStepMm = value
+            }
+        }
+        if let home = dict["SV_HOME"] as? String {
+            let h = home.uppercased()
+            let t = lastLocalSettingChange["servoHome"] ?? .distantPast
+            let age = Date().timeIntervalSince(t)
+            if age > 0.5, (h == "R" || h == "L") {
+                status.servoHome = h
+            }
+        }
         Task { @MainActor in
             self.syncLiveActivity()
         }
@@ -791,5 +836,51 @@ nonisolated extension BLEManager: UNUserNotificationCenterDelegate {
             }
             completionHandler()
         }
+    }
+}
+
+extension BLEManager {
+    func setServoAngleR(_ angle: Int) {
+        guard didInitialSync else { return }
+        let a = max(0, min(180, angle))
+        sendPacket(settings: ["SV_R": a])
+        status.servoAngleR = a
+        lastLocalSettingChange["servoAngleR"] = Date()
+        status.saveSettings()
+    }
+
+    func setServoAngleL(_ angle: Int) {
+        guard didInitialSync else { return }
+        let a = max(0, min(180, angle))
+        sendPacket(settings: ["SV_L": a])
+        status.servoAngleL = a
+        lastLocalSettingChange["servoAngleL"] = Date()
+        status.saveSettings()
+    }
+
+    func setServoStepMm(_ mm: Double) {
+        guard didInitialSync else { return }
+        let v = max(0.05, min(20.0, mm))
+        sendPacket(settings: ["SV_STP": v])
+        status.servoStepMm = v
+        lastLocalSettingChange["servoStepMm"] = Date()
+        status.saveSettings()
+    }
+
+    func setServoHome(_ side: String) {
+        guard didInitialSync else { return }
+        let s = side.uppercased()
+        guard s == "R" || s == "L" else { return }
+        sendPacket(settings: ["SV_HOME": s])
+        status.servoHome = s
+        lastLocalSettingChange["servoHome"] = Date()
+        status.saveSettings()
+    }
+
+    func servoGoto(_ target: String) {
+        guard didInitialSync else { return }
+        let t = target.uppercased()
+        guard t == "L" || t == "R" || t == "HOME" else { return }
+        sendPacket(settings: ["SV_GOTO": t])
     }
 }

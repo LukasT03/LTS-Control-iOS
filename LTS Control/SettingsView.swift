@@ -7,6 +7,7 @@ struct SettingsView: View {
     @Environment(BLEManager.self) private var bleManager
     @Environment(LayoutModel.self) private var layoutModel
     @State private var showRespoolAmount = false
+    @State private var showServoCalibration = false
     
     private var stateIconName: String {
         if !bleManager.isConnected { return "antenna.radiowaves.left.and.right.slash.circle" }
@@ -242,6 +243,62 @@ struct SettingsView: View {
                         .tint(.ltsBlue)
                     }
                 
+                Section(header: Text("Servo"), footer: Text("Wähle aus, auf welcher Seite die Startposition der Filamentführung ist.")) {
+                    if layoutModel.isCompactWidth {
+                        NavigationLink {
+                            ServoCalibrationView()
+                                .navigationTitle("Endpunkte kalibrieren")
+                                .navigationBarTitleDisplayMode(.inline)
+                        } label: {
+                            Text("Endpunkte kalibrieren")
+                        }
+                    } else {
+                        Button {
+                            showServoCalibration = true
+                        } label: {
+                            HStack {
+                                Text("Endpunkte kalibrieren")
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(.tertiary)
+                                    .font(.system(size: 14))
+                                    .fontWeight(.semibold)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    Stepper(
+                        value: Binding(
+                            get: { bleManager.status.servoStepMm },
+                            set: { new in
+                                bleManager.status.servoStepMm = new
+                                bleManager.setServoStepMm(new)
+                            }
+                        ),
+                        in: 0.50...4.00,
+                        step: 0.01
+                    ) {
+                        Text("Schrittweite: \(bleManager.status.servoStepMm, format: .number.precision(.fractionLength(2))) mm")
+                            .monospacedDigit()
+                    }
+
+                    Picker(
+                        "Home-Position",
+                        selection: Binding(
+                            get: { bleManager.status.servoHome },
+                            set: { new in
+                                bleManager.status.servoHome = new
+                                bleManager.setServoHome(new)
+                            }
+                        )
+                    ) {
+                        Text("Links").tag("L")
+                        Text("Rechts").tag("R")
+                    }
+                    .pickerStyle(.segmented)
+                }
+
                 Section(header: Text("Lüfter"), footer: Text("Der Lüfter schaltet sich standardmäßig 10 Sekunden nach stoppen des Respoolers aus.")
                 ){
                     Stepper(
@@ -360,6 +417,120 @@ struct SettingsView: View {
                 }
             }
         }
+        .sheet(isPresented: $showServoCalibration) {
+            NavigationStack {
+                ServoCalibrationView()
+                    .navigationTitle("Endpunkte kalibrieren")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                showServoCalibration = false
+                            } label: {
+                                if #available(iOS 26.0, *) {
+                                    Image(systemName: "xmark")
+                                } else {
+                                    Text(NSLocalizedString("Schließen", comment: "Close sheet"))
+                                }
+                            }
+                        }
+                    }
+            }
+        }
+    }
+}
+
+private struct ServoCalibrationView: View {
+    @Environment(BLEManager.self) private var bleManager
+    @State private var side: String = "L"
+    private var currentAngle: Int {
+        side == "L" ? bleManager.status.servoAngleL : bleManager.status.servoAngleR
+    }
+    private func lightHaptic() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    }
+
+    var body: some View {
+        List {
+            Section {
+                Picker("Seite", selection: $side) {
+                    Text("Linke Seite").tag("L")
+                    Text("Rechte Seite").tag("R")
+                }
+                .pickerStyle(.segmented)
+                .onChange(of: side) { _, newValue in
+                    bleManager.servoGoto(newValue)
+                }
+                Section {
+                    HStack(spacing: 12) {
+                        Button {
+                            guard currentAngle < 180 else { return }
+                            let newAngle = currentAngle + 1
+                            if side == "L" {
+                                bleManager.status.servoAngleL = newAngle
+                                bleManager.setServoAngleL(newAngle)
+                            } else {
+                                bleManager.status.servoAngleR = newAngle
+                                bleManager.setServoAngleR(newAngle)
+                            }
+                            lightHaptic()
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 18))
+                                .foregroundStyle(currentAngle >= 180 ? Color.secondary : Color.primary)
+                                .frame(minWidth: 44, minHeight: 22)
+                        }
+                        .buttonStyle(.bordered)
+                        .disabled(currentAngle >= 180)
+
+                        Spacer()
+
+                        Text("Winkel: \(currentAngle)°")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                            .monospacedDigit()
+                            .lineLimit(1)
+
+                        Spacer()
+
+                        Button {
+                            guard currentAngle > 0 else { return }
+                            let newAngle = currentAngle - 1
+                            if side == "L" {
+                                bleManager.status.servoAngleL = newAngle
+                                bleManager.setServoAngleL(newAngle)
+                            } else {
+                                bleManager.status.servoAngleR = newAngle
+                                bleManager.setServoAngleR(newAngle)
+                            }
+                            lightHaptic()
+                        } label: {
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 18))
+                                .foregroundStyle(currentAngle <= 0 ? Color.secondary : Color.primary)
+                                .frame(minWidth: 44, minHeight: 22)
+                        }
+                        .buttonStyle(.bordered)
+                        .disabled(currentAngle <= 0)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            } footer: {
+                Text("Stelle die Endanschläge links und rechts so ein, dass die Filamentführung gerade so die Seiten berührt.")
+            }
+        }
+        .onAppear {
+            let home = bleManager.status.servoHome.uppercased()
+            if home == "L" || home == "R" {
+                side = home
+            } else {
+                side = "R"
+            }
+            bleManager.servoGoto(side)
+        }
+        .onDisappear {
+            bleManager.servoGoto("HOME")
+        }
     }
 }
 
@@ -432,6 +603,7 @@ private struct RespoolAmountView: View {
     NavigationStack {
         SettingsView()
             .environment(BLEManager())
+            .environment(LayoutModel())
     }
 }
 #endif

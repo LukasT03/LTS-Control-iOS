@@ -414,8 +414,10 @@ struct AboutView: View {
     private func boardTypeLabel(for raw: String?) -> String? {
         guard let raw = raw else { return nil }
         if raw.contains("CtrBoard V3") { return "Control Board V3" }
-        if raw.contains("CtrBoard V4") { return "Control Board V4" }
-        if raw.localizedCaseInsensitiveContains("esp32 PCB") { return "ESP32 PCB" }
+        if raw.contains("CtrBoard V4") { return "Control Board" }
+        if raw.contains("Ctrl Board") { return "Control Board" }
+        if raw.contains("Drvr Board") { return "Driver Board" }
+        if raw.localizedCaseInsensitiveContains("esp32 PCB") { return "Driver Board" }
         return nil
     }
 

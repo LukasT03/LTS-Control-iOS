@@ -1826,6 +1826,9 @@
         }
       }
     },
+    "Endpunkte kalibrieren" : {
+
+    },
     "Erhalte Push-Benachrichtigungen, wenn der Respooler stoppt oder fertig ist." : {
       "localizations" : {
         "da" : {
@@ -3028,6 +3031,9 @@
         }
       }
     },
+    "Home-Position" : {
+
+    },
     "Kalibrierung" : {
       "localizations" : {
         "da" : {
@@ -3304,6 +3310,12 @@
         }
       }
     },
+    "Linke Seite" : {
+
+    },
+    "Links" : {
+
+    },
     "Live-Aktivitäten" : {
       "localizations" : {
         "da" : {
@@ -3579,9 +3591,6 @@
           }
         }
       }
-    },
-    "Meine Geräte" : {
-
     },
     "Mittel" : {
       "localizations" : {
@@ -4321,6 +4330,12 @@
         }
       }
     },
+    "Rechte Seite" : {
+
+    },
+    "Rechts" : {
+
+    },
     "Respool-Menge" : {
       "localizations" : {
         "da" : {
@@ -4692,6 +4707,12 @@
         }
       }
     },
+    "Schrittweite: %@ mm" : {
+
+    },
+    "Seite" : {
+
+    },
     "Sende bei Fragen, Problemen oder Anregungen gerne eine E-Mail an info@lts-design.com." : {
       "localizations" : {
         "da" : {
@@ -4737,6 +4758,9 @@
           }
         }
       }
+    },
+    "Servo" : {
+
     },
     "Star Wars" : {
       "localizations" : {
@@ -5254,6 +5278,9 @@
           }
         }
       }
+    },
+    "Stelle die Endanschläge links und rechts so ein, dass die Filamentführung gerade so die Seiten berührt." : {
+
     },
     "Stelle sicher, dass das Board eingeschaltet ist und starte die Kopplung über den Button unten." : {
       "localizations" : {
@@ -6410,6 +6437,9 @@
         }
       }
     },
+    "Wähle aus, auf welcher Seite die Startposition der Filamentführung ist." : {
+
+    },
     "Wenn der Sensor deaktiviert ist, wird nicht auf den Verlust von Filament reagiert." : {
       "localizations" : {
         "da" : {
@@ -6593,6 +6623,9 @@
           }
         }
       }
+    },
+    "Winkel: %lld°" : {
+
     },
     "WLAN" : {
       "localizations" : {

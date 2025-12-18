@@ -22,11 +22,16 @@
 			<key>CFBundleURLName</key>
 			<string></string>
 		</dict>
+		<dict/>
 	</array>
 	<key>INIntentsSupported</key>
 	<array>
 		<string>StopMotorIntent</string>
 		<string>StartMotorIntent</string>
+	</array>
+	<key>NSAccessorySetupBluetoothCompanyIdentifiers</key>
+	<array>
+		<string>FFFF</string>
 	</array>
 	<key>NSAccessorySetupBluetoothServices</key>
 	<array>

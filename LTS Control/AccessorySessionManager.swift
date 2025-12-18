@@ -13,7 +13,8 @@ final class AccessorySessionManager: NSObject {
 
     private let storedAccessoryKey = "storedAccessoryIdentifier"
     private var accessorySession: ASAccessorySession?
-    private let pickerImage = UIImage(named: "RespoolerBright") ?? UIImage()
+    private let pickerImage = UIImage(named: "Respooler") ?? UIImage()
+    private let pickerImagePro = UIImage(named: "RespoolerPro") ?? UIImage()
 
     override init() {
         super.init()
@@ -70,14 +71,34 @@ final class AccessorySessionManager: NSObject {
             initializeSession()
             return
         }
-        let descriptor = ASDiscoveryDescriptor()
-        descriptor.bluetoothServiceUUID = CBUUID(string: "9E05D06D-68A7-4E1F-A503-AE26713AC101")
-        let displayItem = ASPickerDisplayItem(
+
+        let serviceUUID = CBUUID(string: "9E05D06D-68A7-4E1F-A503-AE26713AC101")
+
+        let stdDescriptor = ASDiscoveryDescriptor()
+        stdDescriptor.bluetoothServiceUUID = serviceUUID
+        stdDescriptor.bluetoothCompanyIdentifier = ASBluetoothCompanyIdentifier(rawValue: 0xFFFF)
+        stdDescriptor.bluetoothManufacturerDataBlob = Data([0x01])
+        stdDescriptor.bluetoothManufacturerDataMask = Data([0xFF])
+
+        let proDescriptor = ASDiscoveryDescriptor()
+        proDescriptor.bluetoothServiceUUID = serviceUUID
+        proDescriptor.bluetoothCompanyIdentifier = ASBluetoothCompanyIdentifier(rawValue: 0xFFFF)
+        proDescriptor.bluetoothManufacturerDataBlob = Data([0x02])
+        proDescriptor.bluetoothManufacturerDataMask = Data([0xFF])
+
+        let stdItem = ASPickerDisplayItem(
             name: "LTS Respooler",
             productImage: pickerImage,
-            descriptor: descriptor
+            descriptor: stdDescriptor
         )
-        accessorySession.showPicker(for: [displayItem], completionHandler: { _ in })
+
+        let proItem = ASPickerDisplayItem(
+            name: "LTS Respooler Pro",
+            productImage: pickerImagePro,
+            descriptor: proDescriptor
+        )
+
+        accessorySession.showPicker(for: [proItem, stdItem], completionHandler: { _ in })
     }
 
     func forgetAccessoryWithPolling() {

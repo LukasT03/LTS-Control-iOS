@@ -413,11 +413,24 @@ struct AboutView: View {
 
     private func boardTypeLabel(for raw: String?) -> String? {
         guard let raw = raw else { return nil }
+
+        let isPro = (bleManager.status.boardVariant == .pro)
+
         if raw.contains("CtrBoard V3") { return "Control Board V3" }
-        if raw.contains("CtrBoard V4") { return "Control Board" }
-        if raw.contains("Ctrl Board") { return "Control Board" }
-        if raw.contains("Drvr Board") { return "Driver Board" }
-        if raw.localizedCaseInsensitiveContains("esp32 PCB") { return "Driver Board" }
+
+        if raw.contains("CtrBoard V4") {
+            return isPro ? "Control Board (Pro)" : "Control Board"
+        }
+        if raw.contains("LTS CB") {
+            return isPro ? "Control Board (Pro)" : "Control Board"
+        }
+
+        if raw.contains("LTS DB") {
+            return isPro ? "Driver Board (Pro)" : "Driver Board"
+        }
+        if raw.localizedCaseInsensitiveContains("esp32 PCB") {
+            return "Driver Board"
+        }
         return nil
     }
 

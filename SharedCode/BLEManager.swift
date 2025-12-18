@@ -1,3 +1,32 @@
+enum BoardVariant: String, Codable {
+    case unknown = "UNK"
+    case standard = "STD"
+    case pro = "PRO"
+
+    init(fromWireValue value: Any?) {
+        if let s = value as? String {
+            let up = s.uppercased()
+            if up == "PRO" { self = .pro; return }
+            if up == "STD" { self = .standard; return }
+            self = .unknown
+            return
+        }
+        if let i = value as? Int {
+            if i == 2 { self = .pro; return }
+            if i == 1 { self = .standard; return }
+            self = .unknown
+            return
+        }
+        if let d = value as? Double {
+            let i = Int(d.rounded())
+            if i == 2 { self = .pro; return }
+            if i == 1 { self = .standard; return }
+            self = .unknown
+            return
+        }
+        self = .unknown
+    }
+}
 import Foundation
 import CoreBluetooth
 import UserNotifications
@@ -24,6 +53,8 @@ class DeviceStatus {
     var wifiLastResult: Bool? = nil
     var firmwareVersion: String? = UserDefaults.standard.string(forKey: "boardFirmwareVersion")
     var boardVersion: String? = UserDefaults.standard.string(forKey: "boardVersion")
+    var boardVariant: BoardVariant = BoardVariant(rawValue: UserDefaults.standard.string(forKey: "boardVariant") ?? "UNK") ?? .unknown
+    var didReceiveBoardVariant: Bool = false
     var otaSuccess: Bool? = nil
     var wifiConnectionResult: Bool? = nil
     var isFanOn: Bool = false
@@ -79,6 +110,7 @@ class DeviceStatus {
         UserDefaults.standard.set(servoAngleL, forKey: "servoAngleL")
         UserDefaults.standard.set(servoStepMm, forKey: "servoStepMm")
         UserDefaults.standard.set(servoHome, forKey: "servoHome")
+        UserDefaults.standard.set(boardVariant.rawValue, forKey: "boardVariant")
         if let boardVersion {
             UserDefaults.standard.set(boardVersion, forKey: "boardVersion")
         } else {
@@ -109,6 +141,8 @@ class BLEManager: NSObject {
     @MainActor var isUpdatingState: Bool { deviceState == .updating }
     @MainActor var isAutoStopState: Bool { deviceState == .autoStop }
     @MainActor var isDoneState: Bool { deviceState == .done }
+
+    @MainActor var needsBoardVariantSelection: Bool { status.didReceiveBoardVariant && status.boardVariant == .unknown }
 
     private var didPersistBoardVersionThisSession: Bool = false
     private var lastDisconnectAt: Date? = nil
@@ -256,6 +290,15 @@ nonisolated(unsafe) extension BLEManager: CBCentralManagerDelegate, CBPeripheral
                !cachedFW.isEmpty {
                 self.status.firmwareVersion = cachedFW
             }
+            // If we're connected to older firmware (<= 1.1.2), it will never send VAR.
+            // Clear any previously cached PRO/STD variant right away so the UI doesn't show “(Pro)”.
+            if let fw = self.status.firmwareVersion, self.isFirmwareVersionAtMost(fw, (1, 1, 2)) {
+                if self.status.boardVariant != .unknown || self.status.didReceiveBoardVariant {
+                    self.status.boardVariant = .unknown
+                    self.status.didReceiveBoardVariant = false
+                    self.status.saveSettings()
+                }
+            }
             self.wifiStatusHoldUntil = Date().addingTimeInterval(2)
             self.status.wifiConnected = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
@@ -332,6 +375,23 @@ nonisolated(unsafe) extension BLEManager: CBCentralManagerDelegate, CBPeripheral
 }
 
 extension BLEManager {
+    private func isFirmwareVersionAtMost(_ fw: String, _ max: (Int, Int, Int)) -> Bool {
+        // Accepts versions like "1.2.0" or "v1.2.0" or "1.2". Non-numeric parts are ignored.
+        let cleaned = fw.trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "v", with: "", options: [.caseInsensitive])
+        let parts = cleaned.split(separator: ".").map { part -> Int in
+            let digits = part.filter { $0.isNumber }
+            return Int(digits) ?? 0
+        }
+        let major = parts.indices.contains(0) ? parts[0] : 0
+        let minor = parts.indices.contains(1) ? parts[1] : 0
+        let patch = parts.indices.contains(2) ? parts[2] : 0
+
+        if major != max.0 { return major < max.0 }
+        if minor != max.1 { return minor < max.1 }
+        return patch <= max.2
+    }
+
     private func mapSTAT(_ code: String) -> String {
         switch code {
         case "I": return L("state.idle")
@@ -479,6 +539,21 @@ extension BLEManager {
             }
         }
         status.firmwareVersion = dict["FW"] as? String
+
+        if let fw = status.firmwareVersion, isFirmwareVersionAtMost(fw, (1, 1, 2)) {
+            if status.boardVariant != .unknown || status.didReceiveBoardVariant {
+                status.boardVariant = .unknown
+                status.didReceiveBoardVariant = false
+            }
+        }
+
+        if dict.keys.contains("VAR") {
+            status.didReceiveBoardVariant = true
+            let incomingVariant = BoardVariant(fromWireValue: dict["VAR"])
+            if incomingVariant != status.boardVariant {
+                status.boardVariant = incomingVariant
+            }
+        }
 
         if let connResult = dict["WIFI_CONN_RESULT"] as? Bool {
             status.wifiConnectionResult = connResult
@@ -882,5 +957,16 @@ extension BLEManager {
         let t = target.uppercased()
         guard t == "L" || t == "R" || t == "HOME" else { return }
         sendPacket(settings: ["SV_GOTO": t])
+    }
+}
+
+extension BLEManager {
+    func setBoardVariant(_ variant: BoardVariant) {
+        guard didInitialSync else { return }
+        sendPacket(settings: ["VAR": variant.rawValue])
+        status.boardVariant = variant
+        status.didReceiveBoardVariant = true
+        lastLocalSettingChange["boardVariant"] = Date()
+        status.saveSettings()
     }
 }

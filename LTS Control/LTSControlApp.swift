@@ -32,6 +32,53 @@ extension LTSControlApp {
                         .environment(bleManager)
                         .environment(sessionManager)
                 }
+                .sheet(isPresented: $showBoardVariantSheet) {
+                    NavigationStack {
+                        BoardVariantSelectionView()
+                            .toolbar {
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    Button {
+                                        showBoardVariantSheet = false
+                                    } label: {
+                                        if #available(iOS 26, *) {
+                                            Image(systemName: "xmark")
+                                        } else {
+                                            Text("Schließen")
+                                        }
+                                    }
+                                }
+                            }
+                    }
+                    .environment(bleManager)
+                }
+                .onAppear {
+                    if bleManager.needsBoardVariantSelection && !showSplashView {
+                        showBoardVariantSheet = true
+                    }
+                }
+                .onChange(of: bleManager.isConnected) { _, isConnected in
+                    if !isConnected {
+                        showBoardVariantSheet = false
+                        return
+                    }
+                    if bleManager.needsBoardVariantSelection && !showSplashView {
+                        showBoardVariantSheet = true
+                    }
+                }
+                .onChange(of: bleManager.needsBoardVariantSelection) { _, needs in
+                    if needs && !showSplashView {
+                        showBoardVariantSheet = true
+                    } else if !needs {
+                        showBoardVariantSheet = false
+                    }
+                }
+                .onChange(of: showSplashView) { _, isShowing in
+                    if isShowing {
+                        showBoardVariantSheet = false
+                    } else if bleManager.needsBoardVariantSelection {
+                        showBoardVariantSheet = true
+                    }
+                }
         }
         .windowResizability(.contentSize)
     }
@@ -56,6 +103,7 @@ struct LTSControlApp: App {
     @State private var columnVisibility: NavigationSplitViewVisibility = .doubleColumn
     @State private var showOverlay: Bool = false
     @State private var showTipsView = false
+    @State private var showBoardVariantSheet = false
     @State private var presentedSheet: AboutView.AboutSheet? = nil
 
     private var boardVersion: String? {

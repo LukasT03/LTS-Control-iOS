@@ -81,7 +81,6 @@
 		96801C6B2D84A127005CD7C4 /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
 		9692099B2E2FBFAA006268BD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9695F4B92E30E847005C25FB /* Control.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Control.icon; sourceTree = "<group>"; };
-		9695F4E62E30F078005C25FB /* Symbols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbols.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/System/Library/Frameworks/Symbols.framework; sourceTree = DEVELOPER_DIR; };
 		96A9CB082D7739F00084FFF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		96A9CB0A2D7739F00084FFF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		96AC80942E8075FA0023F860 /* DeviceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceState.swift; sourceTree = "<group>"; };
@@ -187,7 +186,6 @@
 			isa = PBXGroup;
 			children = (
 				9645EF5D2E3F6B17005EA35D /* StoreKit.framework */,
-				9695F4E62E30F078005C25FB /* Symbols.framework */,
 				961E82ED2D7EEB6400463B9F /* ActivityKit.framework */,
 				966D95BB2D79CEBF00743C45 /* AppIntents.framework */,
 				960E785B2D5BA2C000E07E5E /* Symbols.framework */,

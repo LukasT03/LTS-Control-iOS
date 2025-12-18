@@ -8,6 +8,7 @@ struct SettingsView: View {
     @Environment(LayoutModel.self) private var layoutModel
     @State private var showRespoolAmount = false
     @State private var showServoCalibration = false
+    @State private var showBoardVariantSelection = false
     
     private var stateIconName: String {
         if !bleManager.isConnected { return "antenna.radiowaves.left.and.right.slash.circle" }
@@ -57,6 +58,17 @@ struct SettingsView: View {
             return NSLocalizedString("0,25 kg", comment: "Respool Amount label: 0.25 kg")
         default:
             return NSLocalizedString("Gesamte Spule", comment: "Respool Amount label: entire spool")
+        }
+    }
+
+    private var boardVariantText: String {
+        switch bleManager.status.boardVariant {
+        case .standard:
+            return "Respooler V4"
+        case .pro:
+            return "Respooler Pro"
+        default:
+            return "–"
         }
     }
 
@@ -149,25 +161,25 @@ struct SettingsView: View {
                                     Text(targetWeightText)
                                         .foregroundColor(.gray)
                                 }
+                                .contentShape(Rectangle())
                             }
                         } else {
-                            HStack {
-                                Text("Respool-Menge")
-                                Spacer()
-                                Button {
-                                    showRespoolAmount = true
-                                } label: {
-                                    HStack {
-                                        Text(targetWeightText)
-                                            .foregroundColor(.secondary)
-                                        Image(systemName: "chevron.right")
-                                            .foregroundStyle(.tertiary)
-                                            .font(.system(size: 14))
-                                            .fontWeight(.semibold)
-                                    }
+                            Button {
+                                showRespoolAmount = true
+                            } label: {
+                                HStack {
+                                    Text("Respool-Menge")
+                                    Spacer()
+                                    Text(targetWeightText)
+                                        .foregroundColor(.secondary)
+                                    Image(systemName: "chevron.right")
+                                        .foregroundStyle(.tertiary)
+                                        .font(.system(size: 14))
+                                        .fontWeight(.semibold)
                                 }
-                                .buttonStyle(.plain)
+                                .contentShape(Rectangle())
                             }
+                            .buttonStyle(.plain)
                         }
                         
                         Toggle(
@@ -243,27 +255,29 @@ struct SettingsView: View {
                         .tint(.ltsBlue)
                     }
                 
-                Section(header: Text("Servo"), footer: Text("Wähle aus, auf welcher Seite die Startposition der Filamentführung ist.")) {
+                if bleManager.status.boardVariant == .pro {
+                    Section(header: Text("Servo"), footer: Text("Wähle aus, auf welcher Seite die Startposition der Filamentführung ist.")) {
                     if layoutModel.isCompactWidth {
                         NavigationLink {
                             ServoCalibrationView()
-                                .navigationTitle("Endpunkte kalibrieren")
+                                .navigationTitle("Endpositionen kalibrieren")
                                 .navigationBarTitleDisplayMode(.inline)
                         } label: {
-                            Text("Endpunkte kalibrieren")
+                            Text("Endpositionen kalibrieren")
                         }
                     } else {
                         Button {
                             showServoCalibration = true
                         } label: {
                             HStack {
-                                Text("Endpunkte kalibrieren")
+                                Text("Endpositionen kalibrieren")
                                 Spacer()
                                 Image(systemName: "chevron.right")
                                     .foregroundStyle(.tertiary)
                                     .font(.system(size: 14))
                                     .fontWeight(.semibold)
                             }
+                            .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
                     }
@@ -284,7 +298,7 @@ struct SettingsView: View {
                     }
 
                     Picker(
-                        "Home-Position",
+                        "",
                         selection: Binding(
                             get: { bleManager.status.servoHome },
                             set: { new in
@@ -297,6 +311,7 @@ struct SettingsView: View {
                         Text("Rechts").tag("R")
                     }
                     .pickerStyle(.segmented)
+                    }
                 }
 
                 Section(header: Text("Lüfter"), footer: Text("Der Lüfter schaltet sich standardmäßig 10 Sekunden nach stoppen des Respoolers aus.")
@@ -326,7 +341,7 @@ struct SettingsView: View {
                         )
                     )
                     .tint(.ltsBlue)
-                    Picker("Temperatur-Einheit", selection: $showFahrenheit) {
+                    Picker("", selection: $showFahrenheit) {
                         Text("Celsius").tag(false)
                         Text("Fahrenheit").tag(true)
                     }
@@ -387,6 +402,41 @@ struct SettingsView: View {
                     }
                     .tint(.ltsBlue)
                 }
+
+                if bleManager.status.boardVariant == .pro || bleManager.status.boardVariant == .standard {
+                    Section {
+                        if layoutModel.isCompactWidth {
+                            NavigationLink {
+                                BoardVariantSettingsView()
+                            } label: {
+                                HStack {
+                                    Text("Variante")
+                                    Spacer()
+                                    Text(boardVariantText)
+                                        .foregroundColor(.gray)
+                                }
+                                .contentShape(Rectangle())
+                            }
+                        } else {
+                            Button {
+                                showBoardVariantSelection = true
+                            } label: {
+                                HStack {
+                                    Text("Variante")
+                                    Spacer()
+                                    Text(boardVariantText)
+                                        .foregroundColor(.secondary)
+                                    Image(systemName: "chevron.right")
+                                        .foregroundStyle(.tertiary)
+                                        .font(.system(size: 14))
+                                        .fontWeight(.semibold)
+                                }
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
             }
         }
         .sheet(isPresented: $showRespoolAmount) {
@@ -410,7 +460,7 @@ struct SettingsView: View {
                             if #available(iOS 26.0, *) {
                                 Image(systemName: "xmark")
                             } else {
-                                Text(NSLocalizedString("Schließen", comment: "Close sheet"))
+                                Text("Schließen")
                             }
                         }
                     }
@@ -420,7 +470,7 @@ struct SettingsView: View {
         .sheet(isPresented: $showServoCalibration) {
             NavigationStack {
                 ServoCalibrationView()
-                    .navigationTitle("Endpunkte kalibrieren")
+                    .navigationTitle("Endpositionen kalibrieren")
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
@@ -430,7 +480,27 @@ struct SettingsView: View {
                                 if #available(iOS 26.0, *) {
                                     Image(systemName: "xmark")
                                 } else {
-                                    Text(NSLocalizedString("Schließen", comment: "Close sheet"))
+                                    Text("Schließen")
+                                }
+                            }
+                        }
+                    }
+            }
+        }
+        .sheet(isPresented: $showBoardVariantSelection) {
+            NavigationStack {
+                BoardVariantSettingsView()
+                    .navigationTitle("Variante")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                showBoardVariantSelection = false
+                            } label: {
+                                if #available(iOS 26.0, *) {
+                                    Image(systemName: "xmark")
+                                } else {
+                                    Text("Schließen")
                                 }
                             }
                         }
@@ -450,10 +520,27 @@ private struct ServoCalibrationView: View {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 
+    private struct ArrowButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+                .background(
+                    Capsule(style: .continuous)
+                        .fill(Color(UIColor.secondarySystemFill))
+                )
+                .overlay(
+                    Capsule(style: .continuous)
+                        .stroke(Color(UIColor.separator).opacity(0.35), lineWidth: 0.5)
+                )
+                .opacity(configuration.isPressed ? 0.7 : 1.0)
+        }
+    }
+
     var body: some View {
         List {
             Section {
-                Picker("Seite", selection: $side) {
+                Picker("", selection: $side) {
                     Text("Linke Seite").tag("L")
                     Text("Rechte Seite").tag("R")
                 }
@@ -480,7 +567,7 @@ private struct ServoCalibrationView: View {
                                 .foregroundStyle(currentAngle >= 180 ? Color.secondary : Color.primary)
                                 .frame(minWidth: 44, minHeight: 22)
                         }
-                        .buttonStyle(.bordered)
+                        .buttonStyle(ArrowButtonStyle())
                         .disabled(currentAngle >= 180)
 
                         Spacer()
@@ -510,7 +597,7 @@ private struct ServoCalibrationView: View {
                                 .foregroundStyle(currentAngle <= 0 ? Color.secondary : Color.primary)
                                 .frame(minWidth: 44, minHeight: 22)
                         }
-                        .buttonStyle(.bordered)
+                        .buttonStyle(ArrowButtonStyle())
                         .disabled(currentAngle <= 0)
                     }
                     .frame(maxWidth: .infinity)
@@ -607,4 +694,5 @@ private struct RespoolAmountView: View {
     }
 }
 #endif
+
 

@@ -22,63 +22,10 @@ class LayoutModel {
 extension LTSControlApp {
     var body: some Scene {
         WindowGroup {
-            mainLayout
-                .environment(bleManager)
-                .environment(sessionManager)
-                .environment(layoutModel)
-                .onAppear(perform: checkInitialSetup)
-                .sheet(isPresented: $showSplashView) {
-                    SplashView()
-                        .environment(bleManager)
-                        .environment(sessionManager)
-                }
-                .sheet(isPresented: $showBoardVariantSheet) {
-                    NavigationStack {
-                        BoardVariantSelectionView()
-                            .toolbar {
-                                ToolbarItem(placement: .topBarTrailing) {
-                                    Button {
-                                        showBoardVariantSheet = false
-                                    } label: {
-                                        if #available(iOS 26, *) {
-                                            Image(systemName: "xmark")
-                                        } else {
-                                            Text("Schließen")
-                                        }
-                                    }
-                                }
-                            }
-                    }
-                    .environment(bleManager)
-                }
-                .onAppear {
-                    if bleManager.needsBoardVariantSelection && !showSplashView {
-                        showBoardVariantSheet = true
-                    }
-                }
-                .onChange(of: bleManager.isConnected) { _, isConnected in
-                    if !isConnected {
-                        showBoardVariantSheet = false
-                        return
-                    }
-                    if bleManager.needsBoardVariantSelection && !showSplashView {
-                        showBoardVariantSheet = true
-                    }
-                }
-                .onChange(of: bleManager.needsBoardVariantSelection) { _, needs in
-                    if needs && !showSplashView {
-                        showBoardVariantSheet = true
-                    } else if !needs {
-                        showBoardVariantSheet = false
-                    }
-                }
-                .onChange(of: showSplashView) { _, isShowing in
-                    if isShowing {
-                        showBoardVariantSheet = false
-                    } else if bleManager.needsBoardVariantSelection {
-                        showBoardVariantSheet = true
-                    }
-                }
+            MainRootView(
+                bleManager: bleManager,
+                sessionManager: sessionManager
+            )
         }
         .windowResizability(.contentSize)
     }
@@ -89,14 +36,19 @@ struct LTSControlApp: App {
     init() {
         _ = LiveActivityManager.shared
     }
+
     private let bleManager = BLEManager.shared
     private let sessionManager = AccessorySessionManager.shared
+}
+
+private struct MainRootView: View {
+    let bleManager: BLEManager
+    let sessionManager: AccessorySessionManager
+
     @State private var layoutModel = LayoutModel()
     @AppStorage("hasCompletedSetup") private var hasCompletedSetup: Bool = false
     @State private var showSplashView: Bool = false
     @State private var hasCheckedSetup: Bool = false
-    @State private var sharedCurrentState: LocalizedStringKey = "Nicht verbunden"
-    @State private var filamentDetected: Bool = false
     @State private var scanSessionID: Int = 0
     @State private var wifiSSID: String = ""
     @State private var wifiPassword: String = ""
@@ -106,8 +58,64 @@ struct LTSControlApp: App {
     @State private var showBoardVariantSheet = false
     @State private var presentedSheet: AboutView.AboutSheet? = nil
 
-    private var boardVersion: String? {
-        UserDefaults.standard.string(forKey: "boardVersion")
+    var body: some View {
+        mainLayout
+            .environment(bleManager)
+            .environment(sessionManager)
+            .environment(layoutModel)
+            .onAppear(perform: checkInitialSetup)
+            .sheet(isPresented: $showSplashView) {
+                SplashView()    
+                    .environment(bleManager)
+                    .environment(sessionManager)
+            }
+            .sheet(isPresented: $showBoardVariantSheet) {
+                NavigationStack {
+                    BoardVariantSelectionView()
+                        .toolbar {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button {
+                                    showBoardVariantSheet = false
+                                } label: {
+                                    if #available(iOS 26, *) {
+                                        Image(systemName: "xmark")
+                                    } else {
+                                        Text("Schließen")
+                                    }
+                                }
+                            }
+                        }
+                }
+                .environment(bleManager)
+            }
+            .onAppear {
+                if bleManager.needsBoardVariantSelection && !showSplashView {
+                    showBoardVariantSheet = true
+                }
+            }
+            .onChange(of: bleManager.isConnected) { _, isConnected in
+                if !isConnected {
+                    showBoardVariantSheet = false
+                    return
+                }
+                if bleManager.needsBoardVariantSelection && !showSplashView {
+                    showBoardVariantSheet = true
+                }
+            }
+            .onChange(of: bleManager.needsBoardVariantSelection) { _, needs in
+                if needs && !showSplashView {
+                    showBoardVariantSheet = true
+                } else if !needs {
+                    showBoardVariantSheet = false
+                }
+            }
+            .onChange(of: showSplashView) { _, isShowing in
+                if isShowing {
+                    showBoardVariantSheet = false
+                } else if bleManager.needsBoardVariantSelection {
+                    showBoardVariantSheet = true
+                }
+            }
     }
 
     @ViewBuilder
@@ -311,3 +319,13 @@ struct LTSControlApp: App {
         }
     }
 }
+
+#if DEBUG
+#Preview("Main Root") {
+    MainRootView(
+        bleManager: .shared,
+        sessionManager: .shared
+    )
+    .environment(\.locale, .init(identifier: "en"))
+}
+#endif

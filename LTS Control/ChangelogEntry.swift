@@ -15,7 +15,7 @@ final class FirmwareChangelogViewModel: ObservableObject {
 
     let sourceURL: URL
 
-    init(sourceURL: URL = URL(string: "https://download.lts-design.com/Firmware/README.md")!) {
+    init(sourceURL: URL = URL(string: "https://respooler.lts-design.com/Firmware/README.md")!) {
         self.sourceURL = sourceURL
     }
 
@@ -122,7 +122,7 @@ struct FirmwareChangelogView: View {
     @State private var fadeVisible = true
     @AppStorage("FirmwareChangelog.hasSeenEntries") private var hasSeenEntries: Bool = false
 
-    init(sourceURL: URL = URL(string: "https://download.lts-design.com/Firmware/README.md")!) {
+    init(sourceURL: URL = URL(string: "https://respooler.lts-design.com/Firmware/README.md")!) {
         _vm = StateObject(wrappedValue: FirmwareChangelogViewModel(sourceURL: sourceURL))
     }
 

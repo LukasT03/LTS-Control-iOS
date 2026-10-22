@@ -4136,6 +4136,7 @@
       }
     },
     "Nicht verbunden" : {
+      "extractionState" : "stale",
       "localizations" : {
         "da" : {
           "stringUnit" : {

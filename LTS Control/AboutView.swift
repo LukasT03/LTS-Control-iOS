@@ -31,7 +31,7 @@ struct AboutView: View {
                 .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
         }
     }
-    @Bindable var bleManager = BLEManager.shared
+    @Environment(BLEManager.self) private var bleManager
     
     @State private var updateButtonDisabledUntil: Date? = nil
     @State private var boardFirmwareVersion = "–"
@@ -61,6 +61,7 @@ struct AboutView: View {
     }
 
     var body: some View {
+        @Bindable var bleManager = bleManager
         let isBLEConnected = bleManager.isConnected
         let isWiFiConnected = (isBLEConnected && (bleManager.status.wifiConnected ?? false))
         let effectiveBoardFW: String = {
@@ -448,7 +449,7 @@ struct AboutView: View {
 
     private func fetchLatestFirmwareVersion() {
 
-        var components = URLComponents(string: "https://download.lts-design.com/Firmware/latest_board_firmware.txt")
+        var components = URLComponents(string: "https://respooler.lts-design.com/Firmware/latest_board_firmware.txt")
         let bucket = Int(Date().timeIntervalSince1970 / 15)
         let existingItems = components?.queryItems ?? []
         components?.queryItems = existingItems + [URLQueryItem(name: "t", value: String(bucket))]
@@ -513,6 +514,7 @@ struct AboutView: View {
                 scanSessionID: $scanSessionID
             )
             .environment(\.locale, .init(identifier: "en"))
+            .environment(BLEManager.shared)
             .environment(LayoutModel())
         }
     }
@@ -554,4 +556,3 @@ struct AttributedTextView: UIViewRepresentable {
         init(_ parent: AttributedTextView) { self.parent = parent }
     }
 }
-

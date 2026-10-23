@@ -66,8 +66,7 @@ struct SettingsView: View {
                 }
                 .pillStyle()
             }
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets())
+            .pillListRow()
 
             Section(header: Text("Konfiguration"), footer: Text("Wenn der Sensor deaktiviert ist, wird nicht auf den Verlust von Filament reagiert.")) {
                 Picker("Ton bei Fertigstellung", selection: binding(\.jingleStyle, bleManager.setJingleStyle)) {

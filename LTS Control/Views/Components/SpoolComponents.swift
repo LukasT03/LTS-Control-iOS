@@ -208,4 +208,14 @@ extension View {
     func pillStyle() -> some View {
         self.modifier(PillStyle())
     }
+
+    /// Shows pills as a bare List row. The row is at least as tall as the List's minimum row height
+    /// (52 pt on iOS 26), so the 50 pt pills are pinned to its top instead of being centered,
+    /// which puts them exactly where the pills in the control tab are.
+    func pillListRow() -> some View {
+        self
+            .frame(maxHeight: .infinity, alignment: .top)
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets())
+    }
 }

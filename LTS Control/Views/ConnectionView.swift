@@ -196,8 +196,7 @@ struct ConnectionView: View {
                             shouldWiggleWiFiIcon: shouldWiggleWiFiIcon,
                             shouldBounceWiFiIcon: shouldBounceWiFiIcon
                         )
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(EdgeInsets())
+                        .pillListRow()
                     }
                 }
                 Section(header: Text("WLAN"),

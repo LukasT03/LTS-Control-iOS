@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Bildschirmfoto_2025-08-10_um_23.56.43-removebg-preview.png",
+      "filename" : "LTSControlAppIcon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +12,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Bildschirmfoto_2025-08-10_um_23.56.23-removebg-preview.png",
+      "filename" : "LTSControlAppIconDark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

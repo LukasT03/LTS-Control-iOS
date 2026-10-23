@@ -4,68 +4,74 @@ struct SplashView: View {
     @Environment(AccessorySessionManager.self) private var accessorySessionManager
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .topTrailing) {
-                VStack {
-                    
-                    Spacer(minLength: 60)
-                
-                Image("AppIconSquare")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 130)
-                    .shadow(color: Color.black.opacity(0.1), radius: 12)
-                
-                Spacer()
-                
-                HStack {
-                    Text("Willkommen bei LTS Control")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 40)
-                }
+        let content = VStack {
+            Spacer(minLength: 60)
+
+            Image("AppIconSquare")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 130)
+                .shadow(color: Color.black.opacity(0.1), radius: 12)
+
+            Spacer()
+
+            Text("Willkommen bei LTS Control")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
                 .frame(maxWidth: 500)
-            
-                Spacer()
-                
-                VStack(alignment: .leading, spacing: 27) {
-                    FeatureRow(
-                        icon: "gearshape",
-                        title: "Funktion",
-                        description: "Um das Respooler Board mit der App zu steuern, musst du es zuerst mit deinem \(UIDevice.current.userInterfaceIdiom == .pad ? "iPad" : "iPhone") verbinden."
-                    )
-                    FeatureRow(
-                        icon: "antenna.radiowaves.left.and.right",
-                        title: "Verbinden",
-                        description: "Stelle sicher, dass das Board eingeschaltet ist und starte die Kopplung über den Button unten."
-                    )
-                }
-                .padding(.leading, 30)
-                .padding(.trailing, 42)
-                
-                Spacer()
-        
-                Button(action: {
-                    accessorySessionManager.showAccessoryPicker()
-                }) {
-                    Text("Respooler verbinden")
-                        .fontWeight(.semibold)
-                        .frame(minWidth: 0, maxWidth: 360)
-                }
-                .focusable(false)
-                .padding(.vertical, 15)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                .padding(.horizontal, 26)
-                .padding(.bottom, 38)
-                }
+
+            Spacer()
+
+            VStack(alignment: .leading, spacing: 27) {
+                FeatureRow(
+                    icon: "gearshape",
+                    title: "Funktion",
+                    description: "Um das Respooler Board mit der App zu steuern, musst du es zuerst mit deinem \(UIDevice.current.userInterfaceIdiom == .pad ? "iPad" : "iPhone") verbinden."
+                )
+                FeatureRow(
+                    icon: "antenna.radiowaves.left.and.right",
+                    title: "Verbinden",
+                    description: "Stelle sicher, dass das Board eingeschaltet ist und starte die Kopplung über den Button unten."
+                )
+            }
+            .padding(.leading, 30)
+            .padding(.trailing, 42)
+
+            Spacer()
+        }
+        .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 480 : 393)
+
+        // Same bottom button as the Onyx sign-in screen.
+        if #available(iOS 26, *) {
+            content.safeAreaBar(edge: .bottom) {
+                connectButton
+                    .buttonStyle(.glassProminent)
+                    .buttonSizing(.flexible)
+                    .padding(.horizontal, 36)
+                    // The iPad sheet has no bottom safe area, so the button would touch the edge.
+                    .padding(.bottom, UIDevice.current.userInterfaceIdiom == .pad ? 36 : 0)
+            }
+        } else {
+            content.safeAreaInset(edge: .bottom) {
+                connectButton
+                    .buttonStyle(.borderedProminent)
+                    .padding(.horizontal, 36)
+                    .padding(.bottom)
             }
         }
-        .frame(minWidth: 0, maxWidth: {
-            return UIDevice.current.userInterfaceIdiom == .pad ? 480 : 393
-        }(), minHeight: 23)
+    }
+
+    private var connectButton: some View {
+        Button {
+            accessorySessionManager.showAccessoryPicker()
+        } label: {
+            Text("Respooler verbinden")
+                .frame(maxWidth: .infinity)
+        }
+        .controlSize(.large)
+        .fontWeight(.semibold)
     }
 }
 

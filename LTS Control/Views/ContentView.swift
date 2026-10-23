@@ -306,10 +306,20 @@ struct ContentView: View {
                     }
                 }
                 .accentColor(.secondary)
-                Text("\(displayedSpeed) %")
+                // A tick for every percent while dragging, not when the board reports a new value.
+                .sensoryFeedback(.selection, trigger: displayedSpeed) { _, _ in isEditingSpeed }
+                // The hidden "100 %" reserves the widest value at any text size, so the slider keeps its length.
+                Text("\(100) %")
+                    .hidden()
+                    .overlay(alignment: .trailing) {
+                        // Passing the value lets the digits roll up or down depending on the direction.
+                        // No animation before the view is on screen, so the stored value is just there on launch.
+                        Text("\(displayedSpeed) %")
+                            .contentTransition(.numericText(value: Double(displayedSpeed)))
+                            .animation(hasAppeared ? .snappy : nil, value: displayedSpeed)
+                    }
                     .monospacedDigit()
                     .foregroundColor(.gray)
-                    .frame(width: 51, alignment: .trailing)
             }
             .frame(height: 40)
         }

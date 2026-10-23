@@ -35,6 +35,7 @@ extension LTSControlApp {
 struct LTSControlApp: App {
     init() {
         _ = LiveActivityManager.shared
+        _ = LocalNotificationManager.shared // sets itself as notification delegate, must exist before launch finishes
     }
 
     private let bleManager = BLEManager.shared
@@ -132,12 +133,7 @@ private struct MainRootView: View {
             if UIDevice.current.userInterfaceIdiom == .pad && !layoutModel.isCompactWidth {
                 NavigationSplitView(columnVisibility: $columnVisibility) {
                     VStack{
-                        AboutView(
-                            presentedSheet: $presentedSheet,
-                            wifiSSID: $wifiSSID,
-                            wifiPassword: $wifiPassword,
-                            scanSessionID: $scanSessionID
-                        )
+                        AboutView(presentedSheet: $presentedSheet)
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -271,12 +267,7 @@ private struct MainRootView: View {
             }
 
             NavigationStack {
-                AboutView(
-                    presentedSheet: $presentedSheet,
-                    wifiSSID: $wifiSSID,
-                    wifiPassword: $wifiPassword,
-                    scanSessionID: $scanSessionID
-                )
+                AboutView(presentedSheet: $presentedSheet)
             }
             .tabItem {
                 Label("Mehr", systemImage: "ellipsis.circle")

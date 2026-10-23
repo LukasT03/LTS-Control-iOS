@@ -6,19 +6,14 @@ struct ContentView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Binding var showSplashView: Bool
     @State private var pillSectionHeight: CGFloat = 108
-    @AppStorage("useFilamentSensor") private var useFilamentSensor: Bool = true
     @AppStorage("temperatureInFahrenheit") private var showFahrenheit = false
-    @State private var motorStartTime: Date = .distantPast
+    /// Slider position; follows the board's speed unless the user is dragging.
     @State private var localSpeedPercent: Double = 85
-    @AppStorage("lastLocalSpeedExact") private var lastLocalSpeedExact: Double = 85
-    @State private var userAdjustedSpeed: Bool = false
     @State private var isEditingSpeed: Bool = false
     @State private var hasAppeared = false
     @State private var enableStartupAnimations = false
-    @State private var ignoreSpeedSyncUntil: Date = .distantPast
-    @State private var displayedSpeedInt: Int = 85
-    @State private var lastSentSpeedInt: Int? = nil
-    @State private var awaitingEcho: Bool = false
+
+    private var displayedSpeed: Int { Int(localSpeedPercent.rounded(.down)) }
 
     private var tempIcon: String {
         if bleManager.isConnected, let temp = bleManager.status.chipTemperature {
@@ -63,65 +58,16 @@ struct ContentView: View {
                     pillSection(pillSectionHeight: $pillSectionHeight)
                     spoolSection()
                     statusProgressSection()
-                    controlSection(
-                        motorSpeed: $localSpeedPercent,
-                        isError: false,
-                        useFilamentSensor: useFilamentSensor
-                    )
+                    controlSection()
                 }
-                .onAppear {
-                    localSpeedPercent = lastLocalSpeedExact
-                    displayedSpeedInt = Int(lastLocalSpeedExact.rounded(.down))
+                .onChange(of: bleManager.status.speedPercent, initial: true) {
+                    syncSpeedFromBoard()
                 }
-                .task(id: bleManager.status.speedPercent) {
-                    if !isEditingSpeed && Date() >= ignoreSpeedSyncUntil && bleManager.isConnected {
-                        let deviceInt = bleManager.status.speedPercent
-
-                        if awaitingEcho {
-                            if let last = lastSentSpeedInt, deviceInt == last {
-                                displayedSpeedInt = deviceInt
-                                awaitingEcho = false
-                                lastSentSpeedInt = nil
-                            } else {
-                                localSpeedPercent = Double(deviceInt)
-                                displayedSpeedInt = deviceInt
-                                lastLocalSpeedExact = Double(deviceInt)
-                                userAdjustedSpeed = false
-                                awaitingEcho = false
-                                lastSentSpeedInt = nil
-                            }
-                        } else {
-                            if deviceInt != displayedSpeedInt {
-                                localSpeedPercent = Double(deviceInt)
-                                displayedSpeedInt = deviceInt
-                                lastLocalSpeedExact = Double(deviceInt)
-                                userAdjustedSpeed = false
-                            }
-                        }
-                    }
-                }
-                .onChange(of: localSpeedPercent) { _, newValue in
-                    if isEditingSpeed {
-                        displayedSpeedInt = Int(newValue.rounded(.down))
-                    }
-                }
-                .onChange(of: bleManager.isConnected) { _, newValue in
-                    if newValue {
+                .onChange(of: bleManager.isConnected) { _, isConnected in
+                    if isConnected {
                         showSplashView = false
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
-                            guard bleManager.isConnected, !isEditingSpeed else { return }
-                            let deviceInt = bleManager.status.speedPercent
-                            if deviceInt != displayedSpeedInt {
-                                localSpeedPercent = Double(deviceInt)
-                                displayedSpeedInt = deviceInt
-                                lastLocalSpeedExact = Double(deviceInt)
-                                userAdjustedSpeed = false
-                            }
-                        }
+                        syncSpeedFromBoard()
                     }
-                    awaitingEcho = false
-                    lastSentSpeedInt = nil
-                    ignoreSpeedSyncUntil = .distantPast
                 }
             }
             .onAppear {
@@ -278,12 +224,16 @@ struct ContentView: View {
         .padding(.horizontal, 45)
     }
     
+    /// Echo filtering happens in `BLEManager`, so the board's value can be taken as is.
+    private func syncSpeedFromBoard() {
+        let boardSpeed = bleManager.status.speedPercent
+        guard !isEditingSpeed, displayedSpeed != boardSpeed else { return }
+        localSpeedPercent = Double(boardSpeed)
+    }
+
     @ViewBuilder
-    private func controlSection(
-        motorSpeed: Binding<Double>,
-        isError: Bool,
-        useFilamentSensor: Bool
-    ) -> some View {
+    private func controlSection() -> some View {
+        let useFilamentSensor = bleManager.status.useFilamentSensor
         VStack {
             HStack {
                 ZStack {
@@ -302,7 +252,6 @@ struct ContentView: View {
                         .transition(.opacity)
                     } else {
                         Button(action: {
-                            motorStartTime = Date()
                             bleManager.startMotor()
                         }) {
                             Text("Start")
@@ -345,21 +294,8 @@ struct ContentView: View {
                     in: 50...100,
                     onEditingChanged: { editing in
                         isEditingSpeed = editing
-                        if editing { userAdjustedSpeed = true }
-                        if !editing {
-                            let spd = Int(localSpeedPercent.rounded(.down))
-                            if bleManager.isConnected {
-                                bleManager.setSpeedPercent(spd)
-                                ignoreSpeedSyncUntil = Date().addingTimeInterval(0.6)
-                                lastSentSpeedInt = spd
-                                awaitingEcho = true
-                            } else {
-                                awaitingEcho = false
-                                lastSentSpeedInt = nil
-                            }
-                            lastLocalSpeedExact = localSpeedPercent
-                            userAdjustedSpeed = true
-                            displayedSpeedInt = spd
+                        if !editing && bleManager.isConnected {
+                            bleManager.setSpeedPercent(displayedSpeed)
                         }
                     }
                 )
@@ -370,7 +306,7 @@ struct ContentView: View {
                     }
                 }
                 .accentColor(.secondary)
-                Text("\(displayedSpeedInt) %")
+                Text("\(displayedSpeed) %")
                     .monospacedDigit()
                     .foregroundColor(.gray)
                     .frame(width: 51, alignment: .trailing)

@@ -179,7 +179,7 @@ struct ConnectionView: View {
     @State private var showWiFiErrorText: Bool = false
     @Binding var scanSessionID: Int
     
-    private var visibleSSIDs: [String] { bleManager.ssidList.availableSSIDs ?? [] }
+    private var visibleSSIDs: [String] { bleManager.availableSSIDs ?? [] }
     
     @FocusState private var focusedField: Field?
     enum Field {
@@ -296,7 +296,7 @@ struct ConnectionView: View {
                         .disabled(!AccessorySessionManager.shared.canConnect)
                         
                         Button(action: {
-                            AccessorySessionManager.shared.forgetAccessoryWithPolling()
+                            AccessorySessionManager.shared.forgetAccessory()
                         }) {
                             Text("Gespeichertes Gerät entfernen")
                         }
@@ -337,23 +337,6 @@ struct ConnectionView: View {
             .background(Color(UIColor.systemGroupedBackground))
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .onChange(of: bleManager.status.wifiLastResult) { _, newValue in
-            if newValue != nil {
-                isConnectingToWiFi = false
-            }
-            if newValue == false {
-                shouldWiggleWiFiIcon.toggle()
-                isWiFiErrorHighlight = true
-                showWiFiErrorText = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
-                    isWiFiErrorHighlight = false
-                    showWiFiErrorText = false
-                }
-            }
-            if newValue == true {
-                shouldBounceWiFiIcon.toggle()
-            }
-        }
         .onChange(of: bleManager.status.wifiConnectionResult) { _, newValue in
             if let newValue {
                 isConnectingToWiFi = false

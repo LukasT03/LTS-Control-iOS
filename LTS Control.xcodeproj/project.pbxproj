@@ -123,11 +123,6 @@
 			path = "LTS Control";
 			sourceTree = "<group>";
 		};
-		9699361F2E37B2610094174A /* SharedCode */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SharedCode;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,8 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				9645EF612E3F6BEA005EA35D /* TipsStoreKitConfig.storekit */,
-				9699361F2E37B2610094174A /* SharedCode */,
-				965F8F0D2DDD335800118DF3 /* SharedIntents */,
+				965F8F0D2DDD335800118DF3 /* Shared */,
 				96801C6B2D84A127005CD7C4 /* WidgetExtension.entitlements */,
 				9637E4032D63708A007D780B /* Localizable.xcstrings */,
 				9695F4B92E30E847005C25FB /* Control.icon */,
@@ -196,7 +190,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		965F8F0D2DDD335800118DF3 /* SharedIntents */ = {
+		965F8F0D2DDD335800118DF3 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				96AC80992E807DEF0023F860 /* PauseMotorIntent.swift */,
@@ -205,7 +199,7 @@
 				96DC153F2DDE52F400558A64 /* SpoolActivityAttributes.swift */,
 				96AC80942E8075FA0023F860 /* DeviceState.swift */,
 			);
-			path = SharedIntents;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,7 +244,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				9634157B2D590551007CAD13 /* LTS Control */,
-				9699361F2E37B2610094174A /* SharedCode */,
 			);
 			name = "LTS Control";
 			packageProductDependencies = (

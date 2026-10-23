@@ -45,9 +45,6 @@ struct AboutView: View {
     @State private var didAppear: Bool = false
 
     @Binding var presentedSheet: AboutSheet?
-    @Binding var wifiSSID: String
-    @Binding var wifiPassword: String
-    @Binding var scanSessionID: Int
 
     var footerNSAttributed: NSAttributedString {
         let text = NSLocalizedString("© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Deutschland, info@lts-design.com", comment: "about footer")
@@ -503,16 +500,8 @@ struct AboutView: View {
 #Preview {
     struct PreviewHost: View {
         @State private var presentedSheet: AboutView.AboutSheet? = nil
-        @State private var wifiSSID: String = ""
-        @State private var wifiPassword: String = ""
-        @State private var scanSessionID: Int = 0
         var body: some View {
-            AboutView(
-                presentedSheet: $presentedSheet,
-                wifiSSID: $wifiSSID,
-                wifiPassword: $wifiPassword,
-                scanSessionID: $scanSessionID
-            )
+            AboutView(presentedSheet: $presentedSheet)
             .environment(\.locale, .init(identifier: "en"))
             .environment(BLEManager.shared)
             .environment(LayoutModel())

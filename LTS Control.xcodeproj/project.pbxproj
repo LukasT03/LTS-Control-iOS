@@ -15,22 +15,12 @@
 		9637E4042D63708A007D780B /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9637E4032D63708A007D780B /* Localizable.xcstrings */; };
 		9645EF5E2E3F6B17005EA35D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9645EF5D2E3F6B17005EA35D /* StoreKit.framework */; };
 		9645EF622E3F6BEA005EA35D /* TipsStoreKitConfig.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 9645EF612E3F6BEA005EA35D /* TipsStoreKitConfig.storekit */; };
-		965F8F162DDD34BB00118DF3 /* StopMotorIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F8F152DDD34B200118DF3 /* StopMotorIntent.swift */; };
-		965F8F172DDD34BB00118DF3 /* StopMotorIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965F8F152DDD34B200118DF3 /* StopMotorIntent.swift */; };
 		9689EFCE2D79F03C001A6E2A /* AppIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 966D95BB2D79CEBF00743C45 /* AppIntents.framework */; };
 		9692099C2E2FBFAA006268BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9692099B2E2FBFAA006268BD /* LaunchScreen.storyboard */; };
 		9695F4C32E30E847005C25FB /* Control.icon in Resources */ = {isa = PBXBuildFile; fileRef = 9695F4B92E30E847005C25FB /* Control.icon */; };
-		96AC80952E8075FA0023F860 /* DeviceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AC80942E8075FA0023F860 /* DeviceState.swift */; };
-		96AC80962E8076030023F860 /* DeviceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AC80942E8075FA0023F860 /* DeviceState.swift */; };
-		96AC809A2E807DEF0023F860 /* PauseMotorIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AC80992E807DEF0023F860 /* PauseMotorIntent.swift */; };
-		96AC809B2E807DEF0023F860 /* PauseMotorIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AC80992E807DEF0023F860 /* PauseMotorIntent.swift */; };
 		96D2A46D2D7F0F5F00B6A8F2 /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961E82ED2D7EEB6400463B9F /* ActivityKit.framework */; };
 		96D2A4732D7F138200B6A8F2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96A9CB082D7739F00084FFF9 /* WidgetKit.framework */; };
 		96D41B4C2DE7740600B7C382 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9637E4032D63708A007D780B /* Localizable.xcstrings */; };
-		96DC15442DDE52F400558A64 /* SpoolActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DC153F2DDE52F400558A64 /* SpoolActivityAttributes.swift */; };
-		96DC154A2DDE81D000558A64 /* SpoolActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DC153F2DDE52F400558A64 /* SpoolActivityAttributes.swift */; };
-		96DC15532DDE938900558A64 /* StartMotorIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DC15522DDE938900558A64 /* StartMotorIntent.swift */; };
-		96DC15542DDE938900558A64 /* StartMotorIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DC15522DDE938900558A64 /* StartMotorIntent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,17 +66,12 @@
 		9637E4032D63708A007D780B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		9645EF5D2E3F6B17005EA35D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9645EF612E3F6BEA005EA35D /* TipsStoreKitConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = TipsStoreKitConfig.storekit; sourceTree = "<group>"; };
-		965F8F152DDD34B200118DF3 /* StopMotorIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopMotorIntent.swift; sourceTree = "<group>"; };
 		966D95BB2D79CEBF00743C45 /* AppIntents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppIntents.framework; path = System/Library/Frameworks/AppIntents.framework; sourceTree = SDKROOT; };
 		96801C6B2D84A127005CD7C4 /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
 		9692099B2E2FBFAA006268BD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9695F4B92E30E847005C25FB /* Control.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Control.icon; sourceTree = "<group>"; };
 		96A9CB082D7739F00084FFF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		96A9CB0A2D7739F00084FFF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		96AC80942E8075FA0023F860 /* DeviceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceState.swift; sourceTree = "<group>"; };
-		96AC80992E807DEF0023F860 /* PauseMotorIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseMotorIntent.swift; sourceTree = "<group>"; };
-		96DC153F2DDE52F400558A64 /* SpoolActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpoolActivityAttributes.swift; sourceTree = "<group>"; };
-		96DC15522DDE938900558A64 /* StartMotorIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartMotorIntent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -107,6 +92,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		965F8F0D2DDD335800118DF3 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		961E83162D7F0AD700463B9F /* Widget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -190,18 +180,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		965F8F0D2DDD335800118DF3 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				96AC80992E807DEF0023F860 /* PauseMotorIntent.swift */,
-				965F8F152DDD34B200118DF3 /* StopMotorIntent.swift */,
-				96DC15522DDE938900558A64 /* StartMotorIntent.swift */,
-				96DC153F2DDE52F400558A64 /* SpoolActivityAttributes.swift */,
-				96AC80942E8075FA0023F860 /* DeviceState.swift */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -220,6 +198,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				961E83162D7F0AD700463B9F /* Widget */,
+				965F8F0D2DDD335800118DF3 /* Shared */,
 			);
 			name = "Widget Extension";
 			packageProductDependencies = (
@@ -244,6 +223,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				9634157B2D590551007CAD13 /* LTS Control */,
+				965F8F0D2DDD335800118DF3 /* Shared */,
 			);
 			name = "LTS Control";
 			packageProductDependencies = (
@@ -323,11 +303,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96AC809B2E807DEF0023F860 /* PauseMotorIntent.swift in Sources */,
-				96DC15542DDE938900558A64 /* StartMotorIntent.swift in Sources */,
-				96DC15442DDE52F400558A64 /* SpoolActivityAttributes.swift in Sources */,
-				965F8F172DDD34BB00118DF3 /* StopMotorIntent.swift in Sources */,
-				96AC80962E8076030023F860 /* DeviceState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,11 +310,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96AC809A2E807DEF0023F860 /* PauseMotorIntent.swift in Sources */,
-				96AC80952E8075FA0023F860 /* DeviceState.swift in Sources */,
-				965F8F162DDD34BB00118DF3 /* StopMotorIntent.swift in Sources */,
-				96DC154A2DDE81D000558A64 /* SpoolActivityAttributes.swift in Sources */,
-				96DC15532DDE938900558A64 /* StartMotorIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,6 +334,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WIDGET_EXTENSION";
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -382,7 +353,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -397,6 +368,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) WIDGET_EXTENSION";
 				INFOPLIST_KEY_CFBundleDisplayName = Widget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -415,7 +387,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -596,7 +568,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -646,7 +618,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

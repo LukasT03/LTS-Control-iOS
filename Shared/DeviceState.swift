@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DeviceState: String, Codable, Hashable {
+public enum DeviceState: String, Codable, Hashable, Sendable {
     case idle
     case running
     case paused

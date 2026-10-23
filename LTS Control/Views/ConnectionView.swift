@@ -6,10 +6,9 @@ struct StatusHeaderView: View {
     
     let isConnected: Bool
     let isWiFiConnected: Bool
-    let isWiFiErrorHighlight: Bool
+    let showWiFiError: Bool
     let shouldWiggleWiFiIcon: Bool
     let shouldBounceWiFiIcon: Bool
-    let showWiFiErrorText: Bool
 
     var body: some View {
         HStack(spacing: 12) {
@@ -33,23 +32,15 @@ struct StatusHeaderView: View {
                 }
                 Spacer()
             }
-            .frame(height: 40, alignment: .center)
-            .padding(.leading, 12)
-            .padding(.vertical, 5)
-            .background(
-                Capsule()
-                    .fill(Color(UIColor.secondarySystemGroupedBackground))
-            )
-            .frame(height: 50)
-            .contentShape(Capsule())
-            
+            .pillStyle()
+
             HStack(spacing: 8) {
                 Image(systemName: isWiFiConnected ? "wifi" : "wifi.slash")
                     .padding(.bottom, isWiFiConnected ? 3 : 2)
                     .font(.system(size: 22))
                     .frame(width: 28, height: 28, alignment: .bottom)
-                    .foregroundColor(isWiFiConnected ? .green : (isWiFiErrorHighlight ? .red : Color.primary))
-                    .animation(.default, value: isWiFiErrorHighlight)
+                    .foregroundColor(isWiFiConnected ? .green : (showWiFiError ? .red : Color.primary))
+                    .animation(.default, value: showWiFiError)
                     .animation(.default, value: isWiFiConnected)
                     .contentTransition(.symbolEffect(.replace))
                     .symbolEffect(.wiggle, value: shouldWiggleWiFiIcon)
@@ -59,27 +50,13 @@ struct StatusHeaderView: View {
                     Text("WLAN")
                         .font(.headline)
                         .foregroundColor(.primary)
-                    Text(
-                        showWiFiErrorText
-                        ? "Fehler!"
-                        : (isConnected
-                            ? (isWiFiConnected ? "Verbunden" : "Getrennt")
-                            : "Getrennt")
-                    )
+                    Text(showWiFiError ? "Fehler!" : (isWiFiConnected ? "Verbunden" : "Getrennt"))
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 }
                 Spacer()
             }
-            .frame(height: 40, alignment: .center)
-            .padding(.leading, 12)
-            .padding(.vertical, 5)
-            .background(
-                Capsule()
-                    .fill(Color(UIColor.secondarySystemGroupedBackground))
-            )
-            .frame(height: 50)
-            .contentShape(Capsule())
+            .pillStyle()
         }
         .frame(minHeight: {
             if !layoutModel.isCompactWidth, #available(iOS 26, *) {
@@ -101,14 +78,10 @@ struct StatusHeaderView: View {
     .environment(BLEManager())
 }
 
-struct SSIDPickerView: View, Equatable {
+struct SSIDPickerView: View {
     let ssids: [String]
     @Binding var selectedSSID: String
     let scanSessionID: Int
-
-    static func == (lhs: SSIDPickerView, rhs: SSIDPickerView) -> Bool {
-        lhs.ssids == rhs.ssids && lhs.selectedSSID == rhs.selectedSSID && lhs.scanSessionID == rhs.scanSessionID
-    }
 
     var body: some View {
         let unique = Array(NSOrderedSet(array: ssids)) as! [String]
@@ -167,25 +140,21 @@ struct ClearableSecureField: UIViewRepresentable {
 struct ConnectionView: View {
     @Environment(LayoutModel.self) private var layoutModel
     @Environment(BLEManager.self) private var bleManager
-    @Environment(\.dismiss) private var dismiss
-    
+
     @Binding var wifiSSID: String
     @Binding var wifiPassword: String
     
+    @Binding var scanSessionID: Int
+
     @State private var isConnectingToWiFi: Bool = false
     @State private var shouldWiggleWiFiIcon: Bool = false
     @State private var shouldBounceWiFiIcon: Bool = false
-    @State private var isWiFiErrorHighlight: Bool = false
-    @State private var showWiFiErrorText: Bool = false
-    @Binding var scanSessionID: Int
-    
+    @State private var showWiFiError: Bool = false
+
     private var visibleSSIDs: [String] { bleManager.availableSSIDs ?? [] }
-    
-    @FocusState private var focusedField: Field?
-    enum Field {
-        case ssid, password
-    }
-    
+
+    private var canScan: Bool { bleManager.isConnected && bleManager.deviceState != .updating }
+
     private var isWiFiConnected: Bool {
         bleManager.isConnected && (bleManager.status.wifiConnected ?? false)
     }
@@ -196,147 +165,114 @@ struct ConnectionView: View {
     
     private func performSendCredentials() {
         isConnectingToWiFi = true
-        focusedField = nil
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         bleManager.sendWiFiPassword(wifiPassword)
         wifiPassword = ""
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        Task {
+            try? await Task.sleep(for: .seconds(0.3))
             bleManager.sendWiFiSSID(wifiSSID)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                bleManager.triggerWiFiConnect()
-            }
+            try? await Task.sleep(for: .seconds(0.3))
+            bleManager.triggerWiFiConnect()
         }
     }
-    
+
+    private func scanButton(_ title: LocalizedStringKey) -> some View {
+        Button(title) {
+            bleManager.triggerWiFiScan()
+            scanSessionID += 1
+        }
+        .disabled(!canScan)
+    }
+
     var body: some View {
-        GeometryReader { geo in
-            VStack{
-                List {
-                    Section {
-                        Group {
-                            StatusHeaderView(
-                                isConnected: bleManager.isConnected,
-                                isWiFiConnected: isWiFiConnected,
-                                isWiFiErrorHighlight: isWiFiErrorHighlight,
-                                shouldWiggleWiFiIcon: shouldWiggleWiFiIcon,
-                                shouldBounceWiFiIcon: shouldBounceWiFiIcon,
-                                showWiFiErrorText: showWiFiErrorText
-                            )
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                        }
-                    }
-                    Section(header: Text("WLAN"),
-                            footer: Text("Für die WLAN-Verbindung hier nach verfügbaren Netzwerken suchen und das Passwort eingeben. Funktioniert nur mit 2,4 GHz Netzwerken.")) {
-                        if bleManager.isScanningForSSIDs {
-                            HStack {
-                                Text("Netzwerk")
-                                Spacer()
-                                ProgressView()
-                            }
-                            .id(scanSessionID)
-                        } else {
-                            SSIDPickerView(ssids: visibleSSIDs, selectedSSID: $wifiSSID, scanSessionID: scanSessionID)
-                        }
-                        ClearableSecureField(text: $wifiPassword, placeholder: NSLocalizedString("Passwort", comment: "Wi‑Fi password placeholder")) {
-                            focusedField = nil
-                            if canSendCredentials {
-                                performSendCredentials()
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                performSendCredentials()
-                            }) {
-                                if isConnectingToWiFi {
-                                    ProgressView()
-                                }
-                                else {
-                                    Text("Zugangsdaten senden")
-                                }
-                            }
-                            .disabled(!canSendCredentials)
-                            Spacer()
-                        }
-                    }
-                    
-                    if layoutModel.isCompactWidth {
-                        Section {
-                            Button(action: {
-                                bleManager.triggerWiFiScan()
-                                scanSessionID += 1
-                            }) {
-                                Text("Nach verfügbaren Netzwerken suchen")
-                            }
-                            .disabled(!bleManager.isConnected || bleManager.deviceState == .updating)
-                        }
-                    } else {
-                        if #unavailable(iOS 26) {
-                            Section {
-                                Button(action: {
-                                    bleManager.triggerWiFiScan()
-                                    scanSessionID += 1
-                                }) {
-                                    Text("Nach verfügbaren Netzwerken suchen")
-                                }
-                                .disabled(!bleManager.isConnected || bleManager.deviceState == .updating)
-                            }
-                        }
-                    }
-                    
-                    Section(header: Text("Bluetooth"),
-                            footer: Text("Bei Verbindungsproblemen das gespeicherte Gerät entfernen und die Verbindung neu aufbauen.")) {
-                        Button(action: {
-                            AccessorySessionManager.shared.showAccessoryPicker()
-                        }) {
-                            Text("Verbindung herstellen")
-                        }
-                        .disabled(!AccessorySessionManager.shared.canConnect)
-                        
-                        Button(action: {
-                            AccessorySessionManager.shared.forgetAccessory()
-                        }) {
-                            Text("Gespeichertes Gerät entfernen")
-                        }
-                        .foregroundColor(.red)
+        VStack {
+            List {
+                Section {
+                    Group {
+                        StatusHeaderView(
+                            isConnected: bleManager.isConnected,
+                            isWiFiConnected: isWiFiConnected,
+                            showWiFiError: showWiFiError,
+                            shouldWiggleWiFiIcon: shouldWiggleWiFiIcon,
+                            shouldBounceWiFiIcon: shouldBounceWiFiIcon
+                        )
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
                     }
                 }
-                .ignoresSafeArea(.keyboard, edges: .bottom)
-                .navigationTitle("Verbindung")
-                .navigationBarTitleDisplayMode(!layoutModel.isCompactWidth ? .inline : .large)
-                .toolbar {
-                    if !layoutModel.isCompactWidth {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button {
-                                dismiss()
-                            } label: {
-                                if #available(iOS 26, *) {
-                                    Image(systemName: "xmark")
-                                } else {
-                                    Text("Schließen")
-                                }
-                            }
+                Section(header: Text("WLAN"),
+                        footer: Text("Für die WLAN-Verbindung hier nach verfügbaren Netzwerken suchen und das Passwort eingeben. Funktioniert nur mit 2,4 GHz Netzwerken.")) {
+                    if bleManager.isScanningForSSIDs {
+                        HStack {
+                            Text("Netzwerk")
+                            Spacer()
+                            ProgressView()
                         }
-                        if #available(iOS 26, *) {
-                            ToolbarItem(placement: .topBarLeading) {
-                                Button {
-                                    bleManager.triggerWiFiScan()
-                                    scanSessionID += 1
-                                } label: {
-                                    Text("Netzwerk-Scan")
-                                }
-                                .disabled(!bleManager.isConnected || bleManager.deviceState == .updating)
-                            }
+                        .id(scanSessionID)
+                    } else {
+                        SSIDPickerView(ssids: visibleSSIDs, selectedSSID: $wifiSSID, scanSessionID: scanSessionID)
+                    }
+                    ClearableSecureField(text: $wifiPassword, placeholder: NSLocalizedString("Passwort", comment: "Wi‑Fi password placeholder")) {
+                        if canSendCredentials {
+                            performSendCredentials()
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            performSendCredentials()
+                        }) {
+                            if isConnectingToWiFi {
+                                ProgressView()
+                            }
+                            else {
+                                Text("Zugangsdaten senden")
+                            }
+                        }
+                        .disabled(!canSendCredentials)
+                        Spacer()
+                    }
+                }
+                
+                // On iPad with iOS 26 the scan button sits in the toolbar instead.
+                if layoutModel.isCompactWidth {
+                    Section { scanButton("Nach verfügbaren Netzwerken suchen") }
+                } else if #unavailable(iOS 26) {
+                    Section { scanButton("Nach verfügbaren Netzwerken suchen") }
+                }
+                
+                Section(header: Text("Bluetooth"),
+                        footer: Text("Bei Verbindungsproblemen das gespeicherte Gerät entfernen und die Verbindung neu aufbauen.")) {
+                    Button(action: {
+                        AccessorySessionManager.shared.showAccessoryPicker()
+                    }) {
+                        Text("Verbindung herstellen")
+                    }
+                    .disabled(!AccessorySessionManager.shared.canConnect)
+                    
+                    Button(action: {
+                        AccessorySessionManager.shared.forgetAccessory()
+                    }) {
+                        Text("Gespeichertes Gerät entfernen")
+                    }
+                    .foregroundColor(.red)
                 }
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
-            .background(Color(UIColor.systemGroupedBackground))
+            .navigationTitle("Verbindung")
+            .navigationBarTitleDisplayMode(!layoutModel.isCompactWidth ? .inline : .large)
+            .toolbar {
+                if !layoutModel.isCompactWidth {
+                    SheetCloseButton()
+                    if #available(iOS 26, *) {
+                        ToolbarItem(placement: .topBarLeading) { scanButton("Netzwerk-Scan") }
+                    }
+                }
+            }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .background(Color(UIColor.systemGroupedBackground))
         .onChange(of: bleManager.status.wifiConnectionResult) { _, newValue in
             if let newValue {
                 isConnectingToWiFi = false
@@ -344,11 +280,10 @@ struct ConnectionView: View {
                     shouldBounceWiFiIcon.toggle()
                 } else {
                     shouldWiggleWiFiIcon.toggle()
-                    isWiFiErrorHighlight = true
-                    showWiFiErrorText = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
-                        isWiFiErrorHighlight = false
-                        showWiFiErrorText = false
+                    showWiFiError = true
+                    Task {
+                        try? await Task.sleep(for: .seconds(3.5))
+                        showWiFiError = false
                     }
                 }
             }

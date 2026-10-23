@@ -14,13 +14,18 @@ struct RotatingTimelapseIcon: View {
     private let motorDeceleration: Double = 0.05
     private let friction: Double = 0.98
 
+    /// The timeline only runs while the spool moves; at rest it would redraw at 120 fps for nothing.
+    private var isResting: Bool {
+        bleManager.deviceState != .running && dragStartOffset == nil && abs(angularVelocity) < 0.01
+    }
+
     var body: some View {
         GeometryReader { geo in
             let spoolRadius = min(geo.size.width, geo.size.height) / 2
             let center = CGPoint(x: geo.size.width / 2, y: geo.size.height / 2)
             let deadZoneRadius = spoolRadius * 0.25
 
-            TimelineView(.animation(minimumInterval: 1.0 / 120.0)) { context in
+            TimelineView(.animation(minimumInterval: 1.0 / 120.0, paused: isResting)) { context in
                 ZStack {
                     Image("BambuSpool")
                         .resizable()
@@ -71,24 +76,24 @@ struct RotatingTimelapseIcon: View {
                         }
                 )
                 .onChange(of: context.date) {
-                    DispatchQueue.main.async {
-                        guard dragStartOffset == nil else {
-                            lastUpdate = context.date
-                            return
-                        }
-
-                        let dt = context.date.timeIntervalSince(lastUpdate)
+                    guard dragStartOffset == nil else {
                         lastUpdate = context.date
-
-                        let targetSpeed = bleManager.deviceState == .running ? maxMotorSpeed : 0.0
-                        let smoothing = (targetSpeed > angularVelocity) ? motorAcceleration : motorDeceleration
-                        angularVelocity += (targetSpeed - angularVelocity) * smoothing
-                        angularVelocity *= friction
-
-                        let clampedVelocity = angularVelocity.clamped(to: -15...15)
-                        rotation += clampedVelocity * dt * 60.0
-                        rotation = rotation.truncatingRemainder(dividingBy: 360)
+                        return
                     }
+
+                    // Capped so the spool doesn't jump after the timeline was paused.
+                    let dt = min(context.date.timeIntervalSince(lastUpdate), 1.0 / 30.0)
+                    lastUpdate = context.date
+
+                    let targetSpeed = bleManager.deviceState == .running ? maxMotorSpeed : 0.0
+                    let smoothing = (targetSpeed > angularVelocity) ? motorAcceleration : motorDeceleration
+                    angularVelocity += (targetSpeed - angularVelocity) * smoothing
+                    angularVelocity *= friction
+                    if targetSpeed == 0 && abs(angularVelocity) < 0.01 { angularVelocity = 0 }
+
+                    let clampedVelocity = angularVelocity.clamped(to: -15...15)
+                    rotation += clampedVelocity * dt * 60.0
+                    rotation = rotation.truncatingRemainder(dividingBy: 360)
                 }
             }
         }

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct UpgradeCodeView: View {
-    @Environment(\.dismiss) private var dismiss
     @State private var didCopy = false
 
     var body: some View {
@@ -64,17 +63,7 @@ struct UpgradeCodeView: View {
         .padding(.trailing, 20)
         .navigationTitle("Neues Control Board")
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    dismiss()
-                } label: {
-                    if #available(iOS 26.0, *) {
-                        Image(systemName: "xmark")
-                    } else {
-                        Text("Schließen")
-                    }
-                }
-            }
+            SheetCloseButton()
         }
     }
 }

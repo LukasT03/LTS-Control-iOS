@@ -5,16 +5,37 @@ struct TipsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(LayoutModel.self) private var layoutModel
     
-    @State private var smallTipProduct: Product?
-    @State private var mediumTipProduct: Product?
-    @State private var bigTipProduct: Product?
-    @State private var biggerTipProduct: Product?
-    @State private var biggestTipProduct: Product?
+    private static let productIDs = ["smallTip", "mediumTip", "bigTip", "biggerTip", "biggestTip"]
 
+    @State private var products: [String: Product] = [:]
     @State private var isPurchasing: Bool = false
     @State private var purchaseMessage: String?
     @State private var purchaseWasSuccessful: Bool = false
     @State private var selectedTipLevel: Int = 0
+
+    private var selectedProduct: Product? { products[Self.productIDs[selectedTipLevel]] }
+
+    private func changeTipLevel(by delta: Int) {
+        guard Self.productIDs.indices.contains(selectedTipLevel + delta) else { return }
+        selectedTipLevel += delta
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    }
+
+    private var buttonBackground: some View {
+        Group {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(.blue)
+            } else {
+                Capsule()
+                    .fill(.blue)
+            }
+        }
+    }
+
+    private var buttonBottomPadding: CGFloat {
+        UIDevice.current.userInterfaceIdiom == .pad ? (layoutModel.isCompactWidth ? 14 : 38) : 0
+    }
 
     var body: some View {
         NavigationStack {
@@ -49,11 +70,7 @@ struct TipsView: View {
                         HStack {
                             Spacer()
                             Button {
-                                if selectedTipLevel > 0 {
-                                    selectedTipLevel -= 1
-                                    let generator = UIImpactFeedbackGenerator(style: .light)
-                                    generator.impactOccurred()
-                                }
+                                changeTipLevel(by: -1)
                             } label: {
                                 Image(systemName: "minus.circle.fill")
                                     .resizable()
@@ -78,11 +95,7 @@ struct TipsView: View {
                             }
                             Spacer()
                             Button {
-                                if selectedTipLevel < 4 {
-                                    selectedTipLevel += 1
-                                    let generator = UIImpactFeedbackGenerator(style: .light)
-                                    generator.impactOccurred()
-                                }
+                                changeTipLevel(by: 1)
                             } label: {
                                 Image(systemName: "plus.circle.fill")
                                     .resizable()
@@ -111,30 +124,16 @@ struct TipsView: View {
                             .frame(minWidth: 0, maxWidth: 420)
                             .padding(.vertical, 15)
                     }
-                    .background(
-                        Group {
-                            if UIDevice.current.userInterfaceIdiom == .pad {
-                                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                    .fill(.blue)
-                            } else {
-                                Capsule()
-                                    .fill(.blue)
-                            }
-                        }
-                    )
+                    .background(buttonBackground)
                     .foregroundColor(.white)
                     .padding(.horizontal, 36)
-                    .padding(.bottom, UIDevice.current.userInterfaceIdiom == .pad ? (layoutModel.isCompactWidth ? 14 : 38) : 0)
+                    .padding(.bottom, buttonBottomPadding)
                 } else {
                     Button(action: {
-                        let tipLevels: [Product?] = [smallTipProduct, mediumTipProduct, bigTipProduct, biggerTipProduct, biggestTipProduct]
-                        let selectedProduct = tipLevels[selectedTipLevel]
-                        if let product = selectedProduct {
-                            Task { await purchase(product) }
+                        if let selectedProduct {
+                            Task { await purchase(selectedProduct) }
                         }
                     }) {
-                        let tipLevels: [Product?] = [smallTipProduct, mediumTipProduct, bigTipProduct, biggerTipProduct, biggestTipProduct]
-                        let selectedProduct = tipLevels[selectedTipLevel]
                         let priceText = selectedProduct?.displayPrice ?? ""
                         Text(priceText.isEmpty ? "Unterstützen" : "Unterstützen \(priceText)")
                             .monospacedDigit()
@@ -142,30 +141,12 @@ struct TipsView: View {
                             .frame(minWidth: 0, maxWidth: 420)
                             .padding(.vertical, 15)
                     }
-                    .background(
-                        Group {
-                            if UIDevice.current.userInterfaceIdiom == .pad {
-                                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                    .fill(.blue)
-                            } else {
-                                Capsule()
-                                    .fill(.blue)
-                            }
-                        }
-                    )
+                    .background(buttonBackground)
                     .foregroundColor(.white)
                     .padding(.horizontal, 36)
-                    .padding(.bottom, UIDevice.current.userInterfaceIdiom == .pad ? (layoutModel.isCompactWidth ? 14 : 38) : 0)
-                    .disabled({
-                        let tipLevels: [Product?] = [smallTipProduct, mediumTipProduct, bigTipProduct, biggerTipProduct, biggestTipProduct]
-                        let selectedProduct = tipLevels[selectedTipLevel]
-                        return selectedProduct == nil || isPurchasing
-                    }())
-                    .redacted(reason: {
-                        let tipLevels: [Product?] = [smallTipProduct, mediumTipProduct, bigTipProduct, biggerTipProduct, biggestTipProduct]
-                        let selectedProduct = tipLevels[selectedTipLevel]
-                        return selectedProduct == nil ? .placeholder : []
-                    }())
+                    .padding(.bottom, buttonBottomPadding)
+                    .disabled(selectedProduct == nil || isPurchasing)
+                    .redacted(reason: selectedProduct == nil ? .placeholder : [])
                 }
             }
             .presentationDetents([.height(340)])
@@ -181,17 +162,8 @@ struct TipsView: View {
 
     func loadProducts() async {
         do {
-            let products = try await Product.products(for: ["smallTip", "mediumTip", "bigTip", "biggerTip", "biggestTip"])
-            for product in products {
-                switch product.id {
-                case "smallTip": smallTipProduct = product
-                case "mediumTip": mediumTipProduct = product
-                case "bigTip": bigTipProduct = product
-                case "biggerTip": biggerTipProduct = product
-                case "biggestTip": biggestTipProduct = product
-                default: break
-                }
-            }
+            let loaded = try await Product.products(for: Self.productIDs)
+            products = Dictionary(uniqueKeysWithValues: loaded.map { ($0.id, $0) })
         } catch {
             print("Fehler beim Laden der Produkte: \(error)")
         }

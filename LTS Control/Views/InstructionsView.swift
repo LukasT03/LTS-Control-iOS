@@ -3,7 +3,6 @@ import SwiftUI
 struct InstructionsView: View {
     @Environment(AccessorySessionManager.self) private var accessorySessionManager
     @Environment(LayoutModel.self) private var layoutModel
-    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
@@ -72,17 +71,7 @@ struct InstructionsView: View {
             .frame(maxHeight: .infinity, alignment: .top)
             .navigationTitle("Hinweise")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        if #available(iOS 26, *) {
-                            Image(systemName: "xmark")
-                        } else {
-                            Text("Schließen")
-                        }
-                    }
-                }
+                SheetCloseButton()
             }
         }
     }

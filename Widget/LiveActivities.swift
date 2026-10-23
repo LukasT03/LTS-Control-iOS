@@ -1,6 +1,7 @@
 import SwiftUI
 import WidgetKit
 import ActivityKit
+import AppIntents
 
 @main
 struct SpoolWidgets: WidgetBundle {
@@ -13,25 +14,13 @@ struct SpoolWidgets: WidgetBundle {
 struct SpoolWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: SpoolActivityAttributes.self) { context in
-            SpoolActivityView(context: context)
+            SpoolActivityView(state: context.state)
         } dynamicIsland: { context in
-            let isError = (context.state.deviceState.rawValue == "autoStop")
-            let isPaused = (context.state.deviceState.rawValue == "paused")
-            let isDone = (context.state.deviceState.rawValue == "done")
+            let parts = ActivityParts(state: context.state)
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    if isPaused {
-                        Button(intent: StopMotorIntent()) {
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .padding(6)
-                                .scaledToFit()
-                                .frame(height: 52)
-                        }
-                        .buttonStyle(.bordered)
-                        .buttonBorderShape(.circle)
-                        .frame(width: 52, height: 52)
-                        .tint(.red)
+                    if parts.isPaused {
+                        parts.stopButton
                     } else {
                         Image("BambuSpoolWhite")
                             .resizable()
@@ -39,98 +28,17 @@ struct SpoolWidget: Widget {
                             .frame(height: 52)
                     }
                 }
-
                 DynamicIslandExpandedRegion(.center) {
                     VStack(spacing: 4) {
-                        HStack {
-                            if isError {
-                                Text("Auto-Stopp!")
-                                    .foregroundColor(.red)
-                            } else if isPaused {
-                                Text("Pausiert")
-                            } else if context.state.deviceState.rawValue == "done" {
-                                Text("Fertig!")
-                            } else {
-                                Text("\(Int((context.state.progress).rounded()))%")
-                                    .monospacedDigit()
-                            }
-                        Spacer()
-                            
-                        let remaining = context.state.remainingTime ?? 0
-                        let minutes = remaining / 60
-                        let seconds = remaining % 60
-                        Text(String(format: "-%02d:%02d", minutes, seconds))
-                            .monospacedDigit()
-                    
-                        }
-                        .padding(.horizontal, 6)
-                        
-                        ProgressView(value: context.state.progress / 100.0)
-                            .progressViewStyle(CustomProgressStyle(
-                                isError: isError,
-                                isDone: context.state.deviceState.rawValue == "done",
-                                isPaused: isPaused
-                            ))
-                            .frame(maxWidth: .infinity)
+                        parts.statusRow
+                            .padding(.horizontal, 6)
+                        parts.progressBar
                             .padding(.horizontal, 6)
                             .tint(.blue)
                     }
                 }
-
                 DynamicIslandExpandedRegion(.trailing) {
-                    if isError {
-                        Button(intent: StartMotorIntent()) {
-                            Image(systemName: "play.fill")
-                                .resizable()
-                                .padding(5.7)
-                                .padding(.leading, 2.3)
-                                .padding(.trailing, -2.3)
-                                .scaledToFit()
-                                .frame(height: 52)
-                        }
-                        .buttonStyle(.bordered)
-                        .buttonBorderShape(.circle)
-                        .frame(width: 52, height: 52)
-                        .tint(.blue)
-                    } else if isPaused {
-                        Button(intent: StartMotorIntent()) {
-                            Image(systemName: "play.fill")
-                                .resizable()
-                                .padding(5.7)
-                                .padding(.leading, 2.3)
-                                .padding(.trailing, -2.3)
-                                .scaledToFit()
-                                .frame(height: 52)
-                        }
-                        .buttonStyle(.bordered)
-                        .buttonBorderShape(.circle)
-                        .frame(width: 52, height: 52)
-                        .tint(.blue)
-                    } else if isDone {
-                        Button(intent: StopMotorIntent()) {
-                            Image(systemName: "checkmark")
-                                .resizable()
-                                .padding(6)
-                                .scaledToFit()
-                                .frame(height: 52)
-                        }
-                        .buttonStyle(.bordered)
-                        .buttonBorderShape(.circle)
-                        .frame(width: 52, height: 52)
-                        .tint(.blue)
-                    } else {
-                        Button(intent: PauseMotorIntent()) {
-                            Image(systemName: "pause.fill")
-                                .resizable()
-                                .padding(7)
-                                .scaledToFit()
-                                .frame(height: 52)
-                        }
-                        .buttonStyle(.bordered)
-                        .buttonBorderShape(.circle)
-                        .frame(width: 52, height: 52)
-                        .tint(.blue)
-                    }
+                    parts.mainButton
                 }
             } compactLeading: {
                 Image("BambuSpoolWhite")
@@ -141,43 +49,137 @@ struct SpoolWidget: Widget {
                     .clipped()
                     .padding(.trailing, 2)
             } compactTrailing: {
-                if isError {
-                    Image(systemName: "exclamationmark.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 23, height: 23)
-                        .foregroundColor(.red)
-                } else if isPaused {
-                    ThickCircularProgressView(progress: context.state.progress / 100.0, color: .orange)
-                } else if isDone {
-                    Image(systemName: "checkmark.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 23, height: 23)
-                        .foregroundColor(.green)
-                } else {
-                    ThickCircularProgressView(progress: context.state.progress / 100.0)
-                }
+                parts.compactIndicator
             } minimal: {
-                if isError {
-                    Image(systemName: "exclamationmark.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 23, height: 23)
-                        .foregroundColor(.red)
-                } else if isPaused {
-                    ThickCircularProgressView(progress: context.state.progress / 100.0, color: .orange)
-                } else if isDone {
-                    Image(systemName: "checkmark.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 23, height: 23)
-                        .foregroundColor(.green)
-                } else {
-                    ThickCircularProgressView(progress: context.state.progress / 100.0)
-                }
+                parts.compactIndicator
             }
         }
+    }
+}
+
+struct SpoolActivityView: View {
+    let state: SpoolActivityAttributes.ContentState
+
+    var body: some View {
+        let parts = ActivityParts(state: state)
+        HStack(spacing: 12) {
+            Group {
+                if parts.isPaused {
+                    parts.stopButton
+                } else {
+                    Image("BambuSpoolWhite")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 52, height: 52)
+                }
+            }
+            .padding(.leading, 14)
+
+            parts.mainButton
+
+            VStack(alignment: .leading, spacing: 4) {
+                Spacer()
+                parts.statusRow
+                parts.progressBar
+                Spacer()
+            }
+
+            Spacer()
+        }
+        .padding(.vertical, 12)
+    }
+}
+
+/// Building blocks shared by the Lock Screen view and the Dynamic Island.
+private struct ActivityParts {
+    let state: SpoolActivityAttributes.ContentState
+
+    var isError: Bool { state.deviceState == .autoStop }
+    var isPaused: Bool { state.deviceState == .paused }
+    var isDone: Bool { state.deviceState == .done }
+
+    var stopButton: some View {
+        CircleIntentButton(intent: StopMotorIntent(), systemImage: "xmark", padding: 6, tint: .red)
+    }
+
+    /// Resume after a pause or auto-stop, dismiss when done, pause while running.
+    @ViewBuilder var mainButton: some View {
+        if isError || isPaused {
+            CircleIntentButton(intent: StartMotorIntent(), systemImage: "play.fill", padding: 5.7, nudgeRight: 2.3, tint: .blue)
+        } else if isDone {
+            CircleIntentButton(intent: StopMotorIntent(), systemImage: "checkmark", padding: 6, tint: .blue)
+        } else {
+            CircleIntentButton(intent: PauseMotorIntent(), systemImage: "pause.fill", padding: 7, tint: .blue)
+        }
+    }
+
+    var statusRow: some View {
+        HStack {
+            if isError {
+                Text("Auto-Stopp!")
+                    .foregroundColor(.red)
+            } else if isPaused {
+                Text("Pausiert")
+            } else if isDone {
+                Text("Fertig!")
+            } else {
+                Text("\(Int(state.progress.rounded()))%")
+                    .monospacedDigit()
+            }
+            Spacer()
+            let remaining = state.remainingTime ?? 0
+            Text(String(format: "-%02d:%02d", remaining / 60, remaining % 60))
+                .monospacedDigit()
+        }
+    }
+
+    var progressBar: some View {
+        ProgressView(value: state.progress / 100.0)
+            .progressViewStyle(CustomProgressStyle(isError: isError, isDone: isDone, isPaused: isPaused))
+            .frame(maxWidth: .infinity)
+    }
+
+    @ViewBuilder var compactIndicator: some View {
+        if isError {
+            Image(systemName: "exclamationmark.circle")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 23, height: 23)
+                .foregroundColor(.red)
+        } else if isDone {
+            Image(systemName: "checkmark.circle")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 23, height: 23)
+                .foregroundColor(.green)
+        } else {
+            ThickCircularProgressView(progress: state.progress / 100.0, color: isPaused ? .orange : .blue)
+        }
+    }
+}
+
+private struct CircleIntentButton<Intent: AppIntent>: View {
+    let intent: Intent
+    let systemImage: String
+    let padding: CGFloat
+    /// Optical centering for asymmetric symbols like "play.fill".
+    var nudgeRight: CGFloat = 0
+    let tint: Color
+
+    var body: some View {
+        Button(intent: intent) {
+            Image(systemName: systemImage)
+                .resizable()
+                .padding(padding)
+                .padding(.leading, nudgeRight)
+                .padding(.trailing, -nudgeRight)
+                .scaledToFit()
+                .frame(height: 52)
+        }
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.circle)
+        .frame(width: 52, height: 52)
+        .tint(tint)
     }
 }
 
@@ -203,152 +205,20 @@ struct ThickCircularProgressView: View {
     }
 }
 
-struct SpoolActivityView: View {
-    let context: ActivityViewContext<SpoolActivityAttributes>
-
-    var body: some View {
-        let isError = (context.state.deviceState.rawValue == "autoStop")
-        let isPaused = (context.state.deviceState.rawValue == "paused")
-        let isDone = (context.state.deviceState.rawValue == "done")
-        HStack(spacing: 12) {
-            if isPaused {
-                Button(intent: StopMotorIntent()) {
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .padding(6)
-                        .scaledToFit()
-                        .frame(height: 52)
-                }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.circle)
-                .frame(width: 52, height: 52)
-                .tint(.red)
-                .padding(.leading, 14)
-            } else {
-                Image("BambuSpoolWhite")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 52, height: 52)
-                    .padding(.leading, 14)
-            }
-            
-            if isError {
-                Button(intent: StartMotorIntent()) {
-                    Image(systemName: "play.fill")
-                        .resizable()
-                        .padding(5.7)
-                        .padding(.leading, 2.3)
-                        .padding(.trailing, -2.3)
-                        .scaledToFit()
-                        .frame(height: 52)
-                }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.circle)
-                .frame(width: 52, height: 52)
-                .tint(.blue)
-            } else if isPaused {
-                Button(intent: StartMotorIntent()) {
-                    Image(systemName: "play.fill")
-                        .resizable()
-                        .padding(5.7)
-                        .padding(.leading, 2.3)
-                        .padding(.trailing, -2.3)
-                        .scaledToFit()
-                        .frame(height: 52)
-                }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.circle)
-                .frame(width: 52, height: 52)
-                .tint(.blue)
-            } else if isDone {
-                Button(intent: StopMotorIntent()) {
-                    Image(systemName: "checkmark")
-                        .resizable()
-                        .padding(6)
-                        .scaledToFit()
-                        .frame(height: 52)
-                }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.circle)
-                .frame(width: 52, height: 52)
-                .tint(.blue)
-            } else {
-                Button(intent: PauseMotorIntent()) {
-                    Image(systemName: "pause.fill")
-                        .resizable()
-                        .padding(7)
-                        .scaledToFit()
-                        .frame(height: 52)
-                }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.circle)
-                .frame(width: 52, height: 52)
-                .tint(.blue)
-            }
-
-            VStack(alignment: .leading, spacing: 4) {
-                Spacer()
-                HStack {
-                    if isError {
-                        Text("Auto-Stopp!")
-                            .foregroundColor(.red)
-                    } else if isPaused {
-                        Text("Pausiert")
-                    } else if context.state.deviceState.rawValue == "done" {
-                        Text("Fertig!")
-                    } else {
-                        Text("\(Int((context.state.progress).rounded()))%")
-                            .monospacedDigit()
-                    }
-                Spacer()
-                    
-                let remaining = context.state.remainingTime ?? 0
-                let minutes = remaining / 60
-                let seconds = remaining % 60
-                Text(String(format: "-%02d:%02d", minutes, seconds))
-                    .monospacedDigit()
-            
-                }
-                
-                ProgressView(value: context.state.progress / 100.0)
-                    .progressViewStyle(CustomProgressStyle(
-                        isError: isError,
-                        isDone: context.state.deviceState.rawValue == "done",
-                        isPaused: isPaused
-                    ))
-                    .frame(maxWidth: .infinity)
-                Spacer()
-            }
-
-            Spacer()
-        }
-        .padding(.vertical, 12)
-    }
-}
-
 struct CustomProgressStyle: ProgressViewStyle {
     var isError: Bool
     var isDone: Bool = false
     var isPaused: Bool = false
-    @Environment(\.colorScheme) var colorScheme
+
     func makeBody(configuration: Configuration) -> some View {
         GeometryReader { geometry in
             let progress = CGFloat(configuration.fractionCompleted ?? 0.0)
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 5)
-                    .fill({
-                        if isError { return Color.red.opacity(0.2) }
-                        if isPaused { return Color.orange.opacity(0.2) }
-                        return Color.gray.opacity(0.2)
-                    }())
+                    .fill(isError ? Color.red.opacity(0.2) : isPaused ? Color.orange.opacity(0.2) : Color.gray.opacity(0.2))
 
                 Rectangle()
-                    .fill({
-                        if isError { return Color.red }
-                        if isDone { return Color.green }
-                        if isPaused { return Color.orange }
-                        return Color.blue
-                    }())
+                    .fill(isError ? Color.red : isDone ? Color.green : isPaused ? Color.orange : Color.blue)
                     .frame(width: geometry.size.width * progress)
             }
             .frame(height: 10)

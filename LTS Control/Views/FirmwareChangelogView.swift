@@ -115,7 +115,6 @@ final class FirmwareChangelogViewModel: ObservableObject {
 }
 
 struct FirmwareChangelogView: View {
-    @Environment(\.dismiss) private var dismiss
     @StateObject private var vm: FirmwareChangelogViewModel
     @AppStorage("FirmwareChangelog.entriesSignature") private var storedEntriesSignature: Int = 0
     @State private var shouldAnimate = false
@@ -220,17 +219,7 @@ struct FirmwareChangelogView: View {
         }
         .navigationTitle("Versionsverlauf")
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    dismiss()
-                } label: {
-                    if #available(iOS 26, *) {
-                        Image(systemName: "xmark")
-                    } else {
-                        Text("Schließen")
-                    }
-                }
-            }
+            SheetCloseButton()
         }
     }
 }

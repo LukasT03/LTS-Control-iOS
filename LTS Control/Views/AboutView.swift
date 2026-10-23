@@ -9,508 +9,286 @@ struct AboutView: View {
         case connection
         var id: Self { self }
     }
-    @Environment(LayoutModel.self) private var layoutModel
-    @Environment(\.colorScheme) private var colorScheme
 
     struct UpdateButtonStyle: ButtonStyle {
         @Environment(\.isEnabled) private var isEnabled
         @Environment(\.colorScheme) private var colorScheme
-        
-        var enabledFill: Color = Color.green
-        var disabledFill: Color { Color.gray.opacity(colorScheme == .dark ? 0.24 : 0.16) }
+
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .padding(.vertical, 15)
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 11, style: .continuous)
-                        .fill(isEnabled ? enabledFill.opacity(configuration.isPressed ? 0.15 : 0.2)
-                                         : disabledFill)
+                        .fill(isEnabled ? Color.green.opacity(configuration.isPressed ? 0.15 : 0.2)
+                                        : Color.gray.opacity(colorScheme == .dark ? 0.24 : 0.16))
                 )
-                .foregroundStyle(isEnabled ? (configuration.isPressed ? Color.green.opacity(0.75) : Color.green.opacity(1.0)) : Color.gray.opacity(colorScheme == .dark ? 0.45 : 0.4))
+                .foregroundStyle(isEnabled ? Color.green.opacity(configuration.isPressed ? 0.75 : 1.0) : Color.gray.opacity(colorScheme == .dark ? 0.45 : 0.4))
                 .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
         }
     }
+
     @Environment(BLEManager.self) private var bleManager
-    
-    @State private var updateButtonDisabledUntil: Date? = nil
-    @State private var boardFirmwareVersion = "–"
-    @State private var latestFirmwareVersion = "–"
-    @State private var holdUpdateAvailableUntil: Date? = nil
-    @State private var hasAppliedFirstUpdateAvailableDelay: Bool = false
-    @State private var firmwareTimer: Timer? = nil
-    @State private var showTipsView = false
-    @State private var footerHeight: CGFloat = 0
-    @State private var boardVersion: String? = UserDefaults.standard.string(forKey: "boardVersion")
-    @State private var didAppear: Bool = false
+    @Environment(LayoutModel.self) private var layoutModel
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.scenePhase) private var scenePhase
 
     @Binding var presentedSheet: AboutSheet?
 
-    var footerNSAttributed: NSAttributedString {
+    @State private var firmware = FirmwareUpdateModel()
+    @State private var showTipsView = false
+    @State private var footerHeight: CGFloat = 0
+    @State private var didAppear = false
+    /// Right after connecting the board hasn't reported Wi‑Fi and firmware yet, so the update button waits a moment.
+    @State private var isSettlingAfterConnect = false
+
+    private var status: DeviceStatus { bleManager.status }
+
+    private var boardFirmware: String? {
+        guard let fw = status.firmwareVersion, !fw.isEmpty else { return nil }
+        return fw
+    }
+
+    private var isWiFiConnected: Bool { bleManager.isConnected && status.wifiConnected == true }
+    private var isUpdateAvailable: Bool { firmware.isUpdateAvailable(for: boardFirmware) }
+    private var isUpdating: Bool { bleManager.deviceState == .updating }
+    private var isUpdateButtonEnabled: Bool { isUpdateAvailable && isWiFiConnected && !isSettlingAfterConnect }
+
+    /// The V3 Control Board is stuck on firmware 1.0.0 and gets no more updates.
+    private var isV3Blocked: Bool {
+        (status.boardVersion?.contains("CtrBoard V3") ?? false) && boardFirmware == "1.0.0"
+    }
+
+    private var updateStatusText: LocalizedStringKey {
+        if isV3Blocked { return "Updates nicht unterstützt" }
+        if !bleManager.isConnected { return "Board nicht verbunden" }
+        if isUpdating { return "Firmware wird aktualisiert..." }
+        if status.otaSuccess == true { return "Firmware ist aktuell" }
+        if status.otaSuccess == false { return "Update fehlgeschlagen!" }
+        if isUpdateAvailable, let from = boardFirmware, let to = firmware.latestVersion {
+            return "Update verfügbar (\(from) → \(to))"
+        }
+        return "Firmware ist aktuell"
+    }
+
+    private var boardTypeLabel: String? {
+        guard let raw = status.boardVersion else { return nil }
+        let isPro = status.boardVariant == .pro
+        if raw.contains("CtrBoard V3") { return "Control Board V3" }
+        if raw.contains("CtrBoard V4") || raw.contains("LTS CB") { return isPro ? "Control Board (Pro)" : "Control Board" }
+        if raw.contains("LTS DB") { return isPro ? "Driver Board (Pro)" : "Driver Board" }
+        if raw.localizedCaseInsensitiveContains("esp32 PCB") { return "Driver Board" }
+        return nil
+    }
+
+    private var footerText: NSAttributedString {
         let text = NSLocalizedString("© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Deutschland, info@lts-design.com", comment: "about footer")
-        let attr = NSMutableAttributedString(string: text)
         let style = NSMutableParagraphStyle()
         style.lineHeightMultiple = 0.86
-        attr.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attr.length))
-        attr.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .footnote), range: NSRange(location: 0, length: attr.length))
-        attr.addAttribute(.foregroundColor, value: UIColor.secondaryLabel, range: NSRange(location: 0, length: attr.length))
-        return attr
+        return NSAttributedString(string: text, attributes: [
+            .paragraphStyle: style,
+            .font: UIFont.preferredFont(forTextStyle: .footnote),
+            .foregroundColor: UIColor.secondaryLabel,
+        ])
     }
 
     var body: some View {
         @Bindable var bleManager = bleManager
-        let isBLEConnected = bleManager.isConnected
-        let isWiFiConnected = (isBLEConnected && (bleManager.status.wifiConnected ?? false))
-        let effectiveBoardFW: String = {
-            if bleManager.isConnected, let fw = bleManager.status.firmwareVersion, !fw.isEmpty { return fw }
-            if !boardFirmwareVersion.isEmpty { return boardFirmwareVersion }
-            return "–"
-        }()
-        let (alertTitle, alertMessage): (String, String) = {
-            if bleManager.status.otaSuccess == true {
-                return (
-                    NSLocalizedString("Update erfolgreich!", comment: "OTA result alert title"),
-                    NSLocalizedString("Das OTA-Update war erfolgreich.", comment: "OTA result alert message")
-                )
-            } else {
-                return (
-                    NSLocalizedString("Update fehlgeschlagen!", comment: "OTA result alert title"),
-                    NSLocalizedString("Das OTA-Update ist fehlgeschlagen. Stelle sicher, dass das verbundene WLAN über eine funktionierende Internetverbindung verfügt.", comment: "OTA result alert message")
-                )
-            }
-        }()
-        let isV3Board = (boardVersion?.contains("CtrBoard V3") ?? false)
 
-        GeometryReader{ geo in
-            ZStack {
-                ( !layoutModel.isCompactWidth && colorScheme == .dark ? Color.clear : Color(UIColor.systemGroupedBackground) )
-                    .ignoresSafeArea()
-                VStack {
-                    
-                    Spacer()
-                    VStack{
-                        Image("AppIconSquare")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 170)
-                            .shadow(color: Color.black.opacity(0.1), radius: 12)
-                        
-                        Text("LTS Control")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .padding(.top, 20)
-                        
-                        if let boardType = boardTypeLabel(for: boardVersion) {
-                            Text(boardType)
-                                .font(.subheadline)
-                                .foregroundColor(Color(UIColor.secondaryLabel))
-                                .padding(.bottom, 4)
-                        }
-                        
-                        Text("App Version: \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "–")")
-                            .font(.subheadline)
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                        
-                        if effectiveBoardFW != "–" {
-                            Text("Board Version: \(effectiveBoardFW)")
-                                .font(.subheadline)
-                                .foregroundColor(Color(UIColor.secondaryLabel))
-                        }
-                    }
+        ZStack {
+            (!layoutModel.isCompactWidth && colorScheme == .dark ? Color.clear : Color(UIColor.systemGroupedBackground))
+                .ignoresSafeArea()
+            VStack {
+                Spacer()
+                header
+                Spacer()
 
-                    Spacer()
-
-                    VStack(spacing: 0) {
-                        if layoutModel.isCompactWidth {
-                            HStack(spacing: 12) {
-                                ZStack {
-                                    Capsule()
-                                        .fill(Color(UIColor.secondarySystemGroupedBackground))
-                                        .frame(height: 50)
-                                        .shadow(color: Color.black.opacity(0.07), radius: 6)
-                                    Button {
-                                        presentedSheet = .instructions
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "info.circle")
-                                                .font(.system(size: 23.5))
-                                                .frame(width: 28, height: 28)
-                                                .foregroundStyle(.indigo)
-                                            Text("Hinweise")
-                                            Spacer()
-                                            Image(systemName: "chevron.right")
-                                                .foregroundStyle(.tertiary)
-                                                .font(.system(size: 14))
-                                                .fontWeight(.semibold)
-                                        }
-                                        .padding(.horizontal, 12)
-                                        .frame(height: 30)
-                                    }
-                                    .buttonStyle(.borderless)
-                                    .tint(.primary)
-                                }
-                                
-                                ZStack {
-                                    Capsule()
-                                        .fill(Color(UIColor.secondarySystemGroupedBackground))
-                                        .frame(height: 50)
-                                        .shadow(color: Color.black.opacity(0.07), radius: 6)
-                                    Button {
-                                        showTipsView = true
-                                    } label: {
-                                        HStack {
-                                            Image(systemName: "cup.and.heat.waves")
-                                                .font(.system(size: 22))
-                                                .frame(width: 28, height: 28)
-                                                .foregroundStyle(.orange)
-                                            Text("Trinkgeld")
-                                            Spacer()
-                                            Image(systemName: "chevron.right")
-                                                .foregroundStyle(.tertiary)
-                                                .font(.system(size: 14))
-                                                .fontWeight(.semibold)
-                                        }
-                                        .padding(.horizontal, 12)
-                                        .frame(height: 30)
-                                    }
-                                    .buttonStyle(.borderless)
-                                    .tint(.primary)
-                                }
-                            }
-                            .frame(height: 50)
-                            .padding(.horizontal)
-                            .padding(.bottom, 20)
-                        } else {
-                            HStack {
-                                ZStack {
-                                    Capsule()
-                                        .fill(Color(UIColor.secondarySystemGroupedBackground))
-                                        .frame(height: 50)
-                                        .shadow(color: Color.black.opacity(0.07), radius: 6)
-                                    Button {
-                                        presentedSheet = .instructions
-                                    } label: {
-                                        HStack(spacing: 8) {
-                                            Image(systemName: "info.circle")
-                                                .font(.system(size: 23.5))
-                                                .frame(width: 28, height: 28)
-                                                .foregroundStyle(.indigo)
-                                            Text("Hinweise")
-                                            Spacer()
-                                            Image(systemName: "chevron.right")
-                                                .foregroundStyle(.tertiary)
-                                                .font(.system(size: 14))
-                                                .fontWeight(.semibold)
-                                        }
-                                        .padding(.horizontal, 12)
-                                        .frame(height: 50)
-                                    }
-                                    .buttonStyle(.borderless)
-                                    .tint(.primary)
-                                }
-                            }
-                            .frame(height: 50)
-                            .padding(.horizontal)
-                            .padding(.bottom, 20)
-                            
-                            HStack {
-                                ZStack {
-                                    Capsule()
-                                        .fill(Color(UIColor.secondarySystemGroupedBackground))
-                                        .frame(height: 50)
-                                        .shadow(color: Color.black.opacity(0.07), radius: 6)
-                                    Button {
-                                        presentedSheet = .connection
-                                    } label: {
-                                        HStack(spacing: 8) {
-                                            Image(systemName: "wifi")
-                                                .font(.system(size: 22))
-                                                .frame(width: 28, height: 28)
-                                                .foregroundStyle(.blue)
-                                            Text("Verbindungseinstellungen")
-                                            Spacer()
-                                            Image(systemName: "chevron.right")
-                                                .foregroundStyle(.tertiary)
-                                                .font(.system(size: 14))
-                                                .fontWeight(.semibold)
-                                        }
-                                        .padding(.horizontal, 12)
-                                        .frame(height: 50)
-                                    }
-                                    .buttonStyle(.borderless)
-                                    .tint(.primary)
-                                }
-                            }
-                            .frame(height: 50)
-                            .padding(.horizontal)
-                            .padding(.bottom, 20)
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            let v3Blocked = isV3Board && effectiveBoardFW == "1.0.0"
-                            let isUpdateAvailable = latestFirmwareVersion != "–"
-                                && effectiveBoardFW != "–"
-                                && isNewerVersion(latestFirmwareVersion, than: effectiveBoardFW)
-                            let now = Date()
-                            let isUpdateAvailableDisplayed = isUpdateAvailable && (holdUpdateAvailableUntil.map { now >= $0 } ?? true)
-                            let delayActive = updateButtonDisabledUntil.map { Date() < $0 } ?? false
-                            let isUpdateButtonEnabled = isUpdateAvailableDisplayed && isWiFiConnected && !delayActive
-                            
-                            VStack(alignment: .leading) {
-                                Text("Board Update")
-                                    .font(.headline)
-
-                                Group {
-                                    if v3Blocked {
-                                        Text("Updates nicht unterstützt")
-                                    } else if !bleManager.isConnected {
-                                        Text("Board nicht verbunden")
-                                    } else if bleManager.deviceState == .updating {
-                                        Text("Firmware wird aktualisiert...")
-                                    } else if bleManager.status.otaSuccess == true {
-                                        Text("Firmware ist aktuell")
-                                    } else if bleManager.status.otaSuccess == false {
-                                        Text("Update fehlgeschlagen!")
-                                    } else if isUpdateAvailableDisplayed {
-                                        let from = effectiveBoardFW
-                                        let to = latestFirmwareVersion
-                                        Text("Update verfügbar (\(from) → \(to))")
-                                    } else {
-                                        Text("Firmware ist aktuell")
-                                    }
-                                }
-                                .foregroundColor(.secondary)
-                                Spacer()
-                            }
-                            .padding(.horizontal)
-                            .padding(.top, 13)
-                            
-                            Button(action: {
-                                if v3Blocked { return }
-                                bleManager.triggerOTAUpdate()
-                            }) {
-                                if v3Blocked {
-                                    Text("Nicht unterstützt")
-                                        .frame(maxWidth: .infinity, maxHeight: 21)
-                                } else if bleManager.deviceState == .updating {
-                                    ProgressView()
-                                        .controlSize(.regular)
-                                        .tint(.secondary)
-                                        .frame(maxWidth: .infinity, maxHeight: 21)
-                                } else if isUpdateAvailableDisplayed && !isWiFiConnected && bleManager.isConnected {
-                                    Text("Keine WLAN-Verbindung")
-                                        .frame(maxWidth: .infinity, maxHeight: 21)
-                                } else {
-                                    Text("Firmware aktualisieren")
-                                        .frame(maxWidth: .infinity, maxHeight: 21)
-                                }
-                            }
-                            .padding(.horizontal)
-                            .padding(.bottom)
-                            .buttonStyle(UpdateButtonStyle(enabledFill: .green))
-                            .animation(.default, value: bleManager.deviceState == .updating)
-                            .animation(didAppear ? (isUpdateButtonEnabled ? .default : nil) : nil, value: isUpdateButtonEnabled)
-                            .disabled(v3Blocked || !isUpdateButtonEnabled || bleManager.deviceState == .updating)
-                        }
-                        .background(
-                            RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                .fill(Color(UIColor.secondarySystemGroupedBackground))
-                        )
-                        .frame(maxHeight: 135)
-                        .overlay(alignment: .topTrailing) {
-                            Button(action: {
-                                let effectiveBoardVersion = bleManager.status.firmwareVersion ?? boardFirmwareVersion
-                                let v3Blocked = isV3Board && effectiveBoardVersion == "1.0.0"
-                                if v3Blocked {
-                                    presentedSheet = .upgradeCode
-                                } else {
-                                    presentedSheet = .changelog
-                                }
-                            }) {
-                                Image(systemName: "questionmark.circle")
-                                    .font(.system(size: 21))
-                                    .tint(.primary)
-                            }
-                            .padding(.top, 13)
-                            .padding(.trailing, 13)
+                VStack(spacing: 0) {
+                    if layoutModel.isCompactWidth {
+                        HStack(spacing: 12) {
+                            capsuleButton("Hinweise", icon: "info.circle", iconSize: 23.5, color: .indigo) { presentedSheet = .instructions }
+                            capsuleButton("Trinkgeld", icon: "cup.and.heat.waves", iconSize: 22, color: .orange) { showTipsView = true }
                         }
                         .padding(.horizontal)
-                        
-                        GeometryReader { proxy in
-                            AttributedTextView(
-                                attributedString: footerNSAttributed,
-                                availableWidth: proxy.size.width,
-                                dynamicHeight: $footerHeight
-                            )
+                        .padding(.bottom, 20)
+                    } else {
+                        capsuleButton("Hinweise", icon: "info.circle", iconSize: 23.5, color: .indigo) { presentedSheet = .instructions }
+                            .padding(.horizontal)
+                            .padding(.bottom, 20)
+                        capsuleButton("Verbindungseinstellungen", icon: "wifi", iconSize: 22, color: .blue) { presentedSheet = .connection }
+                            .padding(.horizontal)
+                            .padding(.bottom, 20)
+                    }
+
+                    updateCard
+                        .padding(.horizontal)
+
+                    GeometryReader { proxy in
+                        AttributedTextView(attributedString: footerText, availableWidth: proxy.size.width, dynamicHeight: $footerHeight)
                             .frame(width: proxy.size.width, height: footerHeight, alignment: .leading)
+                    }
+                    .frame(height: footerHeight)
+                    .padding(.top, 10)
+                    .padding(.bottom, 4)
+                    .padding(.horizontal, layoutModel.isCompactWidth ? 32 : 20)
+                }
+                .ignoresSafeArea(.keyboard)
+                .sheet(isPresented: $showTipsView) { TipsView() }
+                .alert(status.otaSuccess == true ? LocalizedStringKey("Update erfolgreich!") : "Update fehlgeschlagen!", isPresented: $bleManager.showOTAAlert) {
+                    if status.otaSuccess == true {
+                        Button("Änderungen anzeigen") {
+                            presentedSheet = .changelog
+                            bleManager.clearOtaStatus()
                         }
-                        .frame(height: footerHeight)
-                        .padding(.top, 10)
-                        .padding(.bottom, 4)
-                        .padding(.horizontal, layoutModel.isCompactWidth ? 32 : 20)
                     }
-                    .ignoresSafeArea(.keyboard)
-                    .sheet(isPresented: $showTipsView) { TipsView() }
-                    .alert(alertTitle, isPresented: $bleManager.showOTAAlert) {
-                        if bleManager.status.otaSuccess == true {
-                            Button(NSLocalizedString("Änderungen anzeigen", comment: "Show changelog")) {
-                                presentedSheet = .changelog
-                                bleManager.clearOtaStatus()
-                            }
-                        }
-                        Button(NSLocalizedString("OK", comment: "OK")) { bleManager.clearOtaStatus() }
-                    } message: {
-                        Text(alertMessage)
-                    }
-                }
-                .ignoresSafeArea(.keyboard, edges: .bottom)
-                .onAppear {
-                    didAppear = true
-                    if let storedFW = UserDefaults.standard.string(forKey: "boardFirmwareVersion") {
-                        boardFirmwareVersion = storedFW
-                    }
-                    if let storedBoard = UserDefaults.standard.string(forKey: "boardVersion") { boardVersion = storedBoard }
-                    if let cachedLatest = UserDefaults.standard.string(forKey: "latestBoardFirmwareVersion"), !cachedLatest.isEmpty {
-                        latestFirmwareVersion = cachedLatest
-                    }
-                    self.fetchLatestFirmwareVersion()
-                    self.startFirmwareTimer()
-                }
-                .onDisappear {
-                    self.invalidateFirmwareTimer()
-                }
-                .onChange(of: bleManager.status.firmwareVersion) { _, newValue in
-                    guard let fw = newValue, !fw.isEmpty else { return }
-                    boardFirmwareVersion = fw
-                    UserDefaults.standard.set(fw, forKey: "boardFirmwareVersion")
-                }
-                .onChange(of: latestFirmwareVersion) { _, _ in
-                    scheduleFirstUpdateAvailableDelayIfNeeded()
-                }
-                .onChange(of: boardFirmwareVersion) { _, _ in
-                    scheduleFirstUpdateAvailableDelayIfNeeded()
-                }
-                .onChange(of: bleManager.isConnected) { _, newValue in
-                    if newValue == true {
-                        updateButtonDisabledUntil = Date().addingTimeInterval(1.5)
+                    Button("OK") { bleManager.clearOtaStatus() }
+                } message: {
+                    if status.otaSuccess == true {
+                        Text("Das OTA-Update war erfolgreich.")
                     } else {
-                        updateButtonDisabledUntil = nil
+                        Text("Das OTA-Update ist fehlgeschlagen. Stelle sicher, dass das verbundene WLAN über eine funktionierende Internetverbindung verfügt.")
                     }
                 }
-                .onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
-                    boardVersion = UserDefaults.standard.string(forKey: "boardVersion")
-                    if let storedFW = UserDefaults.standard.string(forKey: "boardFirmwareVersion"), !storedFW.isEmpty {
-                        boardFirmwareVersion = storedFW
+            }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+        }
+        .onAppear { didAppear = true }
+        // Checks for new firmware on appear, on every (dis)connect and when the app returns to the foreground.
+        .task(id: bleManager.isConnected) { await firmware.refresh() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { Task { await firmware.refresh() } }
+        }
+        .onChange(of: bleManager.isConnected) { _, isConnected in
+            isSettlingAfterConnect = isConnected
+        }
+        .task(id: isSettlingAfterConnect) {
+            guard isSettlingAfterConnect else { return }
+            try? await Task.sleep(for: .seconds(1.5))
+            isSettlingAfterConnect = false
+        }
+    }
+
+    private var header: some View {
+        VStack {
+            Image("AppIconSquare")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 170)
+                .shadow(color: Color.black.opacity(0.1), radius: 12)
+
+            Text("LTS Control")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.top, 20)
+
+            if let boardTypeLabel {
+                Text(boardTypeLabel)
+                    .font(.subheadline)
+                    .foregroundColor(Color(UIColor.secondaryLabel))
+                    .padding(.bottom, 4)
+            }
+
+            Text("App Version: \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "–")")
+                .font(.subheadline)
+                .foregroundColor(Color(UIColor.secondaryLabel))
+
+            if let boardFirmware {
+                Text("Board Version: \(boardFirmware)")
+                    .font(.subheadline)
+                    .foregroundColor(Color(UIColor.secondaryLabel))
+            }
+        }
+    }
+
+    private var updateCard: some View {
+        VStack(alignment: .leading) {
+            VStack(alignment: .leading) {
+                Text("Board Update")
+                    .font(.headline)
+                Text(updateStatusText)
+                    .foregroundColor(.secondary)
+                Spacer()
+            }
+            .padding(.horizontal)
+            .padding(.top, 13)
+
+            Button {
+                if !isV3Blocked { bleManager.triggerOTAUpdate() }
+            } label: {
+                Group {
+                    if isV3Blocked {
+                        Text("Nicht unterstützt")
+                    } else if isUpdating {
+                        ProgressView()
+                            .controlSize(.regular)
+                            .tint(.secondary)
+                    } else if isUpdateAvailable && !isWiFiConnected && bleManager.isConnected {
+                        Text("Keine WLAN-Verbindung")
                     } else {
-                        boardFirmwareVersion = "–"
+                        Text("Firmware aktualisieren")
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: 21)
             }
+            .padding(.horizontal)
+            .padding(.bottom)
+            .buttonStyle(UpdateButtonStyle())
+            .animation(.default, value: isUpdating)
+            .animation(didAppear && isUpdateButtonEnabled ? .default : nil, value: isUpdateButtonEnabled)
+            .disabled(isV3Blocked || !isUpdateButtonEnabled || isUpdating)
         }
-    }
-
-    private func boardTypeLabel(for raw: String?) -> String? {
-        guard let raw = raw else { return nil }
-
-        let isPro = (bleManager.status.boardVariant == .pro)
-
-        if raw.contains("CtrBoard V3") { return "Control Board V3" }
-
-        if raw.contains("CtrBoard V4") {
-            return isPro ? "Control Board (Pro)" : "Control Board"
-        }
-        if raw.contains("LTS CB") {
-            return isPro ? "Control Board (Pro)" : "Control Board"
-        }
-
-        if raw.contains("LTS DB") {
-            return isPro ? "Driver Board (Pro)" : "Driver Board"
-        }
-        if raw.localizedCaseInsensitiveContains("esp32 PCB") {
-            return "Driver Board"
-        }
-        return nil
-    }
-
-    private func isNewerVersion(_ latest: String, than current: String) -> Bool {
-        let latestParts = latest.split(separator: ".").compactMap { Int($0) }
-        let currentParts = current.split(separator: ".").compactMap { Int($0) }
-
-        let maxCount = max(latestParts.count, currentParts.count)
-        let paddedLatest = latestParts + Array(repeating: 0, count: maxCount - latestParts.count)
-        let paddedCurrent = currentParts + Array(repeating: 0, count: maxCount - currentParts.count)
-
-        return paddedLatest.lexicographicallyPrecedes(paddedCurrent) == false &&
-               paddedLatest != paddedCurrent
-    }
-
-    private func fetchLatestFirmwareVersion() {
-
-        var components = URLComponents(string: "https://respooler.lts-design.com/Firmware/latest_board_firmware.txt")
-        let bucket = Int(Date().timeIntervalSince1970 / 15)
-        let existingItems = components?.queryItems ?? []
-        components?.queryItems = existingItems + [URLQueryItem(name: "t", value: String(bucket))]
-        guard let url = components?.url else { return }
-
-        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 8)
-        request.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
-        request.setValue("no-cache", forHTTPHeaderField: "Pragma")
-
-        URLSession.shared.dataTask(with: request) { data, response, _ in
-            guard let data = data,
-                  let versionString = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  !versionString.isEmpty else { return }
-            DispatchQueue.main.async {
-                self.latestFirmwareVersion = versionString
-                UserDefaults.standard.set(versionString, forKey: "latestBoardFirmwareVersion")
+        .background(
+            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                .fill(Color(UIColor.secondarySystemGroupedBackground))
+        )
+        .frame(maxHeight: 135)
+        .overlay(alignment: .topTrailing) {
+            Button {
+                presentedSheet = isV3Blocked ? .upgradeCode : .changelog
+            } label: {
+                Image(systemName: "questionmark.circle")
+                    .font(.system(size: 21))
+                    .tint(.primary)
             }
-        }.resume()
+            .padding(.top, 13)
+            .padding(.trailing, 13)
+        }
     }
 
-    private func scheduleFirstUpdateAvailableDelayIfNeeded() {
-        if hasAppliedFirstUpdateAvailableDelay { return }
-        let effectiveBoardVersion = bleManager.status.firmwareVersion ?? boardFirmwareVersion
-        let isAvail = latestFirmwareVersion != "–"
-            && effectiveBoardVersion != "–"
-            && isNewerVersion(latestFirmwareVersion, than: effectiveBoardVersion)
-        guard isAvail else { return }
-        hasAppliedFirstUpdateAvailableDelay = true
-        holdUpdateAvailableUntil = Date().addingTimeInterval(0.5)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
-            if let until = self.holdUpdateAvailableUntil, Date() >= until {
-                self.holdUpdateAvailableUntil = nil
+    private func capsuleButton(_ title: LocalizedStringKey, icon: String, iconSize: CGFloat, color: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 8) {
+                Image(systemName: icon)
+                    .font(.system(size: iconSize))
+                    .frame(width: 28, height: 28)
+                    .foregroundStyle(color)
+                Text(title)
+                Spacer()
+                DisclosureChevron()
             }
+            .padding(.horizontal, 12)
+            .frame(height: 50)
         }
-    }
-
-    private func startFirmwareTimer() {
-        firmwareTimer?.invalidate()
-        firmwareTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
-            self.fetchLatestFirmwareVersion()
-        }
-    }
-
-    private func invalidateFirmwareTimer() {
-        firmwareTimer?.invalidate()
-        firmwareTimer = nil
+        .buttonStyle(.borderless)
+        .tint(.primary)
+        .background(
+            Capsule()
+                .fill(Color(UIColor.secondarySystemGroupedBackground))
+                .shadow(color: Color.black.opacity(0.07), radius: 6)
+        )
     }
 }
 
 #if DEBUG
 #Preview {
-    struct PreviewHost: View {
-        @State private var presentedSheet: AboutView.AboutSheet? = nil
-        var body: some View {
-            AboutView(presentedSheet: $presentedSheet)
-            .environment(\.locale, .init(identifier: "en"))
-            .environment(BLEManager.shared)
-            .environment(LayoutModel())
-        }
-    }
-    return PreviewHost()
+    AboutView(presentedSheet: .constant(nil))
+        .environment(\.locale, .init(identifier: "en"))
+        .environment(BLEManager.shared)
+        .environment(LayoutModel())
 }
 #endif
 
+/// UITextView-backed text, needed for the tighter line height of the footer.
 struct AttributedTextView: UIViewRepresentable {
     let attributedString: NSAttributedString
     let availableWidth: CGFloat
@@ -525,23 +303,14 @@ struct AttributedTextView: UIViewRepresentable {
         textView.textContainer.lineFragmentPadding = 0
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textView.isUserInteractionEnabled = false
-        textView.delegate = context.coordinator
         return textView
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.attributedText = attributedString
-        let targetSize = CGSize(width: availableWidth, height: .greatestFiniteMagnitude)
-        let height = uiView.sizeThatFits(targetSize).height
+        let height = uiView.sizeThatFits(CGSize(width: availableWidth, height: .greatestFiniteMagnitude)).height
         DispatchQueue.main.async {
-            self.dynamicHeight = height
+            dynamicHeight = height
         }
-    }
-
-    func makeCoordinator() -> Coordinator { Coordinator(self) }
-
-    class Coordinator: NSObject, UITextViewDelegate {
-        var parent: AttributedTextView
-        init(_ parent: AttributedTextView) { self.parent = parent }
     }
 }

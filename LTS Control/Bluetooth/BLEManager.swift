@@ -48,7 +48,7 @@ final class BLEManager: NSObject {
     private var isHoldingWiFiStatus = false
     private var pendingWiFiConnected: Bool?
 
-    private let sharedDefaults = UserDefaults(suiteName: "group.ltscontrol")
+    private let sharedDefaults = UserDefaults(suiteName: MotorCommand.appGroup)
 
     override init() {
         super.init()
@@ -106,9 +106,9 @@ final class BLEManager: NSObject {
 // MARK: - Commands
 
 extension BLEManager {
-    func startMotor() { sendPacket(cmd: "START") }
-    func stopMotor() { sendPacket(cmd: "STOP") }
-    func pauseMotor() { sendPacket(cmd: "PAUSE") }
+    func startMotor() { sendPacket(cmd: MotorCommand.start.rawValue) }
+    func stopMotor() { sendPacket(cmd: MotorCommand.stop.rawValue) }
+    func pauseMotor() { sendPacket(cmd: MotorCommand.pause.rawValue) }
     func triggerOTAUpdate() { sendPacket(cmd: "OTA") }
     func triggerWiFiConnect() { sendPacket(cmd: "WIFI_CONNECT") }
     func sendWiFiSSID(_ ssid: String) { sendPacket(settings: ["WIFI_SSID": ssid]) }
@@ -117,6 +117,16 @@ extension BLEManager {
     func triggerWiFiScan() {
         isScanningForSSIDs = true
         sendPacket(cmd: "WIFI_SCAN")
+    }
+
+    /// Commands from intents can arrive while the app is still connecting, e.g. right after the system
+    /// launched it in the background, so they wait up to 10 s for the connection.
+    func perform(_ command: MotorCommand) async {
+        let deadline = Date().addingTimeInterval(10)
+        while characteristic == nil, Date() < deadline {
+            try? await Task.sleep(for: .milliseconds(200))
+        }
+        sendPacket(cmd: command.rawValue)
     }
 
     func clearOtaStatus() {
@@ -307,16 +317,10 @@ extension BLEManager {
 
     /// Firmware ≤ 1.1.2 never sends VAR, so a cached Pro/Standard variant must not stick.
     private func clearVariantIfLegacyFirmware() {
-        guard let fw = status.firmwareVersion, Self.isVersion(fw, atMost: [1, 1, 2]),
+        guard let fw = status.firmwareVersion, FirmwareVersion.compare(fw, "1.1.2") != .orderedDescending,
               status.boardVariant != .unknown || status.didReceiveBoardVariant else { return }
         status.boardVariant = .unknown
         status.didReceiveBoardVariant = false
-    }
-
-    /// Accepts "1.2.0", "v1.2.0" or "1.2"; non-numeric characters are ignored.
-    private static func isVersion(_ version: String, atMost max: [Int]) -> Bool {
-        let parts = version.split(separator: ".").map { Int($0.filter(\.isNumber)) ?? 0 }
-        return !max.lexicographicallyPrecedes((parts + [0, 0, 0]).prefix(3))
     }
 
     private func syncLiveActivity() {
@@ -344,83 +348,71 @@ extension BLEManager {
 
 // MARK: - CoreBluetooth
 
-// The central runs on the main queue, so every callback is already on the main actor.
-extension BLEManager: CBCentralManagerDelegate, CBPeripheralDelegate {
-    nonisolated func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        MainActor.assumeIsolated {
-            if central.state == .poweredOn, let uuid = pendingConnectUUID {
-                connectToDevice(with: uuid)
-            }
+// The central runs on the main queue, so every callback arrives on the main actor.
+extension BLEManager: @preconcurrency CBCentralManagerDelegate, @preconcurrency CBPeripheralDelegate {
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        if central.state == .poweredOn, let uuid = pendingConnectUUID {
+            connectToDevice(with: uuid)
         }
     }
 
-    nonisolated func centralManager(_ central: CBCentralManager, didDiscover p: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        MainActor.assumeIsolated {
-            guard p.identifier == pendingConnectUUID else { return }
-            central.stopScan()
-            connect(p)
+    func centralManager(_ central: CBCentralManager, didDiscover p: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
+        guard p.identifier == pendingConnectUUID else { return }
+        central.stopScan()
+        connect(p)
+    }
+
+    func centralManager(_ central: CBCentralManager, didConnect p: CBPeripheral) {
+        p.discoverServices([Self.serviceUUID])
+        if let name = p.name, !name.isEmpty {
+            status.boardVersion = name
+        }
+        isConnected = true
+        deviceState = .idle
+        didInitialSync = false
+        availableSSIDs = nil
+        UserDefaults.standard.set(p.identifier.uuidString, forKey: "lastPeripheralUUID")
+        clearVariantIfLegacyFirmware()
+        status.save()
+        holdWiFiStatus()
+    }
+
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral p: CBPeripheral, error: Error?) {
+        peripheral = nil
+        characteristic = nil
+        resetLiveState()
+        guard let uuid = pendingConnectUUID else { return }
+        Task {
+            try? await Task.sleep(for: .seconds(3))
+            connectToDevice(with: uuid)
         }
     }
 
-    nonisolated func centralManager(_ central: CBCentralManager, didConnect p: CBPeripheral) {
-        MainActor.assumeIsolated {
-            p.discoverServices([Self.serviceUUID])
-            if let name = p.name, !name.isEmpty {
-                status.boardVersion = name
-            }
-            isConnected = true
-            deviceState = .idle
-            didInitialSync = false
-            availableSSIDs = nil
-            UserDefaults.standard.set(p.identifier.uuidString, forKey: "lastPeripheralUUID")
-            clearVariantIfLegacyFirmware()
-            status.save()
-            holdWiFiStatus()
-        }
+    func peripheral(_ p: CBPeripheral, didDiscoverServices error: Error?) {
+        guard let service = p.services?.first(where: { $0.uuid == Self.serviceUUID }) else { return }
+        p.discoverCharacteristics([Self.characteristicUUID], for: service)
     }
 
-    nonisolated func centralManager(_ central: CBCentralManager, didDisconnectPeripheral p: CBPeripheral, error: Error?) {
-        MainActor.assumeIsolated {
-            peripheral = nil
-            characteristic = nil
-            resetLiveState()
-            guard let uuid = pendingConnectUUID else { return }
-            Task { @MainActor in
-                try? await Task.sleep(for: .seconds(3))
-                connectToDevice(with: uuid)
-            }
-        }
+    func peripheral(_ p: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        guard let c = service.characteristics?.first(where: { $0.uuid == Self.characteristicUUID }) else { return }
+        characteristic = c
+        p.setNotifyValue(true, for: c)
     }
 
-    nonisolated func peripheral(_ p: CBPeripheral, didDiscoverServices error: Error?) {
-        MainActor.assumeIsolated {
-            guard let service = p.services?.first(where: { $0.uuid == Self.serviceUUID }) else { return }
-            p.discoverCharacteristics([Self.characteristicUUID], for: service)
-        }
-    }
-
-    nonisolated func peripheral(_ p: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        MainActor.assumeIsolated {
-            guard let c = service.characteristics?.first(where: { $0.uuid == Self.characteristicUUID }) else { return }
-            characteristic = c
-            p.setNotifyValue(true, for: c)
-        }
-    }
-
-    nonisolated func peripheral(_ p: CBPeripheral, didUpdateValueFor c: CBCharacteristic, error: Error?) {
-        MainActor.assumeIsolated {
-            if let data = c.value { handleIncoming(data) }
-        }
+    func peripheral(_ p: CBPeripheral, didUpdateValueFor c: CBCharacteristic, error: Error?) {
+        if let data = c.value { handleIncoming(data) }
     }
 }
 
-// MARK: - Requests from widgets, Live Activities and Shortcuts
+// MARK: - Requests from the widget extension
 
-// The intents run in other processes; they set a flag in the App Group and post a Darwin notification.
+// Fallback for intents performed in the widget extension, see `MotorCommand.run()`.
 extension BLEManager {
-    private static let motorRequestNotification = "group.ltscontrol.motorRequest"
-
     private func observeMotorRequests() {
+        // Requests left over from while the app wasn't running are stale.
+        for command in MotorCommand.allCases {
+            sharedDefaults?.removeObject(forKey: command.requestKey)
+        }
         CFNotificationCenterAddObserver(
             CFNotificationCenterGetDarwinNotifyCenter(),
             Unmanaged.passUnretained(self).toOpaque(),
@@ -429,24 +421,16 @@ extension BLEManager {
                 let manager = Unmanaged<BLEManager>.fromOpaque(observer).takeUnretainedValue()
                 DispatchQueue.main.async { manager.handleMotorRequests() }
             },
-            Self.motorRequestNotification as CFString,
+            MotorCommand.requestNotification as CFString,
             nil,
             .deliverImmediately
         )
-        NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification, object: sharedDefaults, queue: .main) { _ in
-            MainActor.assumeIsolated { self.handleMotorRequests() }
-        }
     }
 
     private func handleMotorRequests() {
-        let requests: [(key: String, action: @MainActor () -> Void)] = [
-            ("startMotorRequested", startMotor),
-            ("stopMotorRequested", stopMotor),
-            ("pauseMotorRequested", pauseMotor),
-        ]
-        for request in requests where sharedDefaults?.bool(forKey: request.key) == true {
-            sharedDefaults?.set(false, forKey: request.key)
-            request.action()
+        for command in MotorCommand.allCases where sharedDefaults?.bool(forKey: command.requestKey) == true {
+            sharedDefaults?.set(false, forKey: command.requestKey)
+            Task { await perform(command) }
         }
     }
 }

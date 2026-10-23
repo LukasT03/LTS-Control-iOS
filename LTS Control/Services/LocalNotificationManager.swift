@@ -24,31 +24,18 @@ final class LocalNotificationManager: NSObject {
 
     func setEnabled(_ enabled: Bool) {
         UserDefaults.standard.set(enabled, forKey: enabledKey)
-        if enabled {
-            requestAuthorizationIfNeeded()
-        }
     }
 
-    func requestAuthorizationIfNeeded() {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            if settings.authorizationStatus == .notDetermined {
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in }
-            }
-        }
-    }
-
-    func ensureAuthorization(completion: @escaping (Bool) -> Void) {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            switch settings.authorizationStatus {
-            case .authorized, .provisional, .ephemeral:
-                completion(true)
-            case .notDetermined:
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
-                    completion(granted)
-                }
-            default:
-                completion(false)
-            }
+    /// Asks for permission if the user hasn't decided yet; returns whether notifications are allowed.
+    func ensureAuthorization() async -> Bool {
+        let center = UNUserNotificationCenter.current()
+        switch await center.notificationSettings().authorizationStatus {
+        case .authorized, .provisional, .ephemeral:
+            return true
+        case .notDetermined:
+            return (try? await center.requestAuthorization(options: [.alert, .sound, .badge])) ?? false
+        default:
+            return false
         }
     }
 
@@ -88,6 +75,6 @@ extension LocalNotificationManager: UNUserNotificationCenterDelegate {
 
     nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         guard response.actionIdentifier == startActionID else { return }
-        await MainActor.run { BLEManager.shared.startMotor() }
+        await BLEManager.shared.perform(.start)
     }
 }

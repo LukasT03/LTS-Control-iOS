@@ -35,7 +35,7 @@ struct AdaptiveDetailRow<Destination: View>: View {
     @State private var isPresented = false
 
     let title: LocalizedStringKey
-    var value: String? = nil
+    var value: Text? = nil
     @ViewBuilder let destination: () -> Destination
 
     var body: some View {
@@ -76,7 +76,7 @@ struct AdaptiveDetailRow<Destination: View>: View {
             Text(title)
             Spacer()
             if let value {
-                Text(value)
+                value
                     .foregroundColor(valueColor)
             }
         }

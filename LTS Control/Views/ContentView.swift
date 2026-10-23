@@ -190,7 +190,7 @@ struct ContentView: View {
 
                 Spacer()
 
-                Text(bleManager.deviceStateText)
+                Text(LocalizedStringKey(bleManager.deviceStateKey))
                     .id(bleManager.deviceState)
                     .id(bleManager.isConnected)
                     .transition(.opacity.combined(with: .scale))

@@ -2,8 +2,6 @@ import Foundation
 import CoreBluetooth
 import Observation
 
-private func L(_ key: String) -> String { NSLocalizedString(key, comment: "") }
-
 /// Connection to the Respooler board. The board notifies its status as JSON,
 /// the app sends `{"CMD": …}` for commands and `{"SET": {…}}` for settings.
 @MainActor
@@ -25,8 +23,10 @@ final class BLEManager: NSObject {
     var didInitialSync = false
     var showOTAAlert = false
 
-    var deviceStateText: String {
-        isConnected ? L("state.\(deviceState.rawValue)") : L("state.disconnected")
+    /// Key in Localizable.xcstrings. Views resolve it with `LocalizedStringKey`, so it follows the
+    /// SwiftUI locale like all other texts (`NSLocalizedString` would ignore it, e.g. in previews).
+    var deviceStateKey: String {
+        isConnected ? "state.\(deviceState.rawValue)" : "state.disconnected"
     }
 
     var needsBoardVariantSelection: Bool {

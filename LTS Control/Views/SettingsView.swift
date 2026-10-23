@@ -58,7 +58,7 @@ struct SettingsView: View {
                         Text("Status")
                             .font(.headline)
                             .foregroundColor(.primary)
-                        Text(bleManager.deviceStateText)
+                        Text(LocalizedStringKey(bleManager.deviceStateKey))
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }
@@ -79,7 +79,7 @@ struct SettingsView: View {
                     Text("LED Helligkeit: \(status.ledBrightness) %")
                         .monospacedDigit()
                 }
-                AdaptiveDetailRow(title: "Respool-Menge", value: RespoolAmountView.title(for: status.targetWeight)) {
+                AdaptiveDetailRow(title: "Respool-Menge", value: Text(RespoolAmountView.title(for: status.targetWeight))) {
                     RespoolAmountView(targetWeight: binding(\.targetWeight, bleManager.setTargetWeight))
                 }
                 Toggle("Filament Sensor nutzen", isOn: binding(\.useFilamentSensor, bleManager.setUseFilamentSensor))
@@ -171,7 +171,7 @@ struct SettingsView: View {
 
             if status.boardVariant != .unknown {
                 Section {
-                    AdaptiveDetailRow(title: "Variante", value: boardVariantText) {
+                    AdaptiveDetailRow(title: "Variante", value: Text(verbatim: boardVariantText)) {
                         BoardVariantView(isInitialSelection: false)
                     }
                 }
@@ -274,12 +274,12 @@ private struct RespoolAmountView: View {
     @Binding var targetWeight: Int
 
     /// Wire values of the board's `WGT` setting.
-    static func title(for weight: Int) -> String {
+    static func title(for weight: Int) -> LocalizedStringKey {
         switch weight {
-        case 1: return NSLocalizedString("1,0 kg", comment: "Respool Amount option: 1.0 kg")
-        case 2: return NSLocalizedString("0,5 kg", comment: "Respool Amount option: 0.5 kg")
-        case 3: return NSLocalizedString("0,25 kg", comment: "Respool Amount option: 0.25 kg")
-        default: return NSLocalizedString("Gesamte Spule", comment: "Respool Amount option: entire spool")
+        case 1: "1,0 kg"
+        case 2: "0,5 kg"
+        case 3: "0,25 kg"
+        default: "Gesamte Spule"
         }
     }
 

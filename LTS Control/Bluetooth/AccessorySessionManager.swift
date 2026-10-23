@@ -1,7 +1,10 @@
 import Foundation
 import AccessorySetupKit
 import CoreBluetooth
+import os
 import UIKit
+
+private let log = Logger(subsystem: "LTS-Design.LTS-Control", category: "AccessorySetup")
 
 /// Pairs the Respooler via AccessorySetupKit and hands its Bluetooth identifier to `BLEManager`.
 @MainActor
@@ -24,6 +27,9 @@ final class AccessorySessionManager: NSObject {
         let session = ASAccessorySession()
         session.activate(on: DispatchQueue.main) { [weak self] event in
             guard let self else { return }
+            log.info("Event \(event.eventType.rawValue, privacy: .public), accessory \(event.accessory?.bluetoothIdentifier?.uuidString ?? "–", privacy: .public)")
+            // Whether the board is connected is decided by CoreBluetooth alone. Events like
+            // .accessoryChanged also arrive while the board stays connected.
             switch event.eventType {
             case .activated:
                 restorePreviousConnection()
@@ -34,8 +40,11 @@ final class AccessorySessionManager: NSObject {
                 canConnect = false
                 BLEManager.shared.connectToDevice(with: uuid)
                 BLEManager.shared.isConnected = true
-            case .accessoryRemoved, .accessoryChanged, .invalidated:
-                BLEManager.shared.resetLiveState()
+            case .accessoryRemoved:
+                // Also fires when the Respooler is removed in the iOS Settings app.
+                UserDefaults.standard.removeObject(forKey: Self.storedAccessoryKey)
+                canConnect = true
+                BLEManager.shared.forgetBoard()
             default:
                 break
             }
@@ -59,7 +68,7 @@ final class AccessorySessionManager: NSObject {
         guard let accessorySession, let accessory = accessorySession.accessories.first else { return }
         accessorySession.removeAccessory(accessory) { error in
             if let error {
-                print("Accessory removal cancelled or failed: \(error)")
+                log.error("Accessory removal cancelled or failed: \(error, privacy: .public)")
                 return
             }
             Task { @MainActor in

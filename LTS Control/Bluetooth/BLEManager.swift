@@ -1,6 +1,9 @@
 import Foundation
 import CoreBluetooth
 import Observation
+import os
+
+private let log = Logger(subsystem: "LTS-Design.LTS-Control", category: "Bluetooth")
 
 /// Connection to the Respooler board. The board notifies its status as JSON,
 /// the app sends `{"CMD": …}` for commands and `{"SET": {…}}` for settings.
@@ -61,16 +64,22 @@ final class BLEManager: NSObject {
 
     func connectToDevice(with uuid: UUID) {
         pendingConnectUUID = uuid
-        guard centralManager.state == .poweredOn else { return }
+        guard centralManager.state == .poweredOn else {
+            log.info("Connect \(uuid, privacy: .public) deferred, Bluetooth state \(self.centralManager.state.rawValue, privacy: .public)")
+            return
+        }
         if let p = centralManager.retrievePeripherals(withIdentifiers: [uuid]).first {
+            log.info("Connect \(uuid, privacy: .public) (known peripheral, state \(p.state.rawValue, privacy: .public))")
             connect(p)
         } else {
+            log.info("Connect \(uuid, privacy: .public): not known yet, scanning")
             centralManager.scanForPeripherals(withServices: [Self.serviceUUID])
         }
     }
 
     /// Disconnects and stops reconnecting, e.g. after the accessory was removed.
     func forgetBoard() {
+        log.info("Forget board")
         pendingConnectUUID = nil
         UserDefaults.standard.removeObject(forKey: "lastPeripheralUUID")
         if let peripheral {
@@ -363,6 +372,7 @@ extension BLEManager: @preconcurrency CBCentralManagerDelegate, @preconcurrency 
     }
 
     func centralManager(_ central: CBCentralManager, didConnect p: CBPeripheral) {
+        log.info("Connected to \(p.identifier, privacy: .public) (\(p.name ?? "–", privacy: .public))")
         p.discoverServices([Self.serviceUUID])
         if let name = p.name, !name.isEmpty {
             status.boardVersion = name
@@ -378,9 +388,20 @@ extension BLEManager: @preconcurrency CBCentralManagerDelegate, @preconcurrency 
     }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral p: CBPeripheral, error: Error?) {
+        log.info("Disconnected from \(p.identifier, privacy: .public): \(error?.localizedDescription ?? "no error", privacy: .public)")
         peripheral = nil
         characteristic = nil
         resetLiveState()
+        reconnectLater()
+    }
+
+    func centralManager(_ central: CBCentralManager, didFailToConnect p: CBPeripheral, error: Error?) {
+        log.error("Failed to connect to \(p.identifier, privacy: .public): \(error?.localizedDescription ?? "no error", privacy: .public)")
+        peripheral = nil
+        reconnectLater()
+    }
+
+    private func reconnectLater() {
         guard let uuid = pendingConnectUUID else { return }
         Task {
             try? await Task.sleep(for: .seconds(3))
@@ -394,7 +415,11 @@ extension BLEManager: @preconcurrency CBCentralManagerDelegate, @preconcurrency 
     }
 
     func peripheral(_ p: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        guard let c = service.characteristics?.first(where: { $0.uuid == Self.characteristicUUID }) else { return }
+        guard let c = service.characteristics?.first(where: { $0.uuid == Self.characteristicUUID }) else {
+            log.error("Status characteristic not found")
+            return
+        }
+        log.info("Ready, subscribing to status")
         characteristic = c
         p.setNotifyValue(true, for: c)
     }

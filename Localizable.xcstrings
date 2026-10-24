@@ -62,6 +62,52 @@
     "%lld%%" : {
       "shouldTranslate" : false
     },
+    "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde. [Verbindung erneut starten](ltscontrol://reconnect)" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sørg for, at Respooler Board er tændt, og at den nyeste firmware er installeret. [Genstart forbindelsen](ltscontrol://reconnect)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde. [Verbindung erneut starten](ltscontrol://reconnect)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure the Respooler Board is turned on and the latest firmware is installed. [Restart connection](ltscontrol://reconnect)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asegúrate de que el Respooler Board esté encendido y que el firmware más reciente esté instalado. [Reiniciar la conexión](ltscontrol://reconnect)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assurez‑vous que le Respooler Board est allumé et que le dernier firmware est installé. [Redémarrer la connexion](ltscontrol://reconnect)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zorg ervoor dat het Respooler Board is ingeschakeld en dat de nieuwste firmware is geïnstalleerd. [Verbinding opnieuw starten](ltscontrol://reconnect)"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se till att Respooler Board är påslaget och att den senaste firmware är installerad. [Starta om anslutningen](ltscontrol://reconnect)"
+          }
+        }
+      }
+    },
     "Behalte Fortschritt und Restzeit mit Live-Aktivitäten und Benachrichtigungen im Blick." : {
       "localizations" : {
         "da" : {
@@ -150,6 +196,98 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finjustera inställningar"
+          }
+        }
+      }
+    },
+    "Impressum" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juridisk information"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impressum"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legal Notice"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso legal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mentions légales"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colofon"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juridisk information"
+          }
+        }
+      }
+    },
+    "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Deutschland\ninfo@lts-design.com\n© 2026 LTS Design" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Tyskland\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Deutschland\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Germany\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Alemania\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Allemagne\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Duitsland\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Tyskland\ninfo@lts-design.com\n© 2026 LTS Design"
           }
         }
       }
@@ -341,53 +479,6 @@
     "•" : {
       "shouldTranslate" : false
     },
-    "© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Deutschland, info@lts-design.com" : {
-      "comment" : "about footer",
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Tyskland, info@lts-design.com"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Deutschland, info@lts-design.com"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Germany, info@lts-design.com"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Alemania, info@lts-design.com"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Allemagne, info@lts-design.com"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Duitsland, info@lts-design.com"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Tyskland, info@lts-design.com"
-          }
-        }
-      }
-    },
     "☕️" : {
       "shouldTranslate" : false
     },
@@ -528,52 +619,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1,0 kg"
-          }
-        }
-      }
-    },
-    "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde." : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sørg for, at Respooler Board er tændt, og at den nyeste firmware er installeret."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make sure the Respooler Board is turned on and the latest firmware is installed."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Asegúrate de que el Respooler Board esté encendido y que el firmware más reciente esté instalado."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Assurez‑vous que le Respooler Board est allumé et que le dernier firmware est installé."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zorg ervoor dat het Respooler Board is ingeschakeld en dat de nieuwste firmware is geïnstalleerd."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se till att Respooler Board är påslaget och att den senaste firmware är installerad."
           }
         }
       }
@@ -6679,52 +6724,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anslutning"
-          }
-        }
-      }
-    },
-    "Verbindung erneut starten" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Genstart forbindelsen"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verbindung erneut starten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restart Connection"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reiniciar la conexión"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Redémarrer la connexion"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verbinding opnieuw starten"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Starta om anslutningen"
           }
         }
       }

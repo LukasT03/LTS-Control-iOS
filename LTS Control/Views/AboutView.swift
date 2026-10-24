@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 struct AboutView: View {
     enum AboutSheet: Hashable, Identifiable {
@@ -37,7 +36,6 @@ struct AboutView: View {
 
     @State private var firmware = FirmwareUpdateModel()
     @State private var showTipsView = false
-    @State private var footerHeight: CGFloat = 0
     @State private var didAppear = false
     /// Right after connecting the board hasn't reported Wi‑Fi and firmware yet, so the update button waits a moment.
     @State private var isSettlingAfterConnect = false
@@ -81,17 +79,6 @@ struct AboutView: View {
         return nil
     }
 
-    private var footerText: NSAttributedString {
-        let text = NSLocalizedString("© 2025, LTS Design, Heiligenbornstraße 23, 01219 Dresden, Deutschland, info@lts-design.com", comment: "about footer")
-        let style = NSMutableParagraphStyle()
-        style.lineHeightMultiple = 0.86
-        return NSAttributedString(string: text, attributes: [
-            .paragraphStyle: style,
-            .font: UIFont.preferredFont(forTextStyle: .footnote),
-            .foregroundColor: UIColor.secondaryLabel,
-        ])
-    }
-
     var body: some View {
         @Bindable var bleManager = bleManager
 
@@ -122,15 +109,7 @@ struct AboutView: View {
 
                     updateCard
                         .padding(.horizontal)
-
-                    GeometryReader { proxy in
-                        AttributedTextView(attributedString: footerText, availableWidth: proxy.size.width, dynamicHeight: $footerHeight)
-                            .frame(width: proxy.size.width, height: footerHeight, alignment: .leading)
-                    }
-                    .frame(height: footerHeight)
-                    .padding(.top, 10)
-                    .padding(.bottom, 4)
-                    .padding(.horizontal, layoutModel.isCompactWidth ? 32 : 20)
+                        .padding(.bottom)
                 }
                 .ignoresSafeArea(.keyboard)
                 .sheet(isPresented: $showTipsView) { TipsView() }
@@ -287,30 +266,3 @@ struct AboutView: View {
         .environment(LayoutModel())
 }
 #endif
-
-/// UITextView-backed text, needed for the tighter line height of the footer.
-struct AttributedTextView: UIViewRepresentable {
-    let attributedString: NSAttributedString
-    let availableWidth: CGFloat
-    @Binding var dynamicHeight: CGFloat
-
-    func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.backgroundColor = .clear
-        textView.textContainerInset = .zero
-        textView.textContainer.lineFragmentPadding = 0
-        textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        textView.isUserInteractionEnabled = false
-        return textView
-    }
-
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        uiView.attributedText = attributedString
-        let height = uiView.sizeThatFits(CGSize(width: availableWidth, height: .greatestFiniteMagnitude)).height
-        DispatchQueue.main.async {
-            dynamicHeight = height
-        }
-    }
-}

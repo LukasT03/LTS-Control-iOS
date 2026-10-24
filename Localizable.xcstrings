@@ -3265,7 +3265,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vejledning"
+            "value" : "Info"
           }
         },
         "de" : {
@@ -3277,7 +3277,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instructions"
+            "value" : "Info"
           }
         },
         "es" : {
@@ -3301,7 +3301,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instruktion"
+            "value" : "Info"
           }
         }
       }

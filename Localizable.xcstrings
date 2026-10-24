@@ -3289,7 +3289,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remarques"
+            "value" : "Infos"
           }
         },
         "nl" : {
@@ -6178,7 +6178,7 @@
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drikkepenge"
+            "value" : "Støt"
           }
         },
         "de" : {
@@ -6208,7 +6208,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fooi geven"
+            "value" : "Fooi"
           }
         },
         "sv" : {

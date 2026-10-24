@@ -234,8 +234,9 @@ struct AboutView: View {
         }
     }
 
+    @ViewBuilder
     private func capsuleButton(_ title: LocalizedStringKey, icon: String, iconSize: CGFloat, color: Color, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
+        let button = Button(action: action) {
             HStack(spacing: 8) {
                 Image(systemName: icon)
                     .font(.system(size: iconSize))
@@ -250,11 +251,16 @@ struct AboutView: View {
         }
         .buttonStyle(.borderless)
         .tint(.primary)
-        .background(
-            Capsule()
-                .fill(Color(UIColor.secondarySystemGroupedBackground))
-                .shadow(color: Color.black.opacity(0.07), radius: 6)
-        )
+
+        if #available(iOS 26, *) {
+            button.glassEffect(.regular.interactive(), in: .capsule)
+        } else {
+            button.background(
+                Capsule()
+                    .fill(Color(UIColor.secondarySystemGroupedBackground))
+                    .shadow(color: Color.black.opacity(0.07), radius: 6)
+            )
+        }
     }
 }
 

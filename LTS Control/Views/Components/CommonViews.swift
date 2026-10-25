@@ -121,8 +121,8 @@ extension View {
     /// On iPhone Duo the tab bar sits in the vertical bar, so at the bottom only the home indicator inset is left.
     /// The view then ignores it and keeps `spacing` instead.
     @ViewBuilder
-    func replacingHomeIndicatorInset(with spacing: CGFloat) -> some View {
-        if #available(iOS 27.1, *) {
+    func replacingHomeIndicatorInset(with spacing: CGFloat, isEnabled: Bool = true) -> some View {
+        if #available(iOS 27.1, *), isEnabled {
             modifier(HomeIndicatorInsetReplacingModifier(spacing: spacing))
         } else {
             self
@@ -135,14 +135,11 @@ private struct HomeIndicatorInsetReplacingModifier: ViewModifier {
     @Environment(\.toolbarVerticalEdge) private var barEdge
     let spacing: CGFloat
 
+    // No branching on the edge: it can flicker while a sheet opens, and a new identity would rebuild the content mid-animation.
     func body(content: Content) -> some View {
-        if barEdge != nil {
-            content
-                .padding(.bottom, spacing)
-                .ignoresSafeArea(.container, edges: .bottom)
-        } else {
-            content
-        }
+        content
+            .padding(.bottom, barEdge != nil ? spacing : 0)
+            .ignoresSafeArea(.container, edges: barEdge != nil ? .bottom : [])
     }
 }
 

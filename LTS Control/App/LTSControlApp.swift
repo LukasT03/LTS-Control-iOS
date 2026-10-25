@@ -120,6 +120,13 @@ private struct MainRootView: View {
             }
         }
         .onChange(of: horizontalSizeClass) { adaptToLayout() }
+        // While the window turns compact (e.g. folding iPhone Duo), the split view collapses to the detail column
+        // before the tab view replaces it. Keeping that would bring it back with only the control view.
+        .onChange(of: columnVisibility) { oldValue, newValue in
+            if horizontalSizeClass != .regular && newValue == .detailOnly {
+                columnVisibility = oldValue
+            }
+        }
     }
 
     /// Carries the current page over when the layout switches: Verbindung is a tab in compact width

@@ -132,11 +132,13 @@ private struct MainRootView: View {
     /// Carries the current page over when the layout switches: Verbindung is a tab in compact width
     /// and a sheet in regular width, Mehr is a tab in compact width and the sidebar in regular width.
     /// The other sheets are opened from Mehr, so it stays behind them; an open settings page keeps Einstellungen in front.
+    /// A settings page left behind in its tab doesn't come along into the settings column.
     private func adaptToLayout() {
         var transaction = Transaction()
         transaction.disablesAnimations = true
         withTransaction(transaction) {
             if horizontalSizeClass == .regular {
+                if selectedTab != .settings { settingsPath = [] }
                 if selectedTab == .connection { presentedSheet = .connection }
                 columnVisibility = selectedTab == .more ? .all : .doubleColumn
             } else if presentedSheet == .connection {

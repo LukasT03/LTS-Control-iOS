@@ -50,6 +50,7 @@ private struct MainRootView: View {
     /// Starts with the sidebar open: pushing in the settings column would otherwise show it on its own after launch.
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedTab: AppTab = .control
+    @State private var settingsPath: [SettingsView.Page] = []
     @State private var showBoardVariantSheet = false
     /// Presented from the root, so it stays open when the layout switches.
     @State private var presentedSheet: AboutView.AboutSheet? = nil
@@ -123,6 +124,7 @@ private struct MainRootView: View {
 
     /// Carries the current page over when the layout switches: Verbindung is a tab in compact width
     /// and a sheet in regular width, Mehr is a tab in compact width and the sidebar in regular width.
+    /// The other sheets are opened from Mehr, so it stays behind them; an open settings page keeps Einstellungen in front.
     private func adaptToLayout() {
         var transaction = Transaction()
         transaction.disablesAnimations = true
@@ -133,6 +135,10 @@ private struct MainRootView: View {
             } else if presentedSheet == .connection {
                 presentedSheet = nil
                 selectedTab = .connection
+            } else if presentedSheet != nil {
+                selectedTab = .more
+            } else if !settingsPath.isEmpty {
+                selectedTab = .settings
             } else if selectedTab == .connection || (selectedTab == .more && columnVisibility != .all) {
                 selectedTab = .control
             }
@@ -159,7 +165,7 @@ private struct MainRootView: View {
             .navigationSplitViewColumnWidth(min: 350, ideal: 350, max: 350)
         } content: {
             // Its own stack, so detail rows push inside this column instead of replacing the controls.
-            NavigationStack {
+            NavigationStack(path: $settingsPath) {
                 SettingsView()
                     .listStyle(.insetGrouped)
                     .navigationTitle("Einstellungen")
@@ -198,7 +204,7 @@ private struct MainRootView: View {
             }
             .tag(AppTab.control)
 
-            NavigationStack {
+            NavigationStack(path: $settingsPath) {
                 SettingsView()
                     .navigationTitle("Einstellungen")
             }

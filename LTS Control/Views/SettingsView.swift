@@ -190,7 +190,8 @@ struct SettingsView: View {
         }
     }
 
-    private enum Page: Hashable {
+    /// Pushed pages; the path lives at the root so it survives switching between tab bar and split view.
+    enum Page: Hashable {
         case respoolAmount, servoCalibration, boardVariant
     }
 }

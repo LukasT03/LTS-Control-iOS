@@ -91,8 +91,8 @@ struct AboutView: View {
                     }
 
                     updateCard
-                        .horizontalPadding()
-                        .padding(.bottom)
+                        .horizontalPadding(includesBottom: isSplitLayout)
+                        .padding(.bottom, isSplitLayout ? 0 : nil)
                 }
                 .ignoresSafeArea(.keyboard)
                 // In the sidebar the card sits as far from the bottom edge as from the sides, past the home indicator inset.

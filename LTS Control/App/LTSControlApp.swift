@@ -161,7 +161,7 @@ private struct MainRootView: View {
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationBarTitle("LTS Control", displayMode: .inline)
+            .navigationBarTitle("LTS Respooler", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: tipsButtonPlacement) {
                     Button {

@@ -58,12 +58,13 @@ extension View {
     /// The system's horizontal container margins, before iOS 27.1 the standard padding.
     /// Next to iPhone Duo's vertical bar the margin is 0, since the bar's safe area inset already includes it.
     /// `isSymmetric` uses the larger margin on both sides, for views that extend under the bar.
+    /// `includesBottom` pads the bottom by the same margin, for views that sit at the bottom edge.
     @ViewBuilder
-    func horizontalPadding(isSymmetric: Bool = false) -> some View {
+    func horizontalPadding(isSymmetric: Bool = false, includesBottom: Bool = false) -> some View {
         if #available(iOS 27.1, *) {
-            modifier(ContainerMarginPadding(isSymmetric: isSymmetric))
+            modifier(ContainerMarginPadding(isSymmetric: isSymmetric, includesBottom: includesBottom))
         } else {
-            padding(.horizontal)
+            padding(includesBottom ? [.horizontal, .bottom] : .horizontal)
         }
     }
 }
@@ -73,6 +74,7 @@ extension View {
 @available(iOS 27.1, *)
 private struct ContainerMarginPadding: ViewModifier {
     let isSymmetric: Bool
+    let includesBottom: Bool
     @State private var margins = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 
     func body(content: Content) -> some View {
@@ -80,6 +82,7 @@ private struct ContainerMarginPadding: ViewModifier {
         content
             .padding(.leading, isSymmetric ? symmetric : margins.leading)
             .padding(.trailing, isSymmetric ? symmetric : margins.trailing)
+            .padding(.bottom, includesBottom ? symmetric : 0)
             .onGeometryChange(for: EdgeInsets.self) { proxy in
                 proxy.contentMargins(for: .container, edges: .horizontal)
             } action: { margins = $0 }

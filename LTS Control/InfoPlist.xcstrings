@@ -1,0 +1,54 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSBluetoothAlwaysUsageDescription" : {
+      "comment" : "Privacy - Bluetooth Always Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control bruger Bluetooth til at oprette forbindelse til din Respooler."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control verwendet Bluetooth, um sich mit deinem Respooler zu verbinden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control uses Bluetooth to connect to your Respooler."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control usa Bluetooth para conectarse a tu Respooler."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control utilise le Bluetooth pour se connecter à votre Respooler."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control gebruikt Bluetooth om verbinding te maken met je Respooler."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Control använder Bluetooth för att ansluta till din Respooler."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

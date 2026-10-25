@@ -52,6 +52,38 @@ extension View {
     }
 }
 
+extension View {
+    /// The system's horizontal container margins, before iOS 27.1 the standard padding.
+    /// Next to iPhone Duo's vertical bar the margin is 0, since the bar's safe area inset already includes it.
+    /// `isSymmetric` uses the larger margin on both sides, for views that extend under the bar.
+    @ViewBuilder
+    func horizontalPadding(isSymmetric: Bool = false) -> some View {
+        if #available(iOS 27.1, *) {
+            if isSymmetric {
+                modifier(SymmetricContainerMargins())
+            } else {
+                contentMargins(for: .container, edges: .horizontal)
+            }
+        } else {
+            padding(.horizontal)
+        }
+    }
+}
+
+@available(iOS 27.1, *)
+private struct SymmetricContainerMargins: ViewModifier {
+    @State private var margin: CGFloat = 16
+
+    func body(content: Content) -> some View {
+        content
+            .padding(.horizontal, margin)
+            .onGeometryChange(for: CGFloat.self) { proxy in
+                let margins = proxy.contentMargins(for: .container, edges: .horizontal)
+                return max(margins.leading, margins.trailing)
+            } action: { margin = $0 }
+    }
+}
+
 struct DisclosureChevron: View {
     var body: some View {
         Image(systemName: "chevron.right")

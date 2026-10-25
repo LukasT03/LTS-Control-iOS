@@ -129,23 +129,23 @@ struct ContentView: View {
 
     @ViewBuilder
     private func pillSection(pillSectionHeight: Binding<CGFloat>) -> some View {
+        // Padded outside, so the grid measures the width the pills actually get.
         GeometryReader { geo in
             Color.clear
                 .onAppear {
-                    pillSectionHeight.wrappedValue = geo.size.width > 730 ? 50 : 108
+                    pillSectionHeight.wrappedValue = geo.size.width > 698 ? 50 : 108
                 }
                 .onChange(of: geo.size.width) { _, newWidth in
-                    pillSectionHeight.wrappedValue = newWidth > 730 ? 50 : 108
+                    pillSectionHeight.wrappedValue = newWidth > 698 ? 50 : 108
                 }
 
-            let isWide = geo.size.width > 730
+            let isWide = geo.size.width > 698
 
             Group {
-                let horizontalPadding: CGFloat = 16
                 let hSpacing: CGFloat = 12
                 let vSpacing: CGFloat = 8
                 let targetColumns: CGFloat = isWide ? 4 : 2
-                let minCellWidth = (geo.size.width - (2 * horizontalPadding) - ((targetColumns - 1) * hSpacing)) / targetColumns
+                let minCellWidth = (geo.size.width - ((targetColumns - 1) * hSpacing)) / targetColumns
 
                 let columns = [GridItem(.adaptive(minimum: max(0, minCellWidth), maximum: max(0, minCellWidth)), spacing: hSpacing, alignment: .center)]
 
@@ -156,10 +156,10 @@ struct ContentView: View {
                     LuefterPill()
                 }
             }
-            .padding(.horizontal)
             .zIndex(1)
             .animation(enableStartupAnimations ? .snappy(duration: 0.2) : nil, value: isWide)
         }
+        .horizontalPadding()
         .frame(height: pillSectionHeight.wrappedValue)
     }
 
@@ -176,6 +176,8 @@ struct ContentView: View {
             Color.clear
                 .frame(idealHeight: 0)
         }
+        .frame(maxWidth: .infinity)
+        .ignoresVerticalBar(isSplitLayout)
         .layoutPriority(1)
     }
 
@@ -230,6 +232,7 @@ struct ContentView: View {
         .frame(maxWidth: .infinity)
         .padding(.bottom, 20)
         .padding(.horizontal, 45)
+        .ignoresVerticalBar(isSplitLayout)
     }
     
     /// Echo filtering happens in `BLEManager`, so the board's value can be taken as is.
@@ -344,9 +347,39 @@ struct ContentView: View {
             }
         )
         .padding(.bottom, UIDevice.current.userInterfaceIdiom == .pad ? 4 : 12)
-        .padding(.horizontal)
+        // Under the bar the system margin is 0, so the controls take the other side's.
+        .horizontalPadding(isSymmetric: isSplitLayout)
         .frame(maxWidth:.infinity)
+        .ignoresVerticalBar(isSplitLayout)
         .zIndex(1)
+    }
+}
+
+private extension View {
+    /// On iPhone Duo the status bar runs down the side of the window. Only the pills share the top with it,
+    /// so everything below centers on the full width instead of leaving the bar's column empty.
+    @ViewBuilder
+    func ignoresVerticalBar(_ isEnabled: Bool) -> some View {
+        if #available(iOS 27.1, *), isEnabled {
+            modifier(VerticalBarIgnoringModifier())
+        } else {
+            self
+        }
+    }
+}
+
+@available(iOS 27.1, *)
+private struct VerticalBarIgnoringModifier: ViewModifier {
+    @Environment(\.toolbarVerticalEdge) private var edge
+
+    func body(content: Content) -> some View {
+        content.ignoresSafeArea(.container, edges: {
+            switch edge {
+            case .leading: .leading
+            case .trailing: .trailing
+            case nil: []
+            }
+        }())
     }
 }
 
@@ -474,3 +507,5 @@ extension ContentView {
     .environment(\.locale, .init(identifier: "en"))
 }
 #endif
+
+

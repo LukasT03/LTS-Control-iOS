@@ -79,19 +79,19 @@ struct AboutView: View {
                             capsuleButton("Hinweise", icon: "info.circle", iconSize: 23.5, color: .indigo) { presentedSheet = .instructions }
                             capsuleButton("Trinkgeld", icon: "cup.and.heat.waves", iconSize: 22, color: .orange) { presentedSheet = .tips }
                         }
-                        .padding(.horizontal)
+                        .horizontalPadding()
                         .padding(.bottom, 20)
                     } else {
                         capsuleButton("Hinweise", icon: "info.circle", iconSize: 23.5, color: .indigo) { presentedSheet = .instructions }
-                            .padding(.horizontal)
+                            .horizontalPadding()
                             .padding(.bottom, 20)
                         capsuleButton("Verbindungseinstellungen", icon: "wifi", iconSize: 22, color: .blue) { presentedSheet = .connection }
-                            .padding(.horizontal)
+                            .horizontalPadding()
                             .padding(.bottom, 20)
                     }
 
                     updateCard
-                        .padding(.horizontal)
+                        .horizontalPadding()
                         .padding(.bottom)
                 }
                 .ignoresSafeArea(.keyboard)

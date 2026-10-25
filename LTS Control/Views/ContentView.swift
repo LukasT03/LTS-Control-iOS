@@ -60,6 +60,9 @@ struct ContentView: View {
                     statusProgressSection()
                     controlSection()
                 }
+                // If the window is too short even without the spool, the controls slide down behind the tab bar
+                // instead of pushing the pills under the title.
+                .frame(maxHeight: .infinity, alignment: .top)
                 .onChange(of: bleManager.status.speedPercent, initial: true) {
                     syncSpeedFromBoard()
                 }
@@ -163,12 +166,17 @@ struct ContentView: View {
     @ViewBuilder
     private func spoolSection() -> some View {
         let isWide = pillSectionHeight == 50
-        SpoolWithGradientView()
-            .frame(maxWidth: 350)
-            .padding(isSplitLayout ? 40 : 24)
-            .layoutPriority(1)
-            .scaleEffect(isWide ? 1.0 : 0.96)
-            .animation(enableStartupAnimations ? .snappy(duration: 0.2) : nil, value: isWide)
+        // In short windows the spool gives its space to the controls instead of shrinking to nothing.
+        ViewThatFits(in: .vertical) {
+            SpoolWithGradientView()
+                .frame(maxWidth: 350, minHeight: 60)
+                .padding(isSplitLayout ? 40 : 24)
+                .scaleEffect(isWide ? 1.0 : 0.96)
+                .animation(enableStartupAnimations ? .snappy(duration: 0.2) : nil, value: isWide)
+            Color.clear
+                .frame(idealHeight: 0)
+        }
+        .layoutPriority(1)
     }
 
     @ViewBuilder

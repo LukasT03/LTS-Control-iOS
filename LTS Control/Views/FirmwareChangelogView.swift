@@ -173,13 +173,14 @@ struct FirmwareChangelogView: View {
                                     }
                                 }
                             }
-                            .padding(.horizontal, 20)
+                            .horizontalPadding()
+                            // Keeps the ragged text edge a bit further from the side.
                             .padding(.trailing, 20)
                             .padding(.vertical, 16)
 
                             if idx < vm.entries.count - 1 {
                                 Divider()
-                                    .padding(.horizontal, 20)
+                                    .horizontalPadding()
                             }
                         }
                     }

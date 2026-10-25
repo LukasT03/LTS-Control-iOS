@@ -18,6 +18,7 @@ struct SplashView: View {
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .padding(.top, 24)
+                .padding(.horizontal, 40)
 
             VStack(spacing: 20) {
                 FeatureRow(
@@ -37,11 +38,14 @@ struct SplashView: View {
                 )
             }
             .padding(.top, 30)
+            .padding(.horizontal, 40)
+            // Icon and title stay clear of the status bar at the top of iPhone Duo's vertical bar.
+            // The rows hang from the top, any height left over from the narrower measurement goes below them.
+            .ignoresVerticalBar(alignment: .top)
 
             Spacer(minLength: 0)
         }
         .padding(.top, 48)
-        .padding(.horizontal, 40)
         .sheetBottomButton {
             Button {
                 accessorySessionManager.showAccessoryPicker()

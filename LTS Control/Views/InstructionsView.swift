@@ -59,7 +59,8 @@ struct InstructionsView: View {
                         .padding(.top, 26)
                     }
                     .padding(.top, 12)
-                    .padding(.horizontal, 20)
+                    .horizontalPadding()
+                    // Keeps the ragged text edge a bit further from the side.
                     .padding(.trailing, 20)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                     .padding(.bottom, isSplitLayout ? 16 : 0)

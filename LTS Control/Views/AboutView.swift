@@ -97,6 +97,8 @@ struct AboutView: View {
                 .ignoresSafeArea(.keyboard)
                 // In the sidebar the card sits as far from the bottom edge as from the sides, past the home indicator inset.
                 .ignoresSafeArea(.container, edges: isSplitLayout ? .bottom : [])
+                // With the card's own 16 pt that's 20 pt, the side margin on iPhone Duo.
+                .replacingHomeIndicatorInset(with: 4)
                 .alert(status.otaSuccess == true ? LocalizedStringKey("Update erfolgreich!") : "Update fehlgeschlagen!", isPresented: $bleManager.showOTAAlert) {
                     if status.otaSuccess == true {
                         Button("Änderungen anzeigen") {

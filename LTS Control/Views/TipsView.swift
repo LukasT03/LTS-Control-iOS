@@ -3,7 +3,6 @@ import StoreKit
 
 struct TipsView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.isSplitLayout) private var isSplitLayout
     
     private static let productIDs = ["smallTip", "mediumTip", "bigTip", "biggerTip", "biggestTip"]
 
@@ -94,7 +93,8 @@ struct TipsView: View {
                     }
                 }
             }
-            .padding(.horizontal, isSplitLayout ? 26 : 20)
+            .padding(.horizontal, 24)
+            .ignoresVerticalBar()
             .padding(.top, 20)
             .sheetBottomButton {
                 if purchaseMessage != nil {

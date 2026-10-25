@@ -63,6 +63,8 @@ struct ContentView: View {
                 // If the window is too short even without the spool, the controls slide down behind the tab bar
                 // instead of pushing the pills under the title.
                 .frame(maxHeight: .infinity, alignment: .top)
+                // With the controls' own 12 pt that's 20 pt, the side margin on iPhone Duo.
+                .replacingHomeIndicatorInset(with: 8)
                 .onChange(of: bleManager.status.speedPercent, initial: true) {
                     syncSpeedFromBoard()
                 }
@@ -352,34 +354,6 @@ struct ContentView: View {
         .frame(maxWidth:.infinity)
         .ignoresVerticalBar(isSplitLayout)
         .zIndex(1)
-    }
-}
-
-private extension View {
-    /// On iPhone Duo the status bar runs down the side of the window. Only the pills share the top with it,
-    /// so everything below centers on the full width instead of leaving the bar's column empty.
-    @ViewBuilder
-    func ignoresVerticalBar(_ isEnabled: Bool) -> some View {
-        if #available(iOS 27.1, *), isEnabled {
-            modifier(VerticalBarIgnoringModifier())
-        } else {
-            self
-        }
-    }
-}
-
-@available(iOS 27.1, *)
-private struct VerticalBarIgnoringModifier: ViewModifier {
-    @Environment(\.toolbarVerticalEdge) private var edge
-
-    func body(content: Content) -> some View {
-        content.ignoresSafeArea(.container, edges: {
-            switch edge {
-            case .leading: .leading
-            case .trailing: .trailing
-            case nil: []
-            }
-        }())
     }
 }
 

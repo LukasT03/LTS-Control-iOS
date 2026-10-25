@@ -21,22 +21,6 @@ struct TipsView: View {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 
-    private var buttonBackground: some View {
-        Group {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(.blue)
-            } else {
-                Capsule()
-                    .fill(.blue)
-            }
-        }
-    }
-
-    private var buttonBottomPadding: CGFloat {
-        UIDevice.current.userInterfaceIdiom == .pad ? (isSplitLayout ? 38 : 14) : 0
-    }
-
     var body: some View {
         NavigationStack {
             Group {
@@ -112,39 +96,25 @@ struct TipsView: View {
             }
             .padding(.horizontal, isSplitLayout ? 26 : 20)
             .padding(.top, 20)
-            
-            .safeAreaInset(edge: .bottom) {
+            .sheetBottomButton {
                 if purchaseMessage != nil {
-                    Button(action: {
+                    Button {
                         dismiss()
-                    }) {
+                    } label: {
                         Text("Schließen")
-                            .monospacedDigit()
-                            .fontWeight(.semibold)
-                            .frame(minWidth: 0, maxWidth: 420)
-                            .padding(.vertical, 15)
+                            .frame(maxWidth: .infinity)
                     }
-                    .background(buttonBackground)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 36)
-                    .padding(.bottom, buttonBottomPadding)
                 } else {
-                    Button(action: {
+                    Button {
                         if let selectedProduct {
                             Task { await purchase(selectedProduct) }
                         }
-                    }) {
+                    } label: {
                         let priceText = selectedProduct?.displayPrice ?? ""
                         Text(priceText.isEmpty ? "Unterstützen" : "Unterstützen \(priceText)")
                             .monospacedDigit()
-                            .fontWeight(.semibold)
-                            .frame(minWidth: 0, maxWidth: 420)
-                            .padding(.vertical, 15)
+                            .frame(maxWidth: .infinity)
                     }
-                    .background(buttonBackground)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 36)
-                    .padding(.bottom, buttonBottomPadding)
                     .disabled(selectedProduct == nil || isPurchasing)
                     .redacted(reason: selectedProduct == nil ? .placeholder : [])
                 }
@@ -158,6 +128,9 @@ struct TipsView: View {
                 }
             }
         }
+        // On iPad the form sheet takes its width from here; the height stays the system default.
+        .frame(idealWidth: 520)
+        .presentationSizing(.form.fitted(horizontal: true, vertical: false))
     }
 
     func loadProducts() async {

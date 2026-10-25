@@ -19,6 +19,39 @@ struct SheetCloseButton: ToolbarContent {
     }
 }
 
+extension View {
+    /// Prominent full-width button at the bottom of a sheet, as on Apple's welcome screens.
+    /// Used by the splash and tips sheets so both look the same.
+    @ViewBuilder
+    func sheetBottomButton<Content: View>(@ViewBuilder _ button: () -> Content) -> some View {
+        let isPad = UIDevice.current.userInterfaceIdiom == .pad
+        if #available(iOS 26, *) {
+            safeAreaBar(edge: .bottom) {
+                button()
+                    .buttonStyle(.glassProminent)
+                    .buttonSizing(.flexible)
+                    .controlSize(.large)
+                    .fontWeight(.semibold)
+                    // On iPad Apple keeps the button narrower than the content.
+                    .frame(maxWidth: isPad ? 400 : .infinity)
+                    .padding(.horizontal, 40)
+                    // The iPad sheet has no bottom safe area, so the button would touch the edge.
+                    .padding(.bottom, isPad ? 40 : 0)
+            }
+        } else {
+            safeAreaInset(edge: .bottom) {
+                button()
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: isPad ? 400 : .infinity)
+                    .padding(.horizontal, 40)
+                    .padding(.bottom)
+            }
+        }
+    }
+}
+
 struct DisclosureChevron: View {
     var body: some View {
         Image(systemName: "chevron.right")

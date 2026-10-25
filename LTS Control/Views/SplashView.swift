@@ -6,7 +6,7 @@ struct SplashView: View {
     var body: some View {
         // Spacing modeled on Apple's own welcome screens (e.g. Fitness): content hangs from the top,
         // fixed gaps instead of spacers, rows and button share the same side margin.
-        let content = VStack(spacing: 0) {
+        VStack(spacing: 0) {
             Image("AppIconSquare")
                 .resizable()
                 .scaledToFit()
@@ -42,37 +42,14 @@ struct SplashView: View {
         }
         .padding(.top, 48)
         .padding(.horizontal, 40)
-        .frame(maxWidth: UIDevice.current.userInterfaceIdiom == .pad ? 480 : .infinity)
-
-        // Same bottom button as the Onyx sign-in screen.
-        if #available(iOS 26, *) {
-            content.safeAreaBar(edge: .bottom) {
-                connectButton
-                    .buttonStyle(.glassProminent)
-                    .buttonSizing(.flexible)
-                    .padding(.horizontal, 40)
-                    // The iPad sheet has no bottom safe area, so the button would touch the edge.
-                    .padding(.bottom, UIDevice.current.userInterfaceIdiom == .pad ? 40 : 0)
-            }
-        } else {
-            content.safeAreaInset(edge: .bottom) {
-                connectButton
-                    .buttonStyle(.borderedProminent)
-                    .padding(.horizontal, 40)
-                    .padding(.bottom)
+        .sheetBottomButton {
+            Button {
+                accessorySessionManager.showAccessoryPicker()
+            } label: {
+                Text("Respooler verbinden")
+                    .frame(maxWidth: .infinity)
             }
         }
-    }
-
-    private var connectButton: some View {
-        Button {
-            accessorySessionManager.showAccessoryPicker()
-        } label: {
-            Text("Respooler verbinden")
-                .frame(maxWidth: .infinity)
-        }
-        .controlSize(.large)
-        .fontWeight(.semibold)
     }
 }
 

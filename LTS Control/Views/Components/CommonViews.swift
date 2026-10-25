@@ -28,58 +28,28 @@ struct DisclosureChevron: View {
     }
 }
 
-/// List row that pushes its destination in compact width and opens it as a sheet otherwise
-/// (the settings column on iPad has no room to push).
-struct AdaptiveDetailRow<Destination: View>: View {
-    @Environment(LayoutModel.self) private var layoutModel
-    @State private var isPresented = false
+/// List row with a title and optional value that pushes the destination registered for `page`.
+struct DetailRow<Page: Hashable>: View {
+    @Environment(\.isSplitLayout) private var isSplitLayout
 
     let title: LocalizedStringKey
     var value: Text? = nil
-    @ViewBuilder let destination: () -> Destination
+    let page: Page
 
     var body: some View {
-        if layoutModel.isCompactWidth {
-            NavigationLink {
-                titledDestination
-            } label: {
-                label(valueColor: .gray)
-            }
-        } else {
-            Button {
-                isPresented = true
-            } label: {
-                HStack {
-                    label(valueColor: .secondary)
+        NavigationLink(value: page) {
+            HStack {
+                Text(title)
+                Spacer()
+                if let value {
+                    value
+                        .foregroundColor(.gray)
+                }
+                // Links in a split view column have no chevron of their own; there is no API to turn it on.
+                if isSplitLayout {
                     DisclosureChevron()
                 }
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .sheet(isPresented: $isPresented) {
-                NavigationStack {
-                    titledDestination
-                        .toolbar { SheetCloseButton() }
-                }
             }
         }
-    }
-
-    private var titledDestination: some View {
-        destination()
-            .navigationTitle(title)
-            .navigationBarTitleDisplayMode(.inline)
-    }
-
-    private func label(valueColor: Color) -> some View {
-        HStack {
-            Text(title)
-            Spacer()
-            if let value {
-                value
-                    .foregroundColor(valueColor)
-            }
-        }
-        .contentShape(Rectangle())
     }
 }

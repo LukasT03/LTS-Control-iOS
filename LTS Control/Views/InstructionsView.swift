@@ -4,7 +4,7 @@ struct InstructionsView: View {
     private static let reconnectURL = URL(string: "ltscontrol://reconnect")!
 
     @Environment(AccessorySessionManager.self) private var accessorySessionManager
-    @Environment(LayoutModel.self) private var layoutModel
+    @Environment(\.isSplitLayout) private var isSplitLayout
 
     var body: some View {
         NavigationStack {
@@ -62,7 +62,7 @@ struct InstructionsView: View {
                     .padding(.horizontal, 20)
                     .padding(.trailing, 20)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
-                    .padding(.bottom, layoutModel.isCompactWidth ? 0 : 16)
+                    .padding(.bottom, isSplitLayout ? 16 : 0)
                 }
                 // In-app links like "Verbindung erneut starten"; all other links open as usual.
                 .environment(\.openURL, OpenURLAction { url in

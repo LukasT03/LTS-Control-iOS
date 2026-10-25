@@ -4,38 +4,18 @@ struct AboutView: View {
     enum AboutSheet: Hashable, Identifiable {
         case instructions
         case changelog
-        case upgradeCode
         case connection
+        case tips
         var id: Self { self }
     }
 
-    struct UpdateButtonStyle: ButtonStyle {
-        @Environment(\.isEnabled) private var isEnabled
-        @Environment(\.colorScheme) private var colorScheme
-
-        func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-                .padding(.vertical, 15)
-                .frame(maxWidth: .infinity)
-                .background(
-                    RoundedRectangle(cornerRadius: 11, style: .continuous)
-                        .fill(isEnabled ? Color.green.opacity(configuration.isPressed ? 0.15 : 0.2)
-                                        : Color.gray.opacity(colorScheme == .dark ? 0.24 : 0.16))
-                )
-                .foregroundStyle(isEnabled ? Color.green.opacity(configuration.isPressed ? 0.75 : 1.0) : Color.gray.opacity(colorScheme == .dark ? 0.45 : 0.4))
-                .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
-        }
-    }
-
     @Environment(BLEManager.self) private var bleManager
-    @Environment(LayoutModel.self) private var layoutModel
-    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.isSplitLayout) private var isSplitLayout
     @Environment(\.scenePhase) private var scenePhase
 
     @Binding var presentedSheet: AboutSheet?
 
     @State private var firmware = FirmwareUpdateModel()
-    @State private var showTipsView = false
     @State private var didAppear = false
     /// Right after connecting the board hasn't reported Wi‑Fi and firmware yet, so the update button waits a moment.
     @State private var isSettlingAfterConnect = false
@@ -83,18 +63,21 @@ struct AboutView: View {
         @Bindable var bleManager = bleManager
 
         ZStack {
-            (!layoutModel.isCompactWidth && colorScheme == .dark ? Color.clear : Color(UIColor.systemGroupedBackground))
-                .ignoresSafeArea()
+            // The sidebar keeps the system's own background.
+            if !isSplitLayout {
+                Color(UIColor.systemGroupedBackground)
+                    .ignoresSafeArea()
+            }
             VStack {
                 Spacer()
                 header
                 Spacer()
 
                 VStack(spacing: 0) {
-                    if layoutModel.isCompactWidth {
+                    if !isSplitLayout {
                         HStack(spacing: 12) {
                             capsuleButton("Hinweise", icon: "info.circle", iconSize: 23.5, color: .indigo) { presentedSheet = .instructions }
-                            capsuleButton("Trinkgeld", icon: "cup.and.heat.waves", iconSize: 22, color: .orange) { showTipsView = true }
+                            capsuleButton("Trinkgeld", icon: "cup.and.heat.waves", iconSize: 22, color: .orange) { presentedSheet = .tips }
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 20)
@@ -112,7 +95,8 @@ struct AboutView: View {
                         .padding(.bottom)
                 }
                 .ignoresSafeArea(.keyboard)
-                .sheet(isPresented: $showTipsView) { TipsView() }
+                // In the sidebar the card sits as far from the bottom edge as from the sides, past the home indicator inset.
+                .ignoresSafeArea(.container, edges: isSplitLayout ? .bottom : [])
                 .alert(status.otaSuccess == true ? LocalizedStringKey("Update erfolgreich!") : "Update fehlgeschlagen!", isPresented: $bleManager.showOTAAlert) {
                     if status.otaSuccess == true {
                         Button("Änderungen anzeigen") {
@@ -207,30 +191,30 @@ struct AboutView: View {
                         Text("Firmware aktualisieren")
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: 21)
+                .frame(maxWidth: .infinity)
             }
             .padding(.horizontal)
             .padding(.bottom)
-            .buttonStyle(UpdateButtonStyle())
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+            .tint(.green)
             .animation(.default, value: isUpdating)
             .animation(didAppear && isUpdateButtonEnabled ? .default : nil, value: isUpdateButtonEnabled)
             .disabled(isV3Blocked || !isUpdateButtonEnabled || isUpdating)
         }
-        .background(
-            RoundedRectangle(cornerRadius: 25, style: .continuous)
-                .fill(Color(UIColor.secondarySystemGroupedBackground))
-        )
+        .modifier(CardBackground())
         .frame(maxHeight: 135)
         .overlay(alignment: .topTrailing) {
             Button {
-                presentedSheet = isV3Blocked ? .upgradeCode : .changelog
+                presentedSheet = .changelog
             } label: {
-                Image(systemName: "questionmark.circle")
-                    .font(.system(size: 21))
-                    .tint(.primary)
+                Image(systemName: "info.circle")
+                    .font(.system(size: 23))
+                    // Same box as the former 21 pt circle icon, so the larger icon keeps its center.
+                    .frame(width: 21, height: 21)
             }
-            .padding(.top, 13)
-            .padding(.trailing, 13)
+            .padding(.top, 14)
+            .padding(.trailing, 14)
         }
     }
 
@@ -264,11 +248,32 @@ struct AboutView: View {
     }
 }
 
+/// In the sidebar on iOS 26 the card is Liquid Glass, so it works on the sidebar's background.
+private struct CardBackground: ViewModifier {
+    @Environment(\.isSplitLayout) private var isSplitLayout
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26, *), isSplitLayout {
+            // The bottom leading corner follows the display corner it sits in.
+            content.glassEffect(.regular, in: .rect(
+                topLeadingCorner: .fixed(25),
+                topTrailingCorner: .fixed(25),
+                bottomLeadingCorner: .concentric(minimum: .fixed(20)),
+                bottomTrailingCorner: .fixed(25)
+            ))
+        } else {
+            content.background(
+                RoundedRectangle(cornerRadius: 25, style: .continuous)
+                    .fill(Color(UIColor.secondarySystemGroupedBackground))
+            )
+        }
+    }
+}
+
 #if DEBUG
 #Preview {
     AboutView(presentedSheet: .constant(nil))
         .environment(\.locale, .init(identifier: "en"))
         .environment(BLEManager.shared)
-        .environment(LayoutModel())
 }
 #endif

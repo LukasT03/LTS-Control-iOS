@@ -3,7 +3,7 @@ import StoreKit
 
 struct TipsView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(LayoutModel.self) private var layoutModel
+    @Environment(\.isSplitLayout) private var isSplitLayout
     
     private static let productIDs = ["smallTip", "mediumTip", "bigTip", "biggerTip", "biggestTip"]
 
@@ -34,7 +34,7 @@ struct TipsView: View {
     }
 
     private var buttonBottomPadding: CGFloat {
-        UIDevice.current.userInterfaceIdiom == .pad ? (layoutModel.isCompactWidth ? 14 : 38) : 0
+        UIDevice.current.userInterfaceIdiom == .pad ? (isSplitLayout ? 38 : 14) : 0
     }
 
     var body: some View {
@@ -110,7 +110,7 @@ struct TipsView: View {
                     }
                 }
             }
-            .padding(.horizontal, !layoutModel.isCompactWidth ? 26 : 20)
+            .padding(.horizontal, isSplitLayout ? 26 : 20)
             .padding(.top, 20)
             
             .safeAreaInset(edge: .bottom) {

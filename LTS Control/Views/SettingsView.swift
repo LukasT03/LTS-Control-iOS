@@ -79,9 +79,7 @@ struct SettingsView: View {
                     Text("LED Helligkeit: \(status.ledBrightness) %")
                         .monospacedDigit()
                 }
-                AdaptiveDetailRow(title: "Respool-Menge", value: Text(RespoolAmountView.title(for: status.targetWeight))) {
-                    RespoolAmountView(targetWeight: binding(\.targetWeight, bleManager.setTargetWeight))
-                }
+                DetailRow(title: "Respool-Menge", value: Text(RespoolAmountView.title(for: status.targetWeight)), page: Page.respoolAmount)
                 Toggle("Filament Sensor nutzen", isOn: binding(\.useFilamentSensor, bleManager.setUseFilamentSensor))
                     .tint(.ltsBlue)
             }
@@ -109,9 +107,7 @@ struct SettingsView: View {
 
             if status.boardVariant == .pro {
                 Section(header: Text("Servo"), footer: Text("Wähle aus, auf welcher Seite die Startposition der Filamentführung ist.")) {
-                    AdaptiveDetailRow(title: "Endpositionen kalibrieren") {
-                        ServoCalibrationView()
-                    }
+                    DetailRow(title: "Endpositionen kalibrieren", page: Page.servoCalibration)
                     Stepper(value: binding(\.servoStepMm, bleManager.setServoStepMm), in: 0.50...4.00, step: 0.01) {
                         Text("Schrittweite: \(status.servoStepMm, format: .number.precision(.fractionLength(2))) mm")
                             .monospacedDigit()
@@ -171,12 +167,31 @@ struct SettingsView: View {
 
             if status.boardVariant != .unknown {
                 Section {
-                    AdaptiveDetailRow(title: "Variante", value: Text(verbatim: boardVariantText)) {
-                        BoardVariantView(isInitialSelection: false)
-                    }
+                    DetailRow(title: "Variante", value: Text(verbatim: boardVariantText), page: Page.boardVariant)
                 }
             }
         }
+        // Value-based, so in the iPad split view the pages push inside the settings column instead of the detail column.
+        .navigationDestination(for: Page.self) { page in
+            Group {
+                switch page {
+                case .respoolAmount:
+                    RespoolAmountView(targetWeight: binding(\.targetWeight, bleManager.setTargetWeight))
+                        .navigationTitle("Respool-Menge")
+                case .servoCalibration:
+                    ServoCalibrationView()
+                        .navigationTitle("Endpositionen kalibrieren")
+                case .boardVariant:
+                    BoardVariantView(isInitialSelection: false)
+                        .navigationTitle("Variante")
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+    private enum Page: Hashable {
+        case respoolAmount, servoCalibration, boardVariant
     }
 }
 
@@ -323,7 +338,6 @@ private struct RespoolAmountView: View {
     NavigationStack {
         SettingsView()
             .environment(BLEManager())
-            .environment(LayoutModel())
     }
 }
 #endif

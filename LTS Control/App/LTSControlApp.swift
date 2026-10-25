@@ -1,5 +1,4 @@
 import SwiftUI
-import Observation
 import UIKit
 
 extension Color {
@@ -14,9 +13,10 @@ extension Color {
     }
 }
 
-@Observable
-class LayoutModel {
-    var isCompactWidth: Bool = false
+extension EnvironmentValues {
+    /// Whether the window shows the iPad split view (regular width) instead of the tab bar.
+    /// Read once at the root, since split view columns and sheets report their own size class.
+    @Entry var isSplitLayout = false
 }
 
 @main
@@ -41,17 +41,21 @@ private struct MainRootView: View {
     let bleManager: BLEManager
     let sessionManager: AccessorySessionManager
 
-    @State private var layoutModel = LayoutModel()
     @AppStorage("hasCompletedSetup") private var hasCompletedSetup: Bool = false
     @State private var showSplashView: Bool = false
     @State private var hasCheckedSetup: Bool = false
     @State private var scanSessionID: Int = 0
     @State private var wifiSSID: String = ""
     @State private var wifiPassword: String = ""
-    @State private var columnVisibility: NavigationSplitViewVisibility = .doubleColumn
-    @State private var showTipsView = false
+    /// Starts with the sidebar open: pushing in the settings column would otherwise show it on its own after launch.
+    @State private var columnVisibility: NavigationSplitViewVisibility = .all
+    @State private var selectedTab: AppTab = .control
     @State private var showBoardVariantSheet = false
+    /// Presented from the root, so it stays open when the layout switches.
     @State private var presentedSheet: AboutView.AboutSheet? = nil
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private enum AppTab { case control, settings, connection, more }
 
     private var tipsButtonPlacement: ToolbarItemPlacement {
         if #available(iOS 26, *) { .topBarLeading } else { .topBarTrailing }
@@ -64,7 +68,7 @@ private struct MainRootView: View {
             }
             .environment(bleManager)
             .environment(sessionManager)
-            .environment(layoutModel)
+            .environment(\.isSplitLayout, horizontalSizeClass == .regular)
             .onAppear(perform: checkInitialSetup)
             .sheet(isPresented: $showSplashView) {
                 SplashView()
@@ -96,8 +100,8 @@ private struct MainRootView: View {
             InstructionsView()
         case .changelog:
             NavigationStack { FirmwareChangelogView() }
-        case .upgradeCode:
-            NavigationStack { UpgradeCodeView() }
+        case .tips:
+            TipsView()
         case .connection:
             NavigationStack {
                 ConnectionView(wifiSSID: $wifiSSID, wifiPassword: $wifiPassword, scanSessionID: $scanSessionID)
@@ -107,19 +111,30 @@ private struct MainRootView: View {
 
     @ViewBuilder
     private var mainLayout: some View {
-        GeometryReader { geo in
-            Color.clear
-                .onAppear {
-                    layoutModel.isCompactWidth = geo.size.width < 729
-                }
-                .onChange(of: geo.size.width) { _, newValue in
-                    layoutModel.isCompactWidth = newValue < 729
-                }
-
-            if UIDevice.current.userInterfaceIdiom == .pad && !layoutModel.isCompactWidth {
+        Group {
+            if horizontalSizeClass == .regular {
                 splitView
             } else {
                 defaultTabView
+            }
+        }
+        .onChange(of: horizontalSizeClass) { adaptToLayout() }
+    }
+
+    /// Carries the current page over when the layout switches: Verbindung is a tab in compact width
+    /// and a sheet in regular width, Mehr is a tab in compact width and the sidebar in regular width.
+    private func adaptToLayout() {
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) {
+            if horizontalSizeClass == .regular {
+                if selectedTab == .connection { presentedSheet = .connection }
+                columnVisibility = selectedTab == .more ? .all : .doubleColumn
+            } else if presentedSheet == .connection {
+                presentedSheet = nil
+                selectedTab = .connection
+            } else if selectedTab == .connection || (selectedTab == .more && columnVisibility != .all) {
+                selectedTab = .control
             }
         }
     }
@@ -135,7 +150,7 @@ private struct MainRootView: View {
             .toolbar {
                 ToolbarItem(placement: tipsButtonPlacement) {
                     Button {
-                        showTipsView = true
+                        presentedSheet = .tips
                     } label: {
                         Label("Trinkgeld senden", systemImage: "cup.and.heat.waves")
                     }
@@ -143,10 +158,13 @@ private struct MainRootView: View {
             }
             .navigationSplitViewColumnWidth(min: 350, ideal: 350, max: 350)
         } content: {
-            SettingsView()
-                .listStyle(.insetGrouped)
-                .navigationTitle("Einstellungen")
-                .navigationSplitViewColumnWidth(min: 360, ideal: 360, max: 1000)
+            // Its own stack, so detail rows push inside this column instead of replacing the controls.
+            NavigationStack {
+                SettingsView()
+                    .listStyle(.insetGrouped)
+                    .navigationTitle("Einstellungen")
+            }
+            .navigationSplitViewColumnWidth(min: 360, ideal: 360, max: 1000)
         } detail: {
             GeometryReader { geo in
                 // Before iOS 26 the control view breaks below 383 pt while the split view resizes, so it's covered.
@@ -164,14 +182,13 @@ private struct MainRootView: View {
                 .animation(.easeInOut(duration: 0.1), value: showOverlay)
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
-            .navigationSplitViewColumnWidth(min: 352, ideal: 450, max: 1000)
+            .navigationSplitViewColumnWidth(min: 364, ideal: 450, max: 1000)
         }
         .navigationSplitViewStyle(.balanced)
-        .sheet(isPresented: $showTipsView) { TipsView() }
     }
 
     private var defaultTabView: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             NavigationStack {
                 ContentView(showSplashView: $showSplashView)
                     .navigationTitle("LTS Respooler")
@@ -179,6 +196,7 @@ private struct MainRootView: View {
             .tabItem {
                 Label("Steuerung", systemImage: "house")
             }
+            .tag(AppTab.control)
 
             NavigationStack {
                 SettingsView()
@@ -187,6 +205,7 @@ private struct MainRootView: View {
             .tabItem {
                 Label("Einstellungen", systemImage: "gearshape")
             }
+            .tag(AppTab.settings)
 
             NavigationStack {
                 ConnectionView(wifiSSID: $wifiSSID, wifiPassword: $wifiPassword, scanSessionID: $scanSessionID)
@@ -195,6 +214,7 @@ private struct MainRootView: View {
             .tabItem {
                 Label("Verbindung", systemImage: "wifi")
             }
+            .tag(AppTab.connection)
 
             NavigationStack {
                 AboutView(presentedSheet: $presentedSheet)
@@ -202,6 +222,7 @@ private struct MainRootView: View {
             .tabItem {
                 Label("Mehr", systemImage: "ellipsis.circle")
             }
+            .tag(AppTab.more)
         }
     }
 

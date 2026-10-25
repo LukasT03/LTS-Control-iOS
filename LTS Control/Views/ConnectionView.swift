@@ -2,7 +2,7 @@ import SwiftUI
 import UIKit
 
 struct StatusHeaderView: View {
-    @Environment(LayoutModel.self) private var layoutModel
+    @Environment(\.isSplitLayout) private var isSplitLayout
     
     let isConnected: Bool
     let isWiFiConnected: Bool
@@ -59,7 +59,7 @@ struct StatusHeaderView: View {
             .pillStyle()
         }
         .frame(minHeight: {
-            if !layoutModel.isCompactWidth, #available(iOS 26, *) {
+            if isSplitLayout, #available(iOS 26, *) {
                 78
             } else {
                 50
@@ -74,7 +74,6 @@ struct StatusHeaderView: View {
         wifiPassword: .constant(""),
         scanSessionID: .constant(0)
     )
-    .environment(LayoutModel())
     .environment(BLEManager())
 }
 
@@ -138,7 +137,7 @@ struct ClearableSecureField: UIViewRepresentable {
 }
 
 struct ConnectionView: View {
-    @Environment(LayoutModel.self) private var layoutModel
+    @Environment(\.isSplitLayout) private var isSplitLayout
     @Environment(BLEManager.self) private var bleManager
 
     @Binding var wifiSSID: String
@@ -235,7 +234,7 @@ struct ConnectionView: View {
                 }
                 
                 // On iPad with iOS 26 the scan button sits in the toolbar instead.
-                if layoutModel.isCompactWidth {
+                if !isSplitLayout {
                     Section { scanButton("Nach verfügbaren Netzwerken suchen") }
                 } else if #unavailable(iOS 26) {
                     Section { scanButton("Nach verfügbaren Netzwerken suchen") }
@@ -260,9 +259,9 @@ struct ConnectionView: View {
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
             .navigationTitle("Verbindung")
-            .navigationBarTitleDisplayMode(!layoutModel.isCompactWidth ? .inline : .large)
+            .navigationBarTitleDisplayMode(isSplitLayout ? .inline : .large)
             .toolbar {
-                if !layoutModel.isCompactWidth {
+                if isSplitLayout {
                     SheetCloseButton()
                     if #available(iOS 26, *) {
                         ToolbarItem(placement: .topBarLeading) { scanButton("Netzwerk-Scan") }

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(BLEManager.self) private var bleManager
-    @Environment(LayoutModel.self) private var layoutModel
+    @Environment(\.isSplitLayout) private var isSplitLayout
     @Environment(\.colorScheme) private var colorScheme
     @Binding var showSplashView: Bool
     @State private var pillSectionHeight: CGFloat = 108
@@ -75,7 +75,7 @@ struct ContentView: View {
                     enableStartupAnimations = true
                 }
             }
-            .frame(minWidth: !layoutModel.isCompactWidth ? 364 : nil, maxHeight: UIDevice.current.userInterfaceIdiom == .pad ? 820 : .infinity)
+            .frame(maxHeight: UIDevice.current.userInterfaceIdiom == .pad ? 820 : .infinity)
             .ignoresSafeArea(.keyboard)
         }
     }
@@ -165,7 +165,7 @@ struct ContentView: View {
         let isWide = pillSectionHeight == 50
         SpoolWithGradientView()
             .frame(maxWidth: 350)
-            .padding(!layoutModel.isCompactWidth ? 40 : 24)
+            .padding(isSplitLayout ? 40 : 24)
             .layoutPriority(1)
             .scaleEffect(isWide ? 1.0 : 0.96)
             .animation(enableStartupAnimations ? .snappy(duration: 0.2) : nil, value: isWide)
@@ -463,7 +463,6 @@ extension ContentView {
         showSplashView: .constant(false)
     )
     .environment(BLEManager.shared)
-    .environment(LayoutModel())
     .environment(\.locale, .init(identifier: "en"))
 }
 #endif

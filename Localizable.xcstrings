@@ -1360,9 +1360,6 @@
         }
       }
     },
-    "CBV4-FREE" : {
-      "shouldTranslate" : false
-    },
     "Celsius" : {
       "localizations" : {
         "da" : {
@@ -1451,52 +1448,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chip: %@"
-          }
-        }
-      }
-    },
-    "Da das V3 Control Board nur in begrenzter Stückzahl verkauft wurde und nicht alle Funktionen unterstützt, wird es dafür **keine weiteren Firmware-Updates** mehr geben.\n\nAlle momentan vorhandenen Funktionen bleiben bestehen." : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Da V3 Control Board kun blev solgt i begrænset antal og ikke understøtter alle funktioner, vil der **ikke komme yderligere firmwareopdateringer**.\n\nAlle nuværende funktioner forbliver tilgængelige."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Da das V3 Control Board nur in begrenzter Stückzahl verkauft wurde und nicht alle Funktionen unterstützt, wird es dafür **keine weiteren Firmware-Updates** mehr geben.\n\nAlle momentan vorhandenen Funktionen bleiben bestehen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Since the V3 Control Board was only sold in limited quantities and does not support all features, there will be **no further firmware updates**.\n\nAll currently available functions will remain."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dado que el V3 Control Board se vendió solo en cantidades limitadas y no admite todas las funciones, **no habrá más actualizaciones de firmware**.\n\nTodas las funciones actualmente disponibles se mantendrán."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comme le V3 Control Board n’a été vendu qu’en quantité limitée et ne prend pas en charge toutes les fonctions, il n’y aura **aucune mise à jour supplémentaire du firmware**.\n\nToutes les fonctions actuellement disponibles resteront."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Omdat het V3 Control Board slechts in beperkte oplage is verkocht en niet alle functies ondersteunt, zullen er **geen verdere firmware-updates** komen.\n\nAlle momenteel beschikbare functies blijven behouden."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eftersom V3 Control Board endast såldes i begränsat antal och inte stöder alla funktioner, kommer det **inga fler firmwareuppdateringar**.\n\nAlla nuvarande funktioner förblir tillgängliga."
           }
         }
       }
@@ -3398,52 +3349,6 @@
         }
       }
     },
-    "Keine Updates mehr" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ingen flere opdateringer"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Updates mehr"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No More Updates"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No más actualizaciones"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Plus de mises à jour"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geen updates meer"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inga fler uppdateringar"
-          }
-        }
-      }
-    },
     "Keine WLAN-Verbindung" : {
       "localizations" : {
         "da" : {
@@ -4272,52 +4177,6 @@
         }
       }
     },
-    "Neues Control Board" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nyt Control Board"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Neues Control Board"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New Control Board"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nuevo Control Board"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nouveau Control Board"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nieuw Control Board"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nytt Control Board"
-          }
-        }
-      }
-    },
     "Nicht erkannt" : {
       "localizations" : {
         "da" : {
@@ -4685,52 +4544,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pausad"
-          }
-        }
-      }
-    },
-    "Rabatt Code" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rabatkode"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rabatt Code"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Discount Code"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Código de descuento"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Code de réduction"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kortingscode"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rabattkod"
           }
         }
       }
@@ -7185,52 +6998,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Om du gillar appen kan du lämna ett litet bidrag här. Det låser inte upp några extra funktioner."
-          }
-        }
-      }
-    },
-    "Wenn du **kostenlos** das neue Control Board V4 erhalten möchtest, kannst du den folgenden Code dafür im Store anwenden, sobald es verfügbar ist." : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hvis du vil modtage det nye Control Board V4 **gratis**, kan du anvende følgende kode i butikken, så snart det er tilgængeligt."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wenn du **kostenlos** das neue Control Board V4 erhalten möchtest, kannst du den folgenden Code dafür im Store anwenden, sobald es verfügbar ist."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "If you want to receive the new Control Board V4 **for free**, you can apply the following code in the store as soon as it is available."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Si quieres recibir el nuevo Control Board V4 **gratis**, puedes aplicar el siguiente código en la tienda tan pronto como esté disponible."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Si vous souhaitez recevoir gratuitement le nouveau Control Board V4, vous pouvez utiliser le code suivant dans la boutique dès qu’il sera disponible."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Als je het nieuwe Control Board V4 **gratis** wilt ontvangen, kun je de volgende code in de winkel toepassen zodra deze beschikbaar is."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Om du vill få det nya Control Board V4 **gratis** kan du använda följande kod i butiken så snart den är tillgänglig."
           }
         }
       }

@@ -37,44 +37,12 @@ struct RotatingTimelapseIcon: View {
                         .fill(Color.clear)
                         .frame(width: deadZoneRadius * 2, height: deadZoneRadius * 2)
                 }
-                .gesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { value in
-                            let dx = value.location.x - center.x
-                            let dy = value.location.y - center.y
-                            let distance = sqrt(dx * dx + dy * dy)
-                            guard distance >= deadZoneRadius else {
-                                dragStartOffset = nil
-                                return
-                            }
-                            let currentFingerAngle = atan2(dy, dx) * 180 / .pi
-
-                            if let startOffset = dragStartOffset {
-                                rotation = currentFingerAngle + startOffset
-                                if let lastTime = lastDragTime, let lastAngle = lastDragAngle {
-                                    let dt = Date().timeIntervalSince(lastTime)
-                                    if dt > 0 {
-                                        var deltaAngle = currentFingerAngle - lastAngle
-                                        if deltaAngle > 180 { deltaAngle -= 360 }
-                                        if deltaAngle < -180 { deltaAngle += 360 }
-                                        angularVelocity = deltaAngle
-                                    }
-                                }
-                                lastDragTime = Date()
-                                lastDragAngle = currentFingerAngle
-                            } else {
-                                dragStartOffset = rotation - currentFingerAngle
-                                lastDragTime = Date()
-                                lastDragAngle = currentFingerAngle
-                                angularVelocity = 0
-                            }
-                        }
-                        .onEnded { _ in
-                            dragStartOffset = nil
-                            lastDragTime = nil
-                            lastDragAngle = nil
-                        }
-                )
+                // A UIKit recognizer that begins on touch-down: SwiftUI's DragGesture can wait for other gestures
+                // on device, so a finger on the spinning spool only stopped it after a delay.
+                .gesture(ImmediateDragGesture(
+                    onChanged: { dragChanged(to: $0, center: center, deadZoneRadius: deadZoneRadius) },
+                    onEnded: dragEnded
+                ))
                 .onChange(of: context.date) {
                     guard dragStartOffset == nil else {
                         lastUpdate = context.date
@@ -96,6 +64,94 @@ struct RotatingTimelapseIcon: View {
                     rotation = rotation.truncatingRemainder(dividingBy: 360)
                 }
             }
+        }
+    }
+}
+
+extension RotatingTimelapseIcon {
+    private func dragChanged(to location: CGPoint, center: CGPoint, deadZoneRadius: CGFloat) {
+        let dx = location.x - center.x
+        let dy = location.y - center.y
+        guard sqrt(dx * dx + dy * dy) >= deadZoneRadius else {
+            dragStartOffset = nil
+            return
+        }
+        let currentFingerAngle = atan2(dy, dx) * 180 / .pi
+
+        if let startOffset = dragStartOffset {
+            rotation = currentFingerAngle + startOffset
+            if let lastTime = lastDragTime, let lastAngle = lastDragAngle, Date().timeIntervalSince(lastTime) > 0 {
+                var deltaAngle = currentFingerAngle - lastAngle
+                if deltaAngle > 180 { deltaAngle -= 360 }
+                if deltaAngle < -180 { deltaAngle += 360 }
+                angularVelocity = deltaAngle
+            }
+        } else {
+            dragStartOffset = rotation - currentFingerAngle
+            angularVelocity = 0
+        }
+        lastDragTime = Date()
+        lastDragAngle = currentFingerAngle
+    }
+
+    private func dragEnded() {
+        dragStartOffset = nil
+        lastDragTime = nil
+        lastDragAngle = nil
+    }
+}
+
+/// Reports the finger's location from the moment it touches down, alongside any other gestures.
+private struct ImmediateDragGesture: UIGestureRecognizerRepresentable {
+    let onChanged: (CGPoint) -> Void
+    let onEnded: () -> Void
+
+    final class Recognizer: UIGestureRecognizer {
+        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+            super.touchesBegan(touches, with: event)
+            state = .began
+        }
+
+        override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
+            super.touchesMoved(touches, with: event)
+            state = .changed
+        }
+
+        override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+            super.touchesEnded(touches, with: event)
+            state = .ended
+        }
+
+        override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+            super.touchesCancelled(touches, with: event)
+            state = .cancelled
+        }
+    }
+
+    final class Coordinator: NSObject, UIGestureRecognizerDelegate {
+        func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith other: UIGestureRecognizer) -> Bool {
+            true
+        }
+    }
+
+    func makeCoordinator(converter: CoordinateSpaceConverter) -> Coordinator {
+        Coordinator()
+    }
+
+    func makeUIGestureRecognizer(context: Context) -> Recognizer {
+        let recognizer = Recognizer()
+        recognizer.delegate = context.coordinator
+        return recognizer
+    }
+
+    func handleUIGestureRecognizerAction(_ recognizer: Recognizer, context: Context) {
+        switch recognizer.state {
+        case .began, .changed:
+            onChanged(context.converter.localLocation)
+        case .ended, .cancelled, .failed:
+            onEnded()
+        default:
+            break
         }
     }
 }

@@ -61,7 +61,7 @@ struct SpoolActivityView: View {
     let state: SpoolActivityAttributes.ContentState
 
     var body: some View {
-        let parts = ActivityParts(state: state)
+        let parts = ActivityParts(state: state, onLockScreen: true)
         HStack(spacing: 12) {
             Group {
                 if parts.isPaused {
@@ -93,23 +93,24 @@ struct SpoolActivityView: View {
 /// Building blocks shared by the Lock Screen view and the Dynamic Island.
 private struct ActivityParts {
     let state: SpoolActivityAttributes.ContentState
+    var onLockScreen = false
 
     var isError: Bool { state.deviceState == .autoStop }
     var isPaused: Bool { state.deviceState == .paused }
     var isDone: Bool { state.deviceState == .done }
 
     var stopButton: some View {
-        CircleIntentButton(intent: StopMotorIntent(), systemImage: "xmark", padding: 6, tint: .red)
+        CircleIntentButton(intent: StopMotorIntent(), systemImage: "xmark", padding: 6, tint: .red, boostsFill: onLockScreen)
     }
 
     /// Resume after a pause or auto-stop, dismiss when done, pause while running.
     @ViewBuilder var mainButton: some View {
         if isError || isPaused {
-            CircleIntentButton(intent: StartMotorIntent(), systemImage: "play.fill", padding: 5.7, nudgeRight: 2.3, tint: .blue)
+            CircleIntentButton(intent: StartMotorIntent(), systemImage: "play.fill", padding: 5.7, nudgeRight: 2.3, tint: .blue, boostsFill: onLockScreen)
         } else if isDone {
-            CircleIntentButton(intent: StopMotorIntent(), systemImage: "checkmark", padding: 6, tint: .blue)
+            CircleIntentButton(intent: StopMotorIntent(), systemImage: "checkmark", padding: 6, tint: .blue, boostsFill: onLockScreen)
         } else {
-            CircleIntentButton(intent: PauseMotorIntent(), systemImage: "pause.fill", padding: 7, tint: .blue)
+            CircleIntentButton(intent: PauseMotorIntent(), systemImage: "pause.fill", padding: 7, tint: .blue, boostsFill: onLockScreen)
         }
     }
 
@@ -165,6 +166,7 @@ private struct CircleIntentButton<Intent: AppIntent>: View {
     /// Optical centering for asymmetric symbols like "play.fill".
     var nudgeRight: CGFloat = 0
     let tint: Color
+    var boostsFill = false
 
     var body: some View {
         Button(intent: intent) {
@@ -179,6 +181,12 @@ private struct CircleIntentButton<Intent: AppIntent>: View {
         .buttonStyle(.bordered)
         .buttonBorderShape(.circle)
         .frame(width: 52, height: 52)
+        .background {
+            // iOS 27 renders the bordered fill too faint on the Lock Screen.
+            if #available(iOS 27, *), boostsFill {
+                Circle().fill(tint.opacity(0.15))
+            }
+        }
         .tint(tint)
     }
 }
@@ -210,12 +218,25 @@ struct CustomProgressStyle: ProgressViewStyle {
     var isDone: Bool = false
     var isPaused: Bool = false
 
+    /// iOS 27 renders translucent fills on the Lock Screen much fainter, so the track needs more opacity there
+    /// to look like the system's own Live Activity buttons.
+    private var trackColor: Color {
+        if #available(iOS 27, *) {
+            if isError { return Color.red.opacity(0.35) }
+            if isPaused { return Color.orange.opacity(0.35) }
+            return Color.blue.opacity(0.35)
+        }
+        if isError { return Color.red.opacity(0.2) }
+        if isPaused { return Color.orange.opacity(0.2) }
+        return Color.gray.opacity(0.2)
+    }
+
     func makeBody(configuration: Configuration) -> some View {
         GeometryReader { geometry in
             let progress = CGFloat(configuration.fractionCompleted ?? 0.0)
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(isError ? Color.red.opacity(0.2) : isPaused ? Color.orange.opacity(0.2) : Color.gray.opacity(0.2))
+                    .fill(trackColor)
 
                 Rectangle()
                     .fill(isError ? Color.red : isDone ? Color.green : isPaused ? Color.orange : Color.blue)

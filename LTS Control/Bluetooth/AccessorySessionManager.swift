@@ -53,10 +53,7 @@ final class AccessorySessionManager: NSObject {
     }
 
     func showAccessoryPicker() {
-        guard let accessorySession else {
-            initializeSession()
-            return
-        }
+        guard let accessorySession else { return }
         let items = [
             pickerItem(name: "LTS Respooler Pro", imageName: "RespoolerPro", manufacturerData: 0x02),
             pickerItem(name: "LTS Respooler", imageName: "Respooler", manufacturerData: 0x01),
@@ -75,6 +72,7 @@ final class AccessorySessionManager: NSObject {
                 UserDefaults.standard.removeObject(forKey: Self.storedAccessoryKey)
                 BLEManager.shared.forgetBoard()
                 self.canConnect = true
+                self.accessorySession?.invalidate()
                 self.initializeSession()
             }
         }

@@ -15,28 +15,17 @@ struct ContentView: View {
 
     private var displayedSpeed: Int { Int(localSpeedPercent.rounded(.down)) }
 
-    private var tempIcon: String {
-        if bleManager.isConnected, let temp = bleManager.status.chipTemperature {
-            return temp >= 65 ? "thermometer.high" : "thermometer.medium"
-        } else {
-            return "thermometer.medium"
-        }
+    private var chipTemperature: Int? {
+        bleManager.isConnected ? bleManager.status.chipTemperature : nil
     }
+
+    private var isTemperatureCritical: Bool { (chipTemperature ?? 0) >= 65 }
+
+    private var tempIcon: String { isTemperatureCritical ? "thermometer.high" : "thermometer.medium" }
 
     private var tempColor: Color {
-        if bleManager.isConnected, let temp = bleManager.status.chipTemperature {
-            return temp >= 65 ? .red : .green
-        } else {
-            return .primary
-        }
-    }
-
-    private var isTemperatureCritical: Bool {
-        if bleManager.isConnected, let temp = bleManager.status.chipTemperature {
-            return temp >= 65
-        } else {
-            return false
-        }
+        guard chipTemperature != nil else { return .primary }
+        return isTemperatureCritical ? .red : .green
     }
 
     var body: some View {
@@ -187,15 +176,15 @@ struct ContentView: View {
     private func statusProgressSection() -> some View {
         VStack {
             HStack {
-                Text({
+                Group {
                     if bleManager.deviceState == .autoStop {
-                        return "Fehler!"
+                        Text("Fehler!")
                     } else if bleManager.deviceState == .running || bleManager.deviceState == .paused {
-                        return "\(Int((bleManager.status.progress ?? 0).rounded())) %"
+                        Text(verbatim: "\(Int((bleManager.status.progress ?? 0).rounded())) %")
                     } else {
-                        return " "
+                        Text(verbatim: " ")
                     }
-                }())
+                }
                 .frame(width: 70, alignment: .leading)
                 .foregroundColor(bleManager.deviceState == .autoStop ? .red : .primary)
                 .monospacedDigit()
@@ -419,7 +408,7 @@ extension ContentView {
                     .font(.headline)
                     .foregroundColor(.primary)
                 let tempText: String = {
-                    guard bleManager.isConnected, let temp = bleManager.status.chipTemperature else { return "–" }
+                    guard let temp = chipTemperature else { return "–" }
                     return showFahrenheit
                         ? String(format: "%.0f °F", Double(temp) * 9 / 5 + 32)
                         : "\(temp) °C"

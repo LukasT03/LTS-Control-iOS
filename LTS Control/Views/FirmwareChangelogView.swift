@@ -8,10 +8,11 @@ struct ChangelogEntry: Identifiable, Hashable, Codable {
 }
 
 @MainActor
-final class FirmwareChangelogViewModel: ObservableObject {
-    @Published var entries: [ChangelogEntry] = []
-    @Published var isLoading = false
-    @Published var error: String? = nil
+@Observable
+final class FirmwareChangelogViewModel {
+    var entries: [ChangelogEntry] = []
+    var isLoading = false
+    var error: String? = nil
 
     let sourceURL: URL
 
@@ -49,12 +50,12 @@ final class FirmwareChangelogViewModel: ObservableObject {
             }
             let text = String(decoding: data, as: UTF8.self)
             let parsed = Self.parseChangelog(from: text)
-            self.entries = parsed
-            if parsed.isEmpty {
-                throw NSError(domain: "ChangelogParser", code: 1, userInfo: [NSLocalizedDescriptionKey: "Keine Daten gefunden."])
-            } else {
-                saveCache(parsed)
+            // An empty result keeps the cached entries instead of replacing them with nothing.
+            guard !parsed.isEmpty else {
+                throw NSError(domain: "ChangelogParser", code: 1, userInfo: [NSLocalizedDescriptionKey: String(localized: "Keine Daten gefunden.")])
             }
+            entries = parsed
+            saveCache(parsed)
         } catch {
             self.error = (error as NSError).localizedDescription
         }
@@ -115,14 +116,14 @@ final class FirmwareChangelogViewModel: ObservableObject {
 }
 
 struct FirmwareChangelogView: View {
-    @StateObject private var vm: FirmwareChangelogViewModel
+    @State private var vm: FirmwareChangelogViewModel
     @AppStorage("FirmwareChangelog.entriesSignature") private var storedEntriesSignature: Int = 0
     @State private var shouldAnimate = false
     @State private var fadeVisible = true
     @AppStorage("FirmwareChangelog.hasSeenEntries") private var hasSeenEntries: Bool = false
 
     init(sourceURL: URL = URL(string: "https://respooler.lts-design.com/Firmware/README.md")!) {
-        _vm = StateObject(wrappedValue: FirmwareChangelogViewModel(sourceURL: sourceURL))
+        _vm = State(initialValue: FirmwareChangelogViewModel(sourceURL: sourceURL))
     }
 
     private func stableSignature(_ entries: [ChangelogEntry]) -> Int {

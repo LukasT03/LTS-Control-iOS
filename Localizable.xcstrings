@@ -4,9 +4,6 @@
     "" : {
       "shouldTranslate" : false
     },
-    " " : {
-      "shouldTranslate" : false
-    },
     "%@\n\nDas Stoppen funktioniert auf Basis des dynamisch berechneten Fortschritts. Die Genauigkeit kann je nach Material variieren." : {
       "localizations" : {
         "da" : {
@@ -61,420 +58,6 @@
     },
     "%lld%%" : {
       "shouldTranslate" : false
-    },
-    "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde. [Verbindung erneut starten](ltscontrol://reconnect)" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sørg for, at Respooler Board er tændt, og at den nyeste firmware er installeret. [Genstart forbindelsen](ltscontrol://reconnect)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde. [Verbindung erneut starten](ltscontrol://reconnect)"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Make sure the Respooler Board is turned on and the latest firmware is installed. [Restart connection](ltscontrol://reconnect)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Asegúrate de que el Respooler Board esté encendido y que el firmware más reciente esté instalado. [Reiniciar la conexión](ltscontrol://reconnect)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Assurez‑vous que le Respooler Board est allumé et que le dernier firmware est installé. [Redémarrer la connexion](ltscontrol://reconnect)"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zorg ervoor dat het Respooler Board is ingeschakeld en dat de nieuwste firmware is geïnstalleerd. [Verbinding opnieuw starten](ltscontrol://reconnect)"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se till att Respooler Board är påslaget och att den senaste firmware är installerad. [Starta om anslutningen](ltscontrol://reconnect)"
-          }
-        }
-      }
-    },
-    "Behalte Fortschritt und Restzeit mit Live-Aktivitäten und Benachrichtigungen im Blick." : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hold øje med fremskridt og resterende tid med Live-aktiviteter og notifikationer."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Behalte Fortschritt und Restzeit mit Live-Aktivitäten und Benachrichtigungen im Blick."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keep an eye on progress and remaining time with Live Activities and notifications."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sigue el progreso y el tiempo restante con Actividades en tiempo real y notificaciones."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suivez la progression et le temps restant grâce aux Activités en direct et aux notifications."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Houd voortgang en resterende tijd in de gaten met Live-activiteiten en meldingen."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Håll koll på förlopp och återstående tid med Live-aktiviteter och notiser."
-          }
-        }
-      }
-    },
-    "Genau einstellen" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finjuster indstillinger"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Genau einstellen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fine-Tune Settings"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ajustar con precisión"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Régler avec précision"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nauwkeurig instellen"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finjustera inställningar"
-          }
-        }
-      }
-    },
-    "Impressum" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Juridisk information"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Impressum"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Legal Notice"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aviso legal"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mentions légales"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Colofon"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Juridisk information"
-          }
-        }
-      }
-    },
-    "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Deutschland\ninfo@lts-design.com\n© 2026 LTS Design" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Tyskland\ninfo@lts-design.com\n© 2026 LTS Design"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Deutschland\ninfo@lts-design.com\n© 2026 LTS Design"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Germany\ninfo@lts-design.com\n© 2026 LTS Design"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Alemania\ninfo@lts-design.com\n© 2026 LTS Design"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Allemagne\ninfo@lts-design.com\n© 2026 LTS Design"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Duitsland\ninfo@lts-design.com\n© 2026 LTS Design"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Tyskland\ninfo@lts-design.com\n© 2026 LTS Design"
-          }
-        }
-      }
-    },
-    "Passe Motorstärke, Auto-Stopp, Lüfter und mehr an deinen Respooler an." : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tilpas motorstyrke, Auto-Stop, ventilator og meget mere til din Respooler."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Passe Motorstärke, Auto-Stopp, Lüfter und mehr an deinen Respooler an."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tailor motor strength, Auto-Stop, fan and more to your Respooler."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adapta la potencia del motor, el Auto-Stop, el ventilador y mucho más a tu Respooler."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adaptez la puissance moteur, l’Auto-Stop, le ventilateur et bien plus à votre Respooler."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stem motorkracht, Auto-Stop, ventilator en meer af op je Respooler."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Anpassa motorstyrka, Auto-Stop, fläkt och mer efter din Respooler."
-          }
-        }
-      }
-    },
-    "Respooler steuern" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Styr din Respooler"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Respooler steuern"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Control Your Respooler"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Controla tu Respooler"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Contrôler le Respooler"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bedien je Respooler"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Styr din Respooler"
-          }
-        }
-      }
-    },
-    "Starte, pausiere und stoppe den Spulvorgang und passe die Geschwindigkeit jederzeit an." : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start, sæt på pause og stop spoleprocessen, og juster hastigheden når som helst."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Starte, pausiere und stoppe den Spulvorgang und passe die Geschwindigkeit jederzeit an."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start, pause and stop spooling and adjust the speed at any time."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inicia, pausa y detén el bobinado y ajusta la velocidad en cualquier momento."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Démarrez, mettez en pause et arrêtez le bobinage et ajustez la vitesse à tout moment."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start, pauzeer en stop het spoelproces en pas de snelheid op elk moment aan."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Starta, pausa och stoppa spolningen och justera hastigheten när som helst."
-          }
-        }
-      }
-    },
-    "Status verfolgen" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Følg status"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status verfolgen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Track Status"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seguir el estado"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suivre le statut"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status volgen"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Följ status"
-          }
-        }
-      }
     },
     "•" : {
       "shouldTranslate" : false
@@ -619,6 +202,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1,0 kg"
+          }
+        }
+      }
+    },
+    "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde. [Verbindung erneut starten](ltscontrol://reconnect)" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sørg for, at Respooler Board er tændt, og at den nyeste firmware er installeret. [Genstart forbindelsen](ltscontrol://reconnect)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achte darauf, dass das Respooler Board eingeschaltet ist und die aktuelle Firmware installiert wurde. [Verbindung erneut starten](ltscontrol://reconnect)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure the Respooler Board is turned on and the latest firmware is installed. [Restart connection](ltscontrol://reconnect)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asegúrate de que el Respooler Board esté encendido y que el firmware más reciente esté instalado. [Reiniciar la conexión](ltscontrol://reconnect)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assurez‑vous que le Respooler Board est allumé et que le dernier firmware est installé. [Redémarrer la connexion](ltscontrol://reconnect)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zorg ervoor dat het Respooler Board is ingeschakeld en dat de nieuwste firmware is geïnstalleerd. [Verbinding opnieuw starten](ltscontrol://reconnect)"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se till att Respooler Board är påslaget och att den senaste firmware är installerad. [Starta om anslutningen](ltscontrol://reconnect)"
           }
         }
       }
@@ -1034,6 +663,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Auto-stopp!"
+          }
+        }
+      }
+    },
+    "Behalte Fortschritt und Restzeit mit Live-Aktivitäten und Benachrichtigungen im Blick." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold øje med fremskridt og resterende tid med Live-aktiviteter og notifikationer."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behalte Fortschritt und Restzeit mit Live-Aktivitäten und Benachrichtigungen im Blick."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep an eye on progress and remaining time with Live Activities and notifications."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sigue el progreso y el tiempo restante con Actividades en tiempo real y notificaciones."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivez la progression et le temps restant grâce aux Activités en direct et aux notifications."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Houd voortgang en resterende tijd in de gaten met Live-activiteiten en meldingen."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Håll koll på förlopp och återstående tid med Live-aktiviteter och notiser."
           }
         }
       }
@@ -2885,6 +2560,52 @@
         }
       }
     },
+    "Genau einstellen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finjuster indstillinger"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genau einstellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fine-Tune Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustar con precisión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Régler avec précision"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nauwkeurig instellen"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finjustera inställningar"
+          }
+        }
+      }
+    },
     "Gering" : {
       "localizations" : {
         "da" : {
@@ -3303,6 +3024,52 @@
         }
       }
     },
+    "Impressum" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juridisk information"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impressum"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legal Notice"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso legal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mentions légales"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colofon"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juridisk information"
+          }
+        }
+      }
+    },
     "Kalibrierung" : {
       "localizations" : {
         "da" : {
@@ -3345,6 +3112,53 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kalibrering"
+          }
+        }
+      }
+    },
+    "Keine Daten gefunden." : {
+      "comment" : "Shown when the firmware changelog contains no entries",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen data fundet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Daten gefunden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data found."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontraron datos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune donnée trouvée."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen gegevens gevonden."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inga data hittades."
           }
         }
       }
@@ -3713,6 +3527,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LTS Control"
+          }
+        }
+      }
+    },
+    "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Deutschland\ninfo@lts-design.com\n© 2026 LTS Design" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Tyskland\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Deutschland\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Germany\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Alemania\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Allemagne\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Duitsland\ninfo@lts-design.com\n© 2026 LTS Design"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LTS Design\nHeiligenbornstraße 23\n01219 Dresden, Tyskland\ninfo@lts-design.com\n© 2026 LTS Design"
           }
         }
       }
@@ -4362,6 +4222,52 @@
         }
       }
     },
+    "Passe Motorstärke, Auto-Stopp, Lüfter und mehr an deinen Respooler an." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilpas motorstyrke, Auto-Stop, ventilator og meget mere til din Respooler."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passe Motorstärke, Auto-Stopp, Lüfter und mehr an deinen Respooler an."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tailor motor strength, Auto-Stop, fan and more to your Respooler."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adapta la potencia del motor, el Auto-Stop, el ventilador y mucho más a tu Respooler."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaptez la puissance moteur, l’Auto-Stop, le ventilateur et bien plus à votre Respooler."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stem motorkracht, Auto-Stop, ventilator en meer af op je Respooler."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anpassa motorstyrka, Auto-Stop, fläkt och mer efter din Respooler."
+          }
+        }
+      }
+    },
     "Passwort" : {
       "comment" : "Wi‑Fi password placeholder",
       "localizations" : {
@@ -4775,6 +4681,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Respooler startar"
+          }
+        }
+      }
+    },
+    "Respooler steuern" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Styr din Respooler"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respooler steuern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control Your Respooler"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controla tu Respooler"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrôler le Respooler"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bedien je Respooler"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Styr din Respooler"
           }
         }
       }
@@ -5287,6 +5239,52 @@
         }
       }
     },
+    "Starte, pausiere und stoppe den Spulvorgang und passe die Geschwindigkeit jederzeit an." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start, sæt på pause og stop spoleprocessen, og juster hastigheden når som helst."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starte, pausiere und stoppe den Spulvorgang und passe die Geschwindigkeit jederzeit an."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start, pause and stop spooling and adjust the speed at any time."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia, pausa y detén el bobinado y ajusta la velocidad en cualquier momento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrez, mettez en pause et arrêtez le bobinage et ajustez la vitesse à tout moment."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start, pauzeer en stop het spoelproces en pas de snelheid op elk moment aan."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starta, pausa och stoppa spolningen och justera hastigheten när som helst."
+          }
+        }
+      }
+    },
     "state.autoStop" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5658,6 +5656,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Status"
+          }
+        }
+      }
+    },
+    "Status verfolgen" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Følg status"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status verfolgen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Track Status"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguir el estado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivre le statut"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status volgen"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Följ status"
           }
         }
       }

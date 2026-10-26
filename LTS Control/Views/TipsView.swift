@@ -149,7 +149,9 @@ struct TipsView: View {
         do {
             let result = try await product.purchase()
             switch result {
-            case .success(.verified(_)):
+            case .success(.verified(let transaction)):
+                // Tips are consumables, so the transaction is done once the purchase went through.
+                await transaction.finish()
                 purchaseWasSuccessful = true
                 purchaseMessage = NSLocalizedString("Vielen Dank für deine Unterstützung!", comment: "Shown after a successful tip purchase")
             case .success(.unverified(_, _)):

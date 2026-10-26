@@ -313,6 +313,7 @@ private struct RespoolAmountView: View {
         .onTapGesture {
             if targetWeight != weight { targetWeight = weight }
         }
+        .accessibilityAddTraits(targetWeight == weight ? [.isButton, .isSelected] : .isButton)
     }
 
     var body: some View {

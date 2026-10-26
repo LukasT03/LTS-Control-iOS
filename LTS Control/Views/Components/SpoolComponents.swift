@@ -202,7 +202,6 @@ struct SpoolWithGradientView: View {
 }
 
 struct CustomProgressStyle: ProgressViewStyle {
-    @Environment(\.colorScheme) var colorScheme
     var isError: Bool = false
     var isDone: Bool = false
     var isPaused: Bool = false

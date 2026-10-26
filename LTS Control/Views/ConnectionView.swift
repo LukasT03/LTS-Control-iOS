@@ -83,7 +83,8 @@ struct SSIDPickerView: View {
     let scanSessionID: Int
 
     var body: some View {
-        let unique = Array(NSOrderedSet(array: ssids)) as! [String]
+        var seen = Set<String>()
+        let unique = ssids.filter { seen.insert($0).inserted }
         Picker("Netzwerk", selection: $selectedSSID) {
             Text("Auswählen (\(unique.count))").tag("")
             ForEach(unique, id: \.self) {
@@ -118,7 +119,7 @@ struct ClearableSecureField: UIViewRepresentable {
         let tf = UITextField(frame: .zero)
         tf.delegate = context.coordinator
         tf.isSecureTextEntry = true
-        tf.placeholder = NSLocalizedString(placeholder, comment: "")
+        tf.placeholder = placeholder
         tf.clearButtonMode = .whileEditing
         tf.textContentType = .password
         tf.autocorrectionType = .no
@@ -132,7 +133,7 @@ struct ClearableSecureField: UIViewRepresentable {
 
     func updateUIView(_ uiView: UITextField, context: Context) {
         if uiView.text != text { uiView.text = text }
-        uiView.placeholder = NSLocalizedString(placeholder, comment: "")
+        uiView.placeholder = placeholder
     }
 }
 
@@ -164,6 +165,8 @@ struct ConnectionView: View {
     
     private func performSendCredentials() {
         isConnectingToWiFi = true
+        // The board reports the result only once, so a second failure in a row must still count as a change.
+        bleManager.status.wifiConnectionResult = nil
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         bleManager.sendWiFiPassword(wifiPassword)
         wifiPassword = ""

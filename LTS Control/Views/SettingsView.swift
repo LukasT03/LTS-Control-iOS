@@ -68,7 +68,8 @@ struct SettingsView: View {
             }
             .pillListRow()
 
-            Section(header: Text("Konfiguration"), footer: Text("Wenn der Sensor deaktiviert ist, wird nicht auf den Verlust von Filament reagiert.")) {
+            Section(header: Text("Allgemein"), footer: Text("Wenn der Sensor deaktiviert ist, wird nicht auf den Verlust von Filament reagiert.")) {
+                DetailRow(title: "Respool-Menge", value: Text(RespoolAmountView.title(for: status.targetWeight)), page: Page.respoolAmount)
                 Picker("Ton bei Fertigstellung", selection: binding(\.jingleStyle, bleManager.setJingleStyle)) {
                     Text("Aus").tag(0)
                     Text("Einfach").tag(1)
@@ -79,7 +80,6 @@ struct SettingsView: View {
                     Text("LED Helligkeit: \(status.ledBrightness) %")
                         .monospacedDigit()
                 }
-                DetailRow(title: "Respool-Menge", value: Text(RespoolAmountView.title(for: status.targetWeight)), page: Page.respoolAmount)
                 Toggle("Filament Sensor nutzen", isOn: binding(\.useFilamentSensor, bleManager.setUseFilamentSensor))
                     .tint(.ltsBlue)
             }
@@ -127,21 +127,39 @@ struct SettingsView: View {
                 }
                 Toggle("Lüfter immer an", isOn: binding(\.fanAlways, bleManager.setFanAlways))
                     .tint(.ltsBlue)
+            }
+
+            Section(header: Text("Erweitert"), footer: Text("Für genauere Zeit- und Mengenangaben die Dauer einer 1\u{00A0}kg Spule bei 85\u{00A0}% Geschwindigkeit ohne High-Speed Modus messen und hier anpassen.")) {
+                Stepper(value: binding(\.durationAt85, bleManager.setDurationAt85), in: 5...2000, step: 5) {
+                    Text("Referenzzeit: \(status.durationAt85 / 60, specifier: "%02lld")m \(status.durationAt85 % 60, specifier: "%02lld")s")
+                        .monospacedDigit()
+                }
+            }
+
+            if status.supportsFirmware133Settings {
+                Section(footer: Text("Bei geringerer Empfindlichkeit reagiert der Respooler erst auf längere Unterbrechungen am Filament Sensor.")) {
+                    Picker("Sensor Empfindlichkeit", selection: binding(\.filamentLossMs, bleManager.setFilamentLossMs)) {
+                        Text("Gering").tag(400)
+                        Text("Mittel").tag(200)
+                        Text("Hoch").tag(100)
+                    }
+                    .disabled(!status.useFilamentSensor)
+                }
+
+                Section(footer: status.boardVariant == .pro
+                    ? Text("Fällt beim Umspulen der Strom aus, bleiben Fortschritt und Servoposition erhalten.")
+                    : Text("Fällt beim Umspulen der Strom aus, bleibt der Fortschritt erhalten.")) {
+                    Toggle("Stromausfall Wiederherstellung", isOn: binding(\.resumeAfterPowerLoss, bleManager.setResumeAfterPowerLoss))
+                        .tint(.ltsBlue)
+                }
+            }
+
+            Section(header: Text("App"), footer: Text("Erhalte Push-Benachrichtigungen, wenn der Respooler stoppt oder fertig ist.")) {
                 Picker("", selection: $showFahrenheit) {
                     Text("Celsius").tag(false)
                     Text("Fahrenheit").tag(true)
                 }
                 .pickerStyle(.segmented)
-            }
-
-            Section(header: Text("Kalibrierung"), footer: Text("Für genauere Zeitangaben bzw. Respool-Mengen die benötigte Dauer für eine 1\u{00A0}kg Spule bei 80\u{00A0}% Geschwindigkeit messen und hier anpassen.")) {
-                Stepper(value: binding(\.durationAt80, bleManager.setDurationAt80), in: 5...2000, step: 5) {
-                    Text("Dauer: \(status.durationAt80 / 60)m \(status.durationAt80 % 60)s")
-                        .monospacedDigit()
-                }
-            }
-
-            Section(header: Text("App"), footer: Text("Erhalte Push-Benachrichtigungen, wenn der Respooler stoppt oder fertig ist.")) {
                 Toggle("Live-Aktivitäten", isOn: $liveActivitiesOn)
                     .onChange(of: liveActivitiesOn) { _, newValue in
                         LiveActivityManager.shared.setEnabled(newValue)

@@ -298,6 +298,236 @@
         }
       }
     },
+    "Bei geringerer Empfindlichkeit reagiert der Respooler erst auf längere Unterbrechungen am Filament Sensor." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med lavere følsomhed reagerer Respooleren først på længere afbrydelser ved filamentsensoren."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei geringerer Empfindlichkeit reagiert der Respooler erst auf längere Unterbrechungen am Filament Sensor."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With a lower sensitivity, the Respooler only reacts to longer interruptions at the filament sensor."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con una sensibilidad más baja, el Respooler solo reacciona a interrupciones más largas en el sensor de filamento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec une sensibilité plus faible, le Respooler ne réagit qu’aux interruptions plus longues du capteur filament."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bij een lagere gevoeligheid reageert de Respooler pas op langere onderbrekingen bij de filamentsensor."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med lägre känslighet reagerar Respoolern först på längre avbrott vid filamentsensorn."
+          }
+        }
+      }
+    },
+    "Stromausfall Wiederherstellung" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gendannelse efter strømsvigt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stromausfall Wiederherstellung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power Loss Recovery"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recuperación tras corte de luz"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reprise après coupure de courant"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstel na stroomuitval"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Återställning efter strömavbrott"
+          }
+        }
+      }
+    },
+    "Fällt beim Umspulen der Strom aus, bleiben Fortschritt und Servoposition erhalten." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis strømmen svigter under omspolingen, bevares fremskridtet og servopositionen."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fällt beim Umspulen der Strom aus, bleiben Fortschritt und Servoposition erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If the power fails while respooling, the progress and servo position are kept."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si se corta la luz durante el rebobinado, se conservan el progreso y la posición del servo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cas de coupure de courant pendant le rebobinage, la progression et la position du servo sont conservées."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als de stroom uitvalt tijdens het omspoelen, blijven de voortgang en de servopositie behouden."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om strömmen bryts under omspolningen behålls förloppet och servopositionen."
+          }
+        }
+      }
+    },
+    "Fällt beim Umspulen der Strom aus, bleibt der Fortschritt erhalten." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis strømmen svigter under omspolingen, bevares fremskridtet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fällt beim Umspulen der Strom aus, bleibt der Fortschritt erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If the power fails while respooling, the progress is kept."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si se corta la luz durante el rebobinado, se conserva el progreso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cas de coupure de courant pendant le rebobinage, la progression est conservée."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als de stroom uitvalt tijdens het omspoelen, blijft de voortgang behouden."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om strömmen bryts under omspolningen behålls förloppet."
+          }
+        }
+      }
+    },
+    "Sensor Empfindlichkeit" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor følsomhed"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor Empfindlichkeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor Sensitivity"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensibilidad del sensor"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensibilité du capteur"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor gevoeligheid"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor känslighet"
+          }
+        }
+      }
+    },
     "Änderungen anzeigen" : {
       "comment" : "Show changelog",
       "localizations" : {
@@ -1221,48 +1451,48 @@
         }
       }
     },
-    "Dauer: %lldm %llds" : {
+    "Referenzzeit: %02lldm %02llds" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Varighed: %lldm %llds"
+            "value" : "Referencetid: %02lldm %02llds"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dauer: %lldm %llds"
+            "value" : "Referenzzeit: %02lldm %02llds"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Duration: %1$lldm %2$llds"
+            "value" : "Reference Time: %1$02lldm %2$02llds"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Duración: %lldm %llds"
+            "value" : "Tiempo de referencia: %02lldm %02llds"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Durée: %lldm %llds"
+            "value" : "Temps de référence: %02lldm %02llds"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Duur: %lldm %llds"
+            "value" : "Referentietijd: %02lldm %02llds"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Varaktighet: %lldm %llds"
+            "value" : "Referenstid: %02lldm %02llds"
           }
         }
       }
@@ -1284,7 +1514,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Auto-Stop will stop the Motor on high resistance."
+            "value" : "Auto-Stop will stop the motor on high resistance."
           }
         },
         "es" : {
@@ -2468,48 +2698,48 @@
         }
       }
     },
-    "Für genauere Zeitangaben bzw. Respool-Mengen die benötigte Dauer für eine 1 kg Spule bei 80 % Geschwindigkeit messen und hier anpassen." : {
+    "Für genauere Zeit- und Mengenangaben die Dauer einer 1 kg Spule bei 85 % Geschwindigkeit ohne High-Speed Modus messen und hier anpassen." : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For mere præcise resterende tider og respool-mængder, mål den nødvendige varighed for en 1 kg spole ved 80 % hastighed og justér den her."
+            "value" : "For mere præcise tids- og mængdeangivelser, mål varigheden for en 1 kg spole ved 85 % hastighed uden High-Speed-tilstand og justér den her."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Für genauere Zeitangaben bzw. Respool-Mengen die benötigte Dauer für eine 1 kg Spule bei 80 % Geschwindigkeit messen und hier anpassen."
+            "value" : "Für genauere Zeit- und Mengenangaben die Dauer einer 1 kg Spule bei 85 % Geschwindigkeit ohne High-Speed Modus messen und hier anpassen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For more accurate remaining times and respool amounts, measure the required duration for a 1 kg spool at 80 % speed and adjust it here."
+            "value" : "For more accurate times and amounts, measure the duration of a 1 kg spool at 85 % speed without High-Speed mode and adjust it here."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para obtener tiempos restantes y cantidades de rebobinado más precisos, mide la duración necesaria para una bobina de 1 kg al 80 % de velocidad y ajústala aquí."
+            "value" : "Para tiempos y cantidades más precisos, mide la duración de una bobina de 1 kg al 85 % de velocidad sin el modo High-Speed y ajústala aquí."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pour des temps restants et des quantités de rebobinage plus précis, mesurez la durée nécessaire pour une bobine de 1 kg à 80 % de vitesse et ajustez-la ici."
+            "value" : "Pour des temps et des quantités plus précis, mesurez la durée d’une bobine de 1 kg à 85 % de vitesse sans le mode High-Speed et ajustez-la ici."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Voor nauwkeurigere resterende tijden en respool-hoeveelheden, meet de benodigde duur voor een spoel van 1 kg bij 80 % snelheid en pas deze hier aan."
+            "value" : "Voor nauwkeurigere tijden en hoeveelheden, meet de duur van een spoel van 1 kg bij 85 % snelheid zonder High-Speed modus en pas deze hier aan."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "För mer exakta återstående tider och respool-mängder, mät den tid som krävs för en 1 kg-spole vid 80 % hastighet och justera den här."
+            "value" : "För mer exakta tider och mängder, mät tiden för en 1 kg-spole vid 85 % hastighet utan High-Speed-läget och justera den här."
           }
         }
       }
@@ -3070,48 +3300,48 @@
         }
       }
     },
-    "Kalibrierung" : {
+    "Erweitert" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kalibrering"
+            "value" : "Avanceret"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kalibrierung"
+            "value" : "Erweitert"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Calibration"
+            "value" : "Advanced"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Calibración"
+            "value" : "Avanzado"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Calibrage"
+            "value" : "Avancé"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kalibratie"
+            "value" : "Geavanceerd"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kalibrering"
+            "value" : "Avancerat"
           }
         }
       }
@@ -3209,48 +3439,48 @@
         }
       }
     },
-    "Konfiguration" : {
+    "Allgemein" : {
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Konfiguration"
+            "value" : "Generelt"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Konfiguration"
+            "value" : "Allgemein"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configuration"
+            "value" : "General"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configuración"
+            "value" : "General"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configuration"
+            "value" : "Général"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configuratie"
+            "value" : "Algemeen"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Konfiguration"
+            "value" : "Allmänt"
           }
         }
       }

@@ -218,7 +218,7 @@ private struct MainRootView: View {
                     .navigationTitle("Einstellungen")
             }
             .tabItem {
-                Label("Einstellungen", systemImage: "gearshape")
+                Label("Einstellungen", systemImage: "slider.horizontal.3")
             }
             .tag(AppTab.settings)
 

@@ -12,8 +12,9 @@ final class DeviceStatus {
             "ledBrightness": 50,
             "fanSpeed": 60,
             "useFilamentSensor": true,
+            "filamentLossMs": 100,
             "motorStrength": 100,
-            "durationAt80": 895,
+            "durationAt85": 840,
             "servoAngleR": 5,
             "servoAngleL": 175,
             "servoStepMm": 1.75,
@@ -46,16 +47,25 @@ final class DeviceStatus {
     var fanSpeed = store.integer(forKey: "fanSpeed")
     var fanAlways = store.bool(forKey: "fanAlways")
     var useFilamentSensor = store.bool(forKey: "useFilamentSensor")
+    var filamentLossMs = store.integer(forKey: "filamentLossMs")
+    var resumeAfterPowerLoss = store.bool(forKey: "resumeAfterPowerLoss")
     var directionReversed = store.bool(forKey: "directionReversed")
     var motorStrength = store.integer(forKey: "motorStrength")
     var torqueLimit = store.integer(forKey: "torqueLimit")
     var highSpeed = store.bool(forKey: "highSpeed")
-    var durationAt80 = store.integer(forKey: "durationAt80")
+    var durationAt85 = store.integer(forKey: "durationAt85")
     var targetWeight = store.integer(forKey: "targetWeight")
     var servoAngleR = store.integer(forKey: "servoAngleR")
     var servoAngleL = store.integer(forKey: "servoAngleL")
     var servoStepMm = store.double(forKey: "servoStepMm")
     var servoHome = store.string(forKey: "servoHome") ?? "R"
+
+    /// `FIL_T` and `RES` were added in firmware 1.3.3. Based on the cached version, so the
+    /// settings stay visible while disconnected.
+    var supportsFirmware133Settings: Bool {
+        guard let firmwareVersion else { return false }
+        return FirmwareVersion.compare(firmwareVersion, "1.3.3") != .orderedAscending
+    }
 
     @ObservationIgnored private var lastSaved: NSDictionary?
 
@@ -68,11 +78,13 @@ final class DeviceStatus {
             "fanSpeed": fanSpeed,
             "fanAlways": fanAlways,
             "useFilamentSensor": useFilamentSensor,
+            "filamentLossMs": filamentLossMs,
+            "resumeAfterPowerLoss": resumeAfterPowerLoss,
             "directionReversed": directionReversed,
             "motorStrength": motorStrength,
             "torqueLimit": torqueLimit,
             "highSpeed": highSpeed,
-            "durationAt80": durationAt80,
+            "durationAt85": durationAt85,
             "targetWeight": targetWeight,
             "servoAngleR": servoAngleR,
             "servoAngleL": servoAngleL,

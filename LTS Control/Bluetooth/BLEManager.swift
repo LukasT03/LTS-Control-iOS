@@ -162,12 +162,14 @@ extension BLEManager {
     func setLED(_ value: Int) { setSetting("LED", value, \.ledBrightness) }
     func setFanAlways(_ on: Bool) { setSetting("FAN_ALW", on, \.fanAlways) }
     func setUseFilamentSensor(_ on: Bool) { setSetting("USE_FIL", on, \.useFilamentSensor) }
+    func setFilamentLossMs(_ ms: Int) { setSetting("FIL_T", ms, \.filamentLossMs) }
+    func setResumeAfterPowerLoss(_ on: Bool) { setSetting("RES", on, \.resumeAfterPowerLoss) }
     func setDirectionReversed(_ on: Bool) { setSetting("DIR", on, \.directionReversed) }
     func setMotorStrength(_ value: Int) { setSetting("POW", value, \.motorStrength) }
     func setTorqueLimit(_ value: Int) { setSetting("TRQ", value, \.torqueLimit) }
     func setTargetWeight(_ value: Int) { setSetting("WGT", value, \.targetWeight) }
     func setHighSpeed(_ on: Bool) { setSetting("HS", on, \.highSpeed) }
-    func setDurationAt80(_ seconds: Int) { setSetting("DUR", seconds, \.durationAt80) }
+    func setDurationAt85(_ seconds: Int) { setSetting("DUR", seconds, \.durationAt85) }
     func setJingleStyle(_ style: Int) { setSetting("JIN", style, \.jingleStyle) }
     func setServoAngleR(_ angle: Int) { setSetting("SV_R", angle.clamped(to: 0...180), \.servoAngleR) }
     func setServoAngleL(_ angle: Int) { setSetting("SV_L", angle.clamped(to: 0...180), \.servoAngleL) }
@@ -275,6 +277,8 @@ extension BLEManager {
             applyRemoteSpeed(speed)
         }
         applySetting(dict, "USE_FIL", \.useFilamentSensor)
+        applySetting(dict, "FIL_T", \.filamentLossMs)
+        applySetting(dict, "RES", \.resumeAfterPowerLoss)
         applySetting(dict, "JIN", \.jingleStyle)
         applySetting(dict, "LED", \.ledBrightness)
         applySetting(dict, "FAN_SPD", \.fanSpeed)
@@ -283,7 +287,7 @@ extension BLEManager {
         applySetting(dict, "POW", \.motorStrength)
         applySetting(dict, "TRQ", \.torqueLimit)
         applySetting(dict, "HS", \.highSpeed)
-        applySetting(dict, "DUR", \.durationAt80)
+        applySetting(dict, "DUR", \.durationAt85)
         applySetting(dict, "WGT", \.targetWeight)
         applySetting(dict, "SV_R", \.servoAngleR)
         applySetting(dict, "SV_L", \.servoAngleL)

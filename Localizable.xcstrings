@@ -4,6 +4,9 @@
     "" : {
       "shouldTranslate" : false
     },
+    "-%@" : {
+      "shouldTranslate" : false
+    },
     "%@\n\nDas Stoppen funktioniert auf Basis des dynamisch berechneten Fortschritts. Die Genauigkeit kann je nach Material variieren." : {
       "localizations" : {
         "da" : {
@@ -252,6 +255,52 @@
         }
       }
     },
+    "Allgemein" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generelt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allgemein"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Général"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algemeen"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allmänt"
+          }
+        }
+      }
+    },
     "An: %lld %%" : {
       "localizations" : {
         "da" : {
@@ -294,236 +343,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "På: %lld %%"
-          }
-        }
-      }
-    },
-    "Bei geringerer Empfindlichkeit reagiert der Respooler erst auf längere Unterbrechungen am Filament Sensor." : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Med lavere følsomhed reagerer Respooleren først på længere afbrydelser ved filamentsensoren."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bei geringerer Empfindlichkeit reagiert der Respooler erst auf längere Unterbrechungen am Filament Sensor."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "With a lower sensitivity, the Respooler only reacts to longer interruptions at the filament sensor."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Con una sensibilidad más baja, el Respooler solo reacciona a interrupciones más largas en el sensor de filamento."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avec une sensibilité plus faible, le Respooler ne réagit qu’aux interruptions plus longues du capteur filament."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bij een lagere gevoeligheid reageert de Respooler pas op langere onderbrekingen bij de filamentsensor."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Med lägre känslighet reagerar Respoolern först på längre avbrott vid filamentsensorn."
-          }
-        }
-      }
-    },
-    "Stromausfall Wiederherstellung" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gendannelse efter strømsvigt"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stromausfall Wiederherstellung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Power Loss Recovery"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recuperación tras corte de luz"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reprise après coupure de courant"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Herstel na stroomuitval"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Återställning efter strömavbrott"
-          }
-        }
-      }
-    },
-    "Fällt beim Umspulen der Strom aus, bleiben Fortschritt und Servoposition erhalten." : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hvis strømmen svigter under omspolingen, bevares fremskridtet og servopositionen."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fällt beim Umspulen der Strom aus, bleiben Fortschritt und Servoposition erhalten."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "If the power fails while respooling, the progress and servo position are kept."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Si se corta la luz durante el rebobinado, se conservan el progreso y la posición del servo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En cas de coupure de courant pendant le rebobinage, la progression et la position du servo sont conservées."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Als de stroom uitvalt tijdens het omspoelen, blijven de voortgang en de servopositie behouden."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Om strömmen bryts under omspolningen behålls förloppet och servopositionen."
-          }
-        }
-      }
-    },
-    "Fällt beim Umspulen der Strom aus, bleibt der Fortschritt erhalten." : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hvis strømmen svigter under omspolingen, bevares fremskridtet."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fällt beim Umspulen der Strom aus, bleibt der Fortschritt erhalten."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "If the power fails while respooling, the progress is kept."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Si se corta la luz durante el rebobinado, se conserva el progreso."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "En cas de coupure de courant pendant le rebobinage, la progression est conservée."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Als de stroom uitvalt tijdens het omspoelen, blijft de voortgang behouden."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Om strömmen bryts under omspolningen behålls förloppet."
-          }
-        }
-      }
-    },
-    "Sensor Empfindlichkeit" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sensor følsomhed"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sensor Empfindlichkeit"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sensor Sensitivity"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sensibilidad del sensor"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sensibilité du capteur"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sensor gevoeligheid"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sensor känslighet"
           }
         }
       }
@@ -939,6 +758,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Håll koll på förlopp och återstående tid med Live-aktiviteter och notiser."
+          }
+        }
+      }
+    },
+    "Bei geringerer Empfindlichkeit reagiert der Respooler erst auf längere Unterbrechungen am Filament Sensor." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med lavere følsomhed reagerer Respooleren først på længere afbrydelser ved filamentsensoren."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei geringerer Empfindlichkeit reagiert der Respooler erst auf längere Unterbrechungen am Filament Sensor."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With a lower sensitivity, the Respooler only reacts to longer interruptions at the filament sensor."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con una sensibilidad más baja, el Respooler solo reacciona a interrupciones más largas en el sensor de filamento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec une sensibilité plus faible, le Respooler ne réagit qu’aux interruptions plus longues du capteur filament."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bij een lagere gevoeligheid reageert de Respooler pas op langere onderbrekingen bij de filamentsensor."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med lägre känslighet reagerar Respoolern först på längre avbrott vid filamentsensorn."
           }
         }
       }
@@ -1447,52 +1312,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OTA-uppdateringen lyckades."
-          }
-        }
-      }
-    },
-    "Referenzzeit: %02lldm %02llds" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Referencetid: %02lldm %02llds"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Referenzzeit: %02lldm %02llds"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reference Time: %1$02lldm %2$02llds"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tiempo de referencia: %02lldm %02llds"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Temps de référence: %02lldm %02llds"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Referentietijd: %02lldm %02llds"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Referenstid: %02lldm %02llds"
           }
         }
       }
@@ -2144,6 +1963,52 @@
         }
       }
     },
+    "Erweitert" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanceret"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erweitert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanzado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avancé"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geavanceerd"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avancerat"
+          }
+        }
+      }
+    },
     "Fahrenheit" : {
       "localizations" : {
         "da" : {
@@ -2186,6 +2051,98 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fahrenheit"
+          }
+        }
+      }
+    },
+    "Fällt beim Umspulen der Strom aus, bleiben Fortschritt und Servoposition erhalten." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis strømmen svigter under omspolingen, bevares fremskridtet og servopositionen."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fällt beim Umspulen der Strom aus, bleiben Fortschritt und Servoposition erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If the power fails while respooling, the progress and servo position are kept."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si se corta la luz durante el rebobinado, se conservan el progreso y la posición del servo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cas de coupure de courant pendant le rebobinage, la progression et la position du servo sont conservées."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als de stroom uitvalt tijdens het omspoelen, blijven de voortgang en de servopositie behouden."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om strömmen bryts under omspolningen behålls förloppet och servopositionen."
+          }
+        }
+      }
+    },
+    "Fällt beim Umspulen der Strom aus, bleibt der Fortschritt erhalten." : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvis strømmen svigter under omspolingen, bevares fremskridtet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fällt beim Umspulen der Strom aus, bleibt der Fortschritt erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If the power fails while respooling, the progress is kept."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si se corta la luz durante el rebobinado, se conserva el progreso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cas de coupure de courant pendant le rebobinage, la progression est conservée."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als de stroom uitvalt tijdens het omspoelen, blijft de voortgang behouden."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om strömmen bryts under omspolningen behålls förloppet."
           }
         }
       }
@@ -3300,52 +3257,6 @@
         }
       }
     },
-    "Erweitert" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avanceret"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Erweitert"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Advanced"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avanzado"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avancé"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geavanceerd"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avancerat"
-          }
-        }
-      }
-    },
     "Keine Daten gefunden." : {
       "comment" : "Shown when the firmware changelog contains no entries",
       "localizations" : {
@@ -3435,52 +3346,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ingen Wi‑Fi‑anslutning"
-          }
-        }
-      }
-    },
-    "Allgemein" : {
-      "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Generelt"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allgemein"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "General"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "General"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Général"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Algemeen"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allmänt"
           }
         }
       }
@@ -4683,6 +4548,52 @@
         }
       }
     },
+    "Referenzzeit: %02lldm %02llds" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referencetid: %02lldm %02llds"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenzzeit: %02lldm %02llds"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference Time: %1$02lldm %2$02llds"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiempo de referencia: %02lldm %02llds"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temps de référence: %02lldm %02llds"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referentietijd: %02lldm %02llds"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenstid: %02lldm %02llds"
+          }
+        }
+      }
+    },
     "Respool-Menge" : {
       "localizations" : {
         "da" : {
@@ -5188,6 +5099,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Om du har frågor, problem eller förslag, skicka gärna e-post till info@lts-design.com."
+          }
+        }
+      }
+    },
+    "Sensor Empfindlichkeit" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor følsomhed"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor Empfindlichkeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor Sensitivity"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensibilidad del sensor"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensibilité du capteur"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor gevoeligheid"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensor känslighet"
           }
         }
       }
@@ -6071,6 +6028,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stoppa"
+          }
+        }
+      }
+    },
+    "Stromausfall Wiederherstellung" : {
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gendannelse efter strømsvigt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stromausfall Wiederherstellung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power Loss Recovery"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recuperación tras corte de luz"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reprise après coupure de courant"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstel na stroomuitval"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Återställning efter strömavbrott"
           }
         }
       }

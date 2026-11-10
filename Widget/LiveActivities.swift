@@ -31,26 +31,21 @@ struct SpoolWidget: Widget {
                 DynamicIslandExpandedRegion(.center) {
                     VStack(spacing: 4) {
                         parts.statusRow
-                            .padding(.horizontal, 6)
                         parts.progressBar
-                            .padding(.horizontal, 6)
-                            .tint(.blue)
                     }
+                    .padding(.horizontal, 6)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     parts.mainButton
                 }
             } compactLeading: {
-                Image("BambuSpoolWhite")
-                    .renderingMode(.original)
-                    .resizable()
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(width: 22, height: 22)
-                    .clipped()
-                    .padding(.trailing, 2)
+                parts.compactSpool
+                    .modifier(CameraClearance(edge: .trailing))
             } compactTrailing: {
                 parts.compactIndicator
+                    .modifier(CameraClearance(edge: .leading))
             } minimal: {
+                // A circle of its own, away from the camera.
                 parts.compactIndicator
             }
         }
@@ -124,37 +119,84 @@ private struct ActivityParts {
             } else if isDone {
                 Text("Fertig!")
             } else {
-                Text("\(Int(state.progress.rounded()))%")
+                Text("\(state.progress)%")
                     .monospacedDigit()
             }
             Spacer()
-            let remaining = state.remainingTime ?? 0
-            Text(String(format: "-%02d:%02d", remaining / 60, remaining % 60))
+            remainingTimeText
                 .monospacedDigit()
         }
     }
 
+    /// Running, iOS counts down to the end date by itself, without an update every second.
+    @ViewBuilder private var remainingTimeText: some View {
+        if let endDate = state.endDate, endDate > .now {
+            Text("-\(timerInterval: Date.now...endDate, countsDown: true)")
+                .multilineTextAlignment(.trailing)
+        } else {
+            let remaining = state.remainingTime ?? 0
+            Text(String(format: "-%02d:%02d", remaining / 60, remaining % 60))
+        }
+    }
+
     var progressBar: some View {
-        ProgressView(value: state.progress / 100.0)
+        ProgressView(value: Double(state.progress) / 100)
             .progressViewStyle(CustomProgressStyle(isError: isError, isDone: isDone, isPaused: isPaused))
             .frame(maxWidth: .infinity)
     }
 
-    @ViewBuilder var compactIndicator: some View {
-        if isError {
-            Image(systemName: "exclamationmark.circle")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 23, height: 23)
-                .foregroundColor(.red)
-        } else if isDone {
-            Image(systemName: "checkmark.circle")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 23, height: 23)
-                .foregroundColor(.green)
+    /// Both compact views share one fixed size: the island lays them out side by side on iPhone
+    /// and stacked on iPhone Duo, and a view without its own size would fill whatever space it gets.
+    private static let compactSize: CGFloat = 22
+
+    var compactSpool: some View {
+        Image("BambuSpoolWhite")
+            .resizable()
+            .scaledToFit()
+            .frame(width: Self.compactSize, height: Self.compactSize)
+    }
+
+    var compactIndicator: some View {
+        Group {
+            if isError {
+                Image(systemName: "exclamationmark.circle")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.red)
+            } else if isDone {
+                Image(systemName: "checkmark.circle")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.green)
+            } else {
+                ThickCircularProgressView(progress: Double(state.progress) / 100, color: isPaused ? .orange : .blue)
+            }
+        }
+        .frame(width: Self.compactSize, height: Self.compactSize)
+    }
+}
+
+/// Keeps a compact view clear of the camera on its inner side, so its outer side stays concentric with the island.
+/// Not while the island is limited in width (shared with other Live Activities), where the system spaces it itself.
+private struct CameraClearance: ViewModifier {
+    private static let length: CGFloat = 2
+    let edge: Edge.Set
+
+    func body(content: Content) -> some View {
+        if #available(iOS 27, *) {
+            content.modifier(LimitedWidthAware(edge: edge))
         } else {
-            ThickCircularProgressView(progress: state.progress / 100.0, color: isPaused ? .orange : .blue)
+            content.padding(edge, Self.length)
+        }
+    }
+
+    @available(iOS 27, *)
+    private struct LimitedWidthAware: ViewModifier {
+        @Environment(\.isDynamicIslandLimitedInWidth) private var isLimitedInWidth
+        let edge: Edge.Set
+
+        func body(content: Content) -> some View {
+            content.padding(edge, isLimitedInWidth ? 0 : CameraClearance.length)
         }
     }
 }
@@ -197,18 +239,17 @@ struct ThickCircularProgressView: View {
     var color: Color = .blue
 
     var body: some View {
+        // Inset by half the line width, so the ring stays inside the view's frame.
+        let ring = Circle().inset(by: lineWidth / 2)
         ZStack {
-            Circle()
+            ring
                 .stroke(color == .orange ? Color.orange.opacity(0.2) : Color.gray.opacity(0.2), lineWidth: lineWidth)
 
-            Circle()
+            ring
                 .trim(from: 0.0, to: progress)
                 .stroke(color, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90))
         }
-        .padding(1.5)
-        .scaledToFit()
-        .contentShape(Circle())
         .animation(.default, value: progress)
     }
 }

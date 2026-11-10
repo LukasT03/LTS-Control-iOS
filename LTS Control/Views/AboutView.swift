@@ -37,6 +37,13 @@ struct AboutView: View {
         (status.boardVersion?.contains("CtrBoard V3") ?? false) && boardFirmware == "1.0.0"
     }
 
+    /// Since iOS 26 the sidebar keeps the system's own background, the buttons and the card are glass on it.
+    /// Before that they are white like the sidebar, so it gets the grouped background as on iPhone.
+    private var showsGroupedBackground: Bool {
+        if #available(iOS 26, *) { return !isSplitLayout }
+        return true
+    }
+
     private var updateStatusText: LocalizedStringKey {
         if isV3Blocked { return "Updates nicht unterstützt" }
         if !bleManager.isConnected { return "Board nicht verbunden" }
@@ -63,8 +70,7 @@ struct AboutView: View {
         @Bindable var bleManager = bleManager
 
         ZStack {
-            // The sidebar keeps the system's own background.
-            if !isSplitLayout {
+            if showsGroupedBackground {
                 Color(UIColor.systemGroupedBackground)
                     .ignoresSafeArea()
             }
@@ -95,8 +101,6 @@ struct AboutView: View {
                         .padding(.bottom, isSplitLayout ? 0 : nil)
                 }
                 .ignoresSafeArea(.keyboard)
-                // In the sidebar the card sits as far from the bottom edge as from the sides, past the home indicator inset.
-                .ignoresSafeArea(.container, edges: isSplitLayout ? .bottom : [])
                 // With the card's own 16 pt that's 20 pt, the side margin on iPhone Duo.
                 // Not in the sidebar, which has no bar edge of its own; it only flickers there while a sheet opens.
                 .replacingHomeIndicatorInset(with: 4, isEnabled: !isSplitLayout)
@@ -117,6 +121,8 @@ struct AboutView: View {
                 }
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
+            // In the sidebar the card sits as far from the bottom edge as from the sides, past the home indicator inset.
+            .ignoresSafeArea(.container, edges: isSplitLayout ? .bottom : [])
         }
         .onAppear { didAppear = true }
         // Checks for new firmware on appear, on every (dis)connect and when the app returns to the foreground.
@@ -138,6 +144,8 @@ struct AboutView: View {
         VStack {
             Image("AppIconSquare")
                 .resizable()
+                // Smooth downscaling of the large image, otherwise its edges come out jagged.
+                .interpolation(.high)
                 .scaledToFit()
                 .frame(width: 170)
                 .shadow(color: Color.black.opacity(0.1), radius: 12)
@@ -257,13 +265,16 @@ private struct CardBackground: ViewModifier {
 
     func body(content: Content) -> some View {
         if #available(iOS 26, *), isSplitLayout {
-            // The bottom leading corner follows the display corner it sits in.
-            content.glassEffect(.regular, in: .rect(
-                topLeadingCorner: .fixed(25),
-                topTrailingCorner: .fixed(25),
-                bottomLeadingCorner: .concentric(minimum: .fixed(20)),
-                bottomTrailingCorner: .fixed(25)
-            ))
+            content
+                // The sidebar makes fills vibrant, so the button's would blend into the card.
+                .environment(\.backgroundMaterial, nil)
+                // The bottom leading corner follows the display corner it sits in.
+                .glassEffect(.regular, in: .rect(
+                    topLeadingCorner: .fixed(25),
+                    topTrailingCorner: .fixed(25),
+                    bottomLeadingCorner: .concentric(minimum: .fixed(20)),
+                    bottomTrailingCorner: .fixed(25)
+                ))
         } else {
             content.background(
                 RoundedRectangle(cornerRadius: 25, style: .continuous)

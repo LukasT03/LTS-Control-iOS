@@ -42,7 +42,8 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "LTSControlIcon@2x.png"
     },
     {
       "appearances" : [
@@ -52,7 +53,8 @@
         }
       ],
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "LTSControlIconDark@2x.png"
     },
     {
       "appearances" : [
@@ -80,7 +82,8 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "LTSControlIcon@3x.png"
     },
     {
       "appearances" : [
@@ -90,7 +93,8 @@
         }
       ],
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "LTSControlIconDark@3x.png"
     },
     {
       "appearances" : [

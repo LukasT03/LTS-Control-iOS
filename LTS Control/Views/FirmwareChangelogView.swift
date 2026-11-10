@@ -138,9 +138,6 @@ struct FirmwareChangelogView: View {
 
     var body: some View {
         ZStack {
-            Color(uiColor: .systemBackground)
-                .ignoresSafeArea()
-
             if let error = vm.error, vm.entries.isEmpty {
                 VStack(spacing: 18) {
                     Image(systemName: "exclamationmark.circle")
@@ -189,6 +186,8 @@ struct FirmwareChangelogView: View {
                 .opacity(shouldAnimate ? (fadeVisible ? 1 : 0) : 1)
             }
         }
+        // Full size even while it's still empty, so the sheet doesn't lay out around nothing.
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onChange(of: vm.entries) { oldValue, newValue in
             let newSig = stableSignature(newValue)
             let firstAppearance = oldValue.isEmpty && !newValue.isEmpty

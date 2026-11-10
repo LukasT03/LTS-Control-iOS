@@ -75,6 +75,7 @@ private struct MainRootView: View {
                 SplashView()
                     .environment(bleManager)
                     .environment(sessionManager)
+                    .environment(\.isSplitLayout, horizontalSizeClass == .regular)
             }
             .sheet(isPresented: $showBoardVariantSheet) {
                 NavigationStack {
@@ -101,6 +102,7 @@ private struct MainRootView: View {
             InstructionsView()
         case .changelog:
             NavigationStack { FirmwareChangelogView() }
+                .presentationBackground(.background)
         case .tips:
             TipsView()
         case .connection:

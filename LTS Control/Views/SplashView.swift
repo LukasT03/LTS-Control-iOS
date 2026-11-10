@@ -2,23 +2,34 @@ import SwiftUI
 
 struct SplashView: View {
     @Environment(AccessorySessionManager.self) private var accessorySessionManager
+    @Environment(\.isSplitLayout) private var isSplitLayout
+
+    /// The unfolded iPhone Duo.
+    private var isWidePhone: Bool { UIDevice.current.userInterfaceIdiom == .phone && isSplitLayout }
 
     var body: some View {
         // Spacing modeled on Apple's own welcome screens (e.g. Fitness): content hangs from the top,
         // fixed gaps instead of spacers, rows and button share the same side margin.
+        // Where the height runs short (e.g. on the folded iPhone Duo) the icon shrinks, text and the gap to the button stay.
         VStack(spacing: 0) {
             Image("AppIconSquare")
                 .resizable()
+                // Smooth downscaling of the large image, otherwise its edges come out jagged.
+                .interpolation(.high)
                 .scaledToFit()
-                .frame(width: 130)
+                .frame(maxWidth: 130, maxHeight: 130)
                 .shadow(color: Color.black.opacity(0.1), radius: 12)
+                // Same margins as the text, so both center on the same width next to iPhone Duo's vertical bar.
+                .horizontalPadding(40)
+                .layoutPriority(1)
 
             Text("Willkommen bei LTS Control")
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .padding(.top, 24)
-                .padding(.horizontal, 40)
+                .horizontalPadding(40)
+                .layoutPriority(2)
 
             VStack(spacing: 20) {
                 FeatureRow(
@@ -37,13 +48,13 @@ struct SplashView: View {
                     description: "Passe Motorstärke, Auto-Stopp, Lüfter und mehr an deinen Respooler an."
                 )
             }
+            // On the unfolded iPhone Duo Apple keeps the rows about as narrow as the button.
+            .frame(maxWidth: isWidePhone ? 440 : nil)
             .padding(.top, 30)
-            .padding(.horizontal, 40)
-            // Icon and title stay clear of the status bar at the top of iPhone Duo's vertical bar.
-            // The rows hang from the top, any height left over from the narrower measurement goes below them.
-            .ignoresVerticalBar(alignment: .top)
+            .horizontalPadding(40)
+            .layoutPriority(2)
 
-            Spacer(minLength: 0)
+            Spacer(minLength: 24)
         }
         .padding(.top, 48)
         .sheetBottomButton {
@@ -54,6 +65,8 @@ struct SplashView: View {
                     .frame(maxWidth: .infinity)
             }
         }
+        // The plain system background, white or dark gray, instead of the sheet's default material.
+        .presentationBackground(.background)
     }
 }
 

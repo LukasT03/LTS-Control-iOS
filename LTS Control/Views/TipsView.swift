@@ -93,8 +93,7 @@ struct TipsView: View {
                     }
                 }
             }
-            .padding(.horizontal, 24)
-            .ignoresVerticalBar()
+            .horizontalPadding(24)
             .padding(.top, 20)
             .sheetBottomButton {
                 if purchaseMessage != nil {

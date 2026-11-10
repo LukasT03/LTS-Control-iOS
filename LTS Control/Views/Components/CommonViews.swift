@@ -22,33 +22,44 @@ struct SheetCloseButton: ToolbarContent {
 extension View {
     /// Prominent full-width button at the bottom of a sheet, as on Apple's welcome screens.
     /// Used by the splash and tips sheets so both look the same.
-    @ViewBuilder
     func sheetBottomButton<Content: View>(@ViewBuilder _ button: () -> Content) -> some View {
-        let isPad = UIDevice.current.userInterfaceIdiom == .pad
+        modifier(SheetBottomButton(button: button()))
+    }
+}
+
+private struct SheetBottomButton<Button: View>: ViewModifier {
+    @Environment(\.isSplitLayout) private var isSplitLayout
+    let button: Button
+
+    private let isPad = UIDevice.current.userInterfaceIdiom == .pad
+    /// On iPad and the unfolded iPhone Duo Apple keeps the button narrower than the content.
+    private var maxWidth: CGFloat { isPad || isSplitLayout ? 400 : .infinity }
+
+    func body(content: Content) -> some View {
         if #available(iOS 26, *) {
-            safeAreaBar(edge: .bottom) {
-                button()
+            content.safeAreaBar(edge: .bottom) {
+                button
                     .buttonStyle(.glassProminent)
                     .buttonSizing(.flexible)
                     .controlSize(.large)
                     .fontWeight(.semibold)
-                    // On iPad Apple keeps the button narrower than the content.
-                    .frame(maxWidth: isPad ? 400 : .infinity)
-                    .padding(.horizontal, 40)
-                    .ignoresVerticalBar()
+                    .frame(maxWidth: maxWidth)
+                    // Goes right up to iPhone Duo's vertical bar, like the content above it.
+                    .horizontalPadding(40)
                     // The iPad sheet has no bottom safe area, so the button would touch the edge.
                     .padding(.bottom, isPad ? 40 : 0)
             }
         } else {
-            safeAreaInset(edge: .bottom) {
-                button()
+            content.safeAreaInset(edge: .bottom) {
+                button
                     .buttonStyle(.borderedProminent)
+                    // Rounder than the default, as on Apple's welcome screens.
+                    .buttonBorderShape(.roundedRectangle(radius: 14))
                     .controlSize(.large)
                     .fontWeight(.semibold)
-                    .frame(maxWidth: isPad ? 400 : .infinity)
+                    .frame(maxWidth: maxWidth)
                     .padding(.horizontal, 40)
-                    .ignoresVerticalBar()
-                    .padding(.bottom)
+                    .padding(.bottom, isPad ? 40 : nil)
             }
         }
     }
@@ -90,14 +101,37 @@ private struct ContainerMarginPadding: ViewModifier {
 }
 
 extension View {
+    /// Pads both sides by `length`, except the side of iPhone Duo's vertical bar,
+    /// whose safe area inset already keeps the content clear of it.
+    @ViewBuilder
+    func horizontalPadding(_ length: CGFloat) -> some View {
+        if #available(iOS 27.1, *) {
+            modifier(VerticalBarSideOmittingPadding(length: length))
+        } else {
+            padding(.horizontal, length)
+        }
+    }
+}
+
+@available(iOS 27.1, *)
+private struct VerticalBarSideOmittingPadding: ViewModifier {
+    @Environment(\.toolbarVerticalEdge) private var edge
+    let length: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .padding(.leading, edge == .leading ? 0 : length)
+            .padding(.trailing, edge == .trailing ? 0 : length)
+    }
+}
+
+extension View {
     /// Lets the view extend under iPhone Duo's vertical bar, which runs down the side of the window
     /// with the status bar at its top. For content below that, so it centers on the full width.
-    /// Text is measured at the narrower width, so its height can come out larger than what it needs on the full width;
-    /// `alignment` decides where the content sits in that space.
     @ViewBuilder
-    func ignoresVerticalBar(_ isEnabled: Bool = true, alignment: Alignment? = nil) -> some View {
+    func ignoresVerticalBar(_ isEnabled: Bool = true) -> some View {
         if #available(iOS 27.1, *), isEnabled {
-            modifier(VerticalBarIgnoringModifier(alignment: alignment))
+            modifier(VerticalBarIgnoringModifier())
         } else {
             self
         }
@@ -107,7 +141,6 @@ extension View {
 @available(iOS 27.1, *)
 private struct VerticalBarIgnoringModifier: ViewModifier {
     @Environment(\.toolbarVerticalEdge) private var edge
-    let alignment: Alignment?
 
     func body(content: Content) -> some View {
         content.ignoresSafeArea(.container, edges: {
@@ -116,7 +149,7 @@ private struct VerticalBarIgnoringModifier: ViewModifier {
             case .trailing: .trailing
             case nil: []
             }
-        }(), alignment: alignment)
+        }())
     }
 }
 
@@ -172,8 +205,8 @@ struct DetailRow<Page: Hashable>: View {
                     value
                         .foregroundColor(.gray)
                 }
-                // Links in a split view column have no chevron of their own; there is no API to turn it on.
-                if isSplitLayout {
+                // Since iOS 26 links in a split view column have no chevron of their own; there is no API to turn it on.
+                if #available(iOS 26, *), isSplitLayout {
                     DisclosureChevron()
                 }
             }

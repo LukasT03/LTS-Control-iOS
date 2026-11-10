@@ -42,6 +42,8 @@ struct SimpleButtonWidgetEntryView: View {
                 HStack{
                     Image("AppLogo")
                         .resizable()
+                        // Smooth downscaling of the large image, otherwise its edges come out jagged.
+                        .interpolation(.high)
                         .frame(maxWidth: 30, maxHeight: 30)
                     Spacer()
                 }

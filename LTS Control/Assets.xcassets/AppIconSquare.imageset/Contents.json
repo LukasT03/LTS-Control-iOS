@@ -18,7 +18,8 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "LTSControlAppIcon@2x.png"
     },
     {
       "appearances" : [
@@ -28,11 +29,13 @@
         }
       ],
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "LTSControlAppIconDark@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "LTSControlAppIcon@3x.png"
     },
     {
       "appearances" : [
@@ -42,7 +45,8 @@
         }
       ],
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "LTSControlAppIconDark@3x.png"
     }
   ],
   "info" : {

@@ -56,10 +56,16 @@ final class BLEManager: NSObject {
     override init() {
         super.init()
         observeMotorRequests()
+        centralManager = CBCentralManager(delegate: self, queue: nil)
+        #if DEBUG
+        if let demoState = Self.demoState {
+            showDemo(demoState)
+            return
+        }
+        #endif
         if let uuidString = UserDefaults.standard.string(forKey: "lastPeripheralUUID") {
             pendingConnectUUID = UUID(uuidString: uuidString)
         }
-        centralManager = CBCentralManager(delegate: self, queue: nil)
     }
 
     func connectToDevice(with uuid: UUID) {
@@ -473,3 +479,35 @@ extension BLEManager {
         }
     }
 }
+
+// MARK: - Demo for App Store screenshots
+
+#if DEBUG
+extension BLEManager {
+    /// Launched with `-demo running` or `-demo paused`, the app shows a connected board mid-respool
+    /// without Bluetooth, for App Store screenshots in the simulator.
+    fileprivate static var demoState: DeviceState? {
+        UserDefaults.standard.string(forKey: "demo").map { DeviceState(rawValue: $0) ?? .running }
+    }
+
+    fileprivate func showDemo(_ state: DeviceState) {
+        isConnected = true
+        didInitialSync = true
+        deviceState = state
+        status.hasFilament = true
+        status.progress = 26
+        status.remainingTime = 10 * 60 + 16
+        status.chipTemperature = 38
+        status.isFanOn = true
+        status.fanSpeed = 60
+        status.wifiConnected = true
+        status.boardVersion = "LTS CB"
+        status.boardVariant = .standard
+        status.firmwareVersion = "1.3.1" // one behind the published version, so the update card offers it
+        status.speedPercent = 85
+        status.torqueLimit = 2
+        status.targetWeight = 0
+        syncLiveActivity()
+    }
+}
+#endif

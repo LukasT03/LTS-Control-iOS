@@ -5,6 +5,7 @@ struct SettingsView: View {
     @AppStorage("LiveActivityEnabled") private var liveActivitiesOn: Bool = true
     @AppStorage("NotificationsEnabled") private var notificationsOn: Bool = false
     @Environment(BLEManager.self) private var bleManager
+    @Environment(\.isSplitLayout) private var isSplitLayout
 
     private var status: DeviceStatus { bleManager.status }
 
@@ -45,28 +46,36 @@ struct SettingsView: View {
 
     var body: some View {
         List {
-            Section {
-                HStack(spacing: 8) {
-                    Image(systemName: stateIconName)
-                        .foregroundStyle(stateIconColor)
-                        .font(.system(size: 23.5))
-                        .frame(width: 28, height: 28)
-                        .contentTransition(.symbolEffect(.replace))
-                        .animation(.default, value: bleManager.deviceState)
-
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Status")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                        Text(LocalizedStringKey(bleManager.deviceStateKey))
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                    }
-                    Spacer()
+            // In regular width the control view next to the settings shows the status,
+            // and Verbindung is a page here instead of a tab.
+            if isSplitLayout {
+                Section {
+                    DetailRow(title: "Verbindung", systemImage: "wifi", page: Page.connection)
                 }
-                .pillStyle()
+            } else {
+                Section {
+                    HStack(spacing: 8) {
+                        Image(systemName: stateIconName)
+                            .foregroundStyle(stateIconColor)
+                            .font(.system(size: 23.5))
+                            .frame(width: 28, height: 28)
+                            .contentTransition(.symbolEffect(.replace))
+                            .animation(.default, value: bleManager.deviceState)
+
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("Status")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                            Text(LocalizedStringKey(bleManager.deviceStateKey))
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                    }
+                    .pillStyle()
+                }
+                .pillListRow()
             }
-            .pillListRow()
 
             Section(header: Text("Allgemein"), footer: Text("Wenn der Sensor deaktiviert ist, wird nicht auf den Verlust von Filament reagiert.")) {
                 DetailRow(title: "Respool-Menge", value: Text(RespoolAmountView.title(for: status.targetWeight)), page: Page.respoolAmount)
@@ -193,6 +202,9 @@ struct SettingsView: View {
         .navigationDestination(for: Page.self) { page in
             Group {
                 switch page {
+                case .connection:
+                    ConnectionView()
+                        .navigationTitle("Verbindung")
                 case .respoolAmount:
                     RespoolAmountView(targetWeight: binding(\.targetWeight, bleManager.setTargetWeight))
                         .navigationTitle("Respool-Menge")
@@ -210,7 +222,7 @@ struct SettingsView: View {
 
     /// Pushed pages; the path lives at the root so it survives switching between tab bar and split view.
     enum Page: Hashable {
-        case respoolAmount, servoCalibration, boardVariant
+        case connection, respoolAmount, servoCalibration, boardVariant
     }
 }
 
@@ -358,6 +370,7 @@ private struct RespoolAmountView: View {
     NavigationStack {
         SettingsView()
             .environment(BLEManager())
+            .environment(WiFiForm())
     }
 }
 #endif

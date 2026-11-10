@@ -155,7 +155,8 @@ private struct VerticalBarIgnoringModifier: ViewModifier {
 
 extension View {
     /// On iPhone Duo the tab bar sits in the vertical bar, so at the bottom only the home indicator inset is left.
-    /// The view then ignores it and keeps `spacing` instead.
+    /// The view then ignores it and keeps `spacing` instead. The keyboard is ignored with it: while the keyboard is up
+    /// the inset counts as both, and ignoring only the container would let the view move up.
     @ViewBuilder
     func replacingHomeIndicatorInset(with spacing: CGFloat, isEnabled: Bool = true) -> some View {
         if #available(iOS 27.1, *), isEnabled {
@@ -175,7 +176,7 @@ private struct HomeIndicatorInsetReplacingModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.bottom, barEdge != nil ? spacing : 0)
-            .ignoresSafeArea(.container, edges: barEdge != nil ? .bottom : [])
+            .ignoresSafeArea(.all, edges: barEdge != nil ? .bottom : [])
     }
 }
 
@@ -188,18 +189,28 @@ struct DisclosureChevron: View {
     }
 }
 
-/// List row with a title and optional value that pushes the destination registered for `page`.
+/// List row with a title and optional icon and value that pushes the destination registered for `page`.
 struct DetailRow<Page: Hashable>: View {
     @Environment(\.isSplitLayout) private var isSplitLayout
 
     let title: LocalizedStringKey
+    var systemImage: String? = nil
     var value: Text? = nil
     let page: Page
 
     var body: some View {
         NavigationLink(value: page) {
             HStack {
-                Text(title)
+                if let systemImage {
+                    Label {
+                        Text(title)
+                    } icon: {
+                        Image(systemName: systemImage)
+                            .foregroundStyle(.tint)
+                    }
+                } else {
+                    Text(title)
+                }
                 Spacer()
                 if let value {
                     value

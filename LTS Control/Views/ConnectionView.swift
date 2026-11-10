@@ -2,8 +2,6 @@ import SwiftUI
 import UIKit
 
 struct StatusHeaderView: View {
-    @Environment(\.isSplitLayout) private var isSplitLayout
-    
     let isConnected: Bool
     let isWiFiConnected: Bool
     let showWiFiError: Bool
@@ -58,23 +56,14 @@ struct StatusHeaderView: View {
             }
             .pillStyle()
         }
-        .frame(minHeight: {
-            if isSplitLayout, #available(iOS 26, *) {
-                78
-            } else {
-                50
-            }
-        }())
+        .frame(minHeight: 50)
     }
 }
 
 #Preview("Connection – Example") {
-    ConnectionView(
-        wifiSSID: .constant(""),
-        wifiPassword: .constant(""),
-        scanSessionID: .constant(0)
-    )
-    .environment(BLEManager())
+    ConnectionView()
+        .environment(BLEManager())
+        .environment(WiFiForm())
 }
 
 struct SSIDPickerView: View {
@@ -137,14 +126,21 @@ struct ClearableSecureField: UIViewRepresentable {
     }
 }
 
-struct ConnectionView: View {
-    @Environment(\.isSplitLayout) private var isSplitLayout
-    @Environment(BLEManager.self) private var bleManager
+/// What's entered on the connection page. Lives at the root, so it survives switching between
+/// the Verbindung tab (compact width) and the page in the settings column (regular width).
+@MainActor
+@Observable
+final class WiFiForm {
+    var ssid = ""
+    var password = ""
+    /// Rebuilds the network picker for every scan.
+    var scanSessionID = 0
+}
 
-    @Binding var wifiSSID: String
-    @Binding var wifiPassword: String
-    
-    @Binding var scanSessionID: Int
+/// Wi‑Fi and Bluetooth settings. The Verbindung tab in compact width, a settings page in regular width.
+struct ConnectionView: View {
+    @Environment(BLEManager.self) private var bleManager
+    @Environment(WiFiForm.self) private var form
 
     @State private var isConnectingToWiFi: Bool = false
     @State private var shouldWiggleWiFiIcon: Bool = false
@@ -158,122 +154,102 @@ struct ConnectionView: View {
     private var isWiFiConnected: Bool {
         bleManager.isConnected && (bleManager.status.wifiConnected ?? false)
     }
-    
+
     private var canSendCredentials: Bool {
-        !isConnectingToWiFi && bleManager.isConnected && bleManager.deviceState != .updating && !wifiSSID.isEmpty && !wifiPassword.isEmpty
+        !isConnectingToWiFi && bleManager.isConnected && bleManager.deviceState != .updating && !form.ssid.isEmpty && !form.password.isEmpty
     }
-    
+
     private func performSendCredentials() {
         isConnectingToWiFi = true
         // The board reports the result only once, so a second failure in a row must still count as a change.
         bleManager.status.wifiConnectionResult = nil
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        bleManager.sendWiFiPassword(wifiPassword)
-        wifiPassword = ""
+        bleManager.sendWiFiPassword(form.password)
+        form.password = ""
         Task {
             try? await Task.sleep(for: .seconds(0.3))
-            bleManager.sendWiFiSSID(wifiSSID)
+            bleManager.sendWiFiSSID(form.ssid)
             try? await Task.sleep(for: .seconds(0.3))
             bleManager.triggerWiFiConnect()
         }
     }
 
-    private func scanButton(_ title: LocalizedStringKey) -> some View {
-        Button(title) {
-            bleManager.triggerWiFiScan()
-            scanSessionID += 1
-        }
-        .disabled(!canScan)
-    }
-
     var body: some View {
-        VStack {
-            List {
-                Section {
-                    Group {
-                        StatusHeaderView(
-                            isConnected: bleManager.isConnected,
-                            isWiFiConnected: isWiFiConnected,
-                            showWiFiError: showWiFiError,
-                            shouldWiggleWiFiIcon: shouldWiggleWiFiIcon,
-                            shouldBounceWiFiIcon: shouldBounceWiFiIcon
-                        )
-                        .pillListRow()
+        @Bindable var form = form
+
+        List {
+            Section {
+                StatusHeaderView(
+                    isConnected: bleManager.isConnected,
+                    isWiFiConnected: isWiFiConnected,
+                    showWiFiError: showWiFiError,
+                    shouldWiggleWiFiIcon: shouldWiggleWiFiIcon,
+                    shouldBounceWiFiIcon: shouldBounceWiFiIcon
+                )
+                .pillListRow()
+            }
+
+            Section(header: Text("WLAN"),
+                    footer: Text("Für die WLAN-Verbindung hier nach verfügbaren Netzwerken suchen und das Passwort eingeben. Funktioniert nur mit 2,4 GHz Netzwerken.")) {
+                if bleManager.isScanningForSSIDs {
+                    HStack {
+                        Text("Netzwerk")
+                        Spacer()
+                        ProgressView()
+                    }
+                    .id(form.scanSessionID)
+                } else {
+                    SSIDPickerView(ssids: visibleSSIDs, selectedSSID: $form.ssid, scanSessionID: form.scanSessionID)
+                }
+                ClearableSecureField(text: $form.password, placeholder: NSLocalizedString("Passwort", comment: "Wi‑Fi password placeholder")) {
+                    if canSendCredentials {
+                        performSendCredentials()
                     }
                 }
-                Section(header: Text("WLAN"),
-                        footer: Text("Für die WLAN-Verbindung hier nach verfügbaren Netzwerken suchen und das Passwort eingeben. Funktioniert nur mit 2,4 GHz Netzwerken.")) {
-                    if bleManager.isScanningForSSIDs {
-                        HStack {
-                            Text("Netzwerk")
-                            Spacer()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        performSendCredentials()
+                    }) {
+                        if isConnectingToWiFi {
                             ProgressView()
                         }
-                        .id(scanSessionID)
-                    } else {
-                        SSIDPickerView(ssids: visibleSSIDs, selectedSSID: $wifiSSID, scanSessionID: scanSessionID)
-                    }
-                    ClearableSecureField(text: $wifiPassword, placeholder: NSLocalizedString("Passwort", comment: "Wi‑Fi password placeholder")) {
-                        if canSendCredentials {
-                            performSendCredentials()
+                        else {
+                            Text("Zugangsdaten senden")
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            performSendCredentials()
-                        }) {
-                            if isConnectingToWiFi {
-                                ProgressView()
-                            }
-                            else {
-                                Text("Zugangsdaten senden")
-                            }
-                        }
-                        .disabled(!canSendCredentials)
-                        Spacer()
-                    }
-                }
-                
-                // On iPad with iOS 26 the scan button sits in the toolbar instead.
-                if !isSplitLayout {
-                    Section { scanButton("Nach verfügbaren Netzwerken suchen") }
-                } else if #unavailable(iOS 26) {
-                    Section { scanButton("Nach verfügbaren Netzwerken suchen") }
-                }
-                
-                Section(header: Text("Bluetooth"),
-                        footer: Text("Bei Verbindungsproblemen das gespeicherte Gerät entfernen und die Verbindung neu aufbauen.")) {
-                    Button(action: {
-                        AccessorySessionManager.shared.showAccessoryPicker()
-                    }) {
-                        Text("Verbindung herstellen")
-                    }
-                    .disabled(!AccessorySessionManager.shared.canConnect)
-                    
-                    Button(action: {
-                        AccessorySessionManager.shared.forgetAccessory()
-                    }) {
-                        Text("Gespeichertes Gerät entfernen")
-                    }
-                    .foregroundColor(.red)
+                    .disabled(!canSendCredentials)
+                    Spacer()
                 }
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
-            .navigationTitle("Verbindung")
-            .navigationBarTitleDisplayMode(isSplitLayout ? .inline : .large)
-            .toolbar {
-                if isSplitLayout {
-                    SheetCloseButton()
-                    if #available(iOS 26, *) {
-                        ToolbarItem(placement: .topBarLeading) { scanButton("Netzwerk-Scan") }
-                    }
+
+            Section {
+                Button("Nach verfügbaren Netzwerken suchen") {
+                    bleManager.triggerWiFiScan()
+                    form.scanSessionID += 1
                 }
+                .disabled(!canScan)
+            }
+
+            Section(header: Text("Bluetooth"),
+                    footer: Text("Bei Verbindungsproblemen das gespeicherte Gerät entfernen und die Verbindung neu aufbauen.")) {
+                Button(action: {
+                    AccessorySessionManager.shared.showAccessoryPicker()
+                }) {
+                    Text("Verbindung herstellen")
+                }
+                .disabled(!AccessorySessionManager.shared.canConnect)
+
+                Button(action: {
+                    AccessorySessionManager.shared.forgetAccessory()
+                }) {
+                    Text("Gespeichertes Gerät entfernen")
+                }
+                .foregroundColor(.red)
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .background(Color(UIColor.systemGroupedBackground))
         .onChange(of: bleManager.status.wifiConnectionResult) { _, newValue in
             if let newValue {
                 isConnectingToWiFi = false
@@ -296,8 +272,10 @@ struct ConnectionView: View {
         }
         .onChange(of: bleManager.isConnected) { _, newValue in
             if newValue == false {
-                wifiSSID = ""
-                scanSessionID += 1
+                // The board's result can't arrive anymore.
+                isConnectingToWiFi = false
+                form.ssid = ""
+                form.scanSessionID += 1
             }
         }
     }

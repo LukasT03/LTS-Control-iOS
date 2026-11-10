@@ -1,3 +1,4 @@
+import StoreKit
 import SwiftUI
 import UIKit
 
@@ -27,6 +28,18 @@ struct LTSControlApp: App {
     init() {
         _ = LiveActivityManager.shared
         _ = LocalNotificationManager.shared // sets itself as notification delegate, must exist before launch finishes
+        finishTransactionUpdates()
+    }
+
+    /// Tips can complete outside the tips sheet (e.g. Ask to Buy) or stay unfinished after a crash.
+    /// StoreKit delivers those here from launch on; they are consumables, so they're just finished.
+    private func finishTransactionUpdates() {
+        Task {
+            for await result in Transaction.updates {
+                guard case .verified(let transaction) = result else { continue }
+                await transaction.finish()
+            }
+        }
     }
 
     var body: some Scene {
@@ -44,9 +57,7 @@ private struct MainRootView: View {
     @AppStorage("hasCompletedSetup") private var hasCompletedSetup: Bool = false
     @State private var showSplashView: Bool = false
     @State private var hasCheckedSetup: Bool = false
-    @State private var scanSessionID: Int = 0
-    @State private var wifiSSID: String = ""
-    @State private var wifiPassword: String = ""
+    @State private var wifiForm = WiFiForm()
     /// Starts with the sidebar open: pushing in the settings column would otherwise show it on its own after launch.
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedTab: AppTab = .control
@@ -58,10 +69,6 @@ private struct MainRootView: View {
 
     private enum AppTab { case control, settings, connection, more }
 
-    private var tipsButtonPlacement: ToolbarItemPlacement {
-        if #available(iOS 26, *) { .topBarLeading } else { .topBarTrailing }
-    }
-
     var body: some View {
         mainLayout
             .sheet(item: $presentedSheet) { sheet in
@@ -69,6 +76,7 @@ private struct MainRootView: View {
             }
             .environment(bleManager)
             .environment(sessionManager)
+            .environment(wifiForm)
             .environment(\.isSplitLayout, horizontalSizeClass == .regular)
             .onAppear(perform: checkInitialSetup)
             .sheet(isPresented: $showSplashView) {
@@ -105,10 +113,6 @@ private struct MainRootView: View {
                 .presentationBackground(.background)
         case .tips:
             TipsView()
-        case .connection:
-            NavigationStack {
-                ConnectionView(wifiSSID: $wifiSSID, wifiPassword: $wifiPassword, scanSessionID: $scanSessionID)
-            }
         }
     }
 
@@ -132,26 +136,34 @@ private struct MainRootView: View {
     }
 
     /// Carries the current page over when the layout switches: Verbindung is a tab in compact width
-    /// and a sheet in regular width, Mehr is a tab in compact width and the sidebar in regular width.
-    /// The other sheets are opened from Mehr, so it stays behind them; an open settings page keeps Einstellungen in front.
+    /// and a settings page in regular width, Mehr is a tab in compact width and the sidebar in regular width.
+    /// The sheets are opened from Mehr, so it stays behind them; an open settings page keeps Einstellungen in front.
     /// A settings page left behind in its tab doesn't come along into the settings column.
     private func adaptToLayout() {
         var transaction = Transaction()
         transaction.disablesAnimations = true
         withTransaction(transaction) {
             if horizontalSizeClass == .regular {
-                if selectedTab != .settings { settingsPath = [] }
-                if selectedTab == .connection { presentedSheet = .connection }
+                if selectedTab == .connection {
+                    settingsPath = [.connection]
+                } else if selectedTab != .settings {
+                    settingsPath = []
+                }
                 columnVisibility = selectedTab == .more ? .all : .doubleColumn
-            } else if presentedSheet == .connection {
-                presentedSheet = nil
-                selectedTab = .connection
-            } else if presentedSheet != nil {
-                selectedTab = .more
-            } else if !settingsPath.isEmpty {
-                selectedTab = .settings
-            } else if selectedTab == .connection || (selectedTab == .more && columnVisibility != .all) {
-                selectedTab = .control
+            } else {
+                // Compact width has no link to the connection page, so it moves to its tab.
+                let showsConnection = settingsPath.first == .connection
+                if showsConnection { settingsPath = [] }
+
+                if presentedSheet != nil {
+                    selectedTab = .more
+                } else if showsConnection {
+                    selectedTab = .connection
+                } else if !settingsPath.isEmpty {
+                    selectedTab = .settings
+                } else if selectedTab == .connection || (selectedTab == .more && columnVisibility != .all) {
+                    selectedTab = .control
+                }
             }
         }
     }
@@ -161,18 +173,12 @@ private struct MainRootView: View {
             VStack {
                 AboutView(presentedSheet: $presentedSheet)
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            // The card sits as far from the bottom edge as from the sides, past the home indicator inset.
+            // Ignored here at the column's root together with the keyboard: while the keyboard is up the inset
+            // counts as both, and anything less lets the sidebar's content move up.
+            .ignoresSafeArea(edges: .bottom)
             .navigationBarTitle("LTS Respooler", displayMode: .inline)
-            .toolbar {
-                ToolbarItem(placement: tipsButtonPlacement) {
-                    Button {
-                        presentedSheet = .tips
-                    } label: {
-                        Label("Trinkgeld senden", systemImage: "cup.and.heat.waves")
-                    }
-                }
-            }
             .navigationSplitViewColumnWidth(min: 350, ideal: 350, max: 350)
         } content: {
             // Its own stack, so detail rows push inside this column instead of replacing the controls.
@@ -225,7 +231,7 @@ private struct MainRootView: View {
             .tag(AppTab.settings)
 
             NavigationStack {
-                ConnectionView(wifiSSID: $wifiSSID, wifiPassword: $wifiPassword, scanSessionID: $scanSessionID)
+                ConnectionView()
                     .navigationTitle("Verbindung")
             }
             .tabItem {

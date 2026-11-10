@@ -82,6 +82,7 @@ final class BLEManager: NSObject {
         log.info("Forget board")
         pendingConnectUUID = nil
         UserDefaults.standard.removeObject(forKey: "lastPeripheralUUID")
+        centralManager.stopScan()
         if let peripheral {
             centralManager.cancelPeripheralConnection(peripheral)
         }
@@ -237,7 +238,9 @@ extension BLEManager {
     /// only a single key, so values are only updated for keys that are present.
     private func updateStatus(from dict: [String: Any]) {
         if let code = dict["STAT"] as? String, let newState = Self.stateCodes[code], newState != deviceState {
-            if newState == .done {
+            // The first status after connecting only reports the current state: a board that finished
+            // while out of range stays done until the next start and would notify again on every reconnect.
+            if newState == .done, didInitialSync {
                 LocalNotificationManager.shared.notifyDone()
             } else if newState == .autoStop, deviceState == .running {
                 LocalNotificationManager.shared.notifyAutoStop()
@@ -396,15 +399,22 @@ extension BLEManager: @preconcurrency CBCentralManagerDelegate, @preconcurrency 
         peripheral = nil
         characteristic = nil
         resetLiveState()
-        reconnectLater()
+        // A connection request doesn't time out, so it's made right away and goes through as soon as
+        // the board advertises again, e.g. after it was switched off and on.
+        if let uuid = pendingConnectUUID {
+            connectToDevice(with: uuid)
+        }
     }
 
     func centralManager(_ central: CBCentralManager, didFailToConnect p: CBPeripheral, error: Error?) {
         log.error("Failed to connect to \(p.identifier, privacy: .public): \(error?.localizedDescription ?? "no error", privacy: .public)")
         peripheral = nil
+        // Right after pairing the board is already shown as connected, see `AccessorySessionManager`.
+        resetLiveState()
         reconnectLater()
     }
 
+    /// After a failed attempt it waits a moment, so a board that keeps refusing isn't retried in a tight loop.
     private func reconnectLater() {
         guard let uuid = pendingConnectUUID else { return }
         Task {

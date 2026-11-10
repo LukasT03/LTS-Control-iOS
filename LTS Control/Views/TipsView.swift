@@ -119,13 +119,7 @@ struct TipsView: View {
                 }
             }
             .presentationDetents([.height(340)])
-            .task {
-                await loadProducts()
-                for await result in Transaction.updates {
-                    guard case .verified(let transaction) = result else { continue }
-                    await transaction.finish()
-                }
-            }
+            .task { await loadProducts() }
         }
         // On iPad the form sheet takes its width from here; the height stays the system default.
         .frame(idealWidth: 520)

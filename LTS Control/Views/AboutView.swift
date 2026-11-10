@@ -4,7 +4,6 @@ struct AboutView: View {
     enum AboutSheet: Hashable, Identifiable {
         case instructions
         case changelog
-        case connection
         case tips
         var id: Self { self }
     }
@@ -44,6 +43,13 @@ struct AboutView: View {
         return true
     }
 
+    /// Since iPadOS 26 the sidebar's top inset shrinks by about 21 pt while the keyboard is up, which moved the header
+    /// centered below it. So the sidebar keeps a fixed distance from the window's top edge, the inset it has otherwise.
+    private var fixedSidebarTopInset: CGFloat? {
+        if #available(iOS 26, *), isSplitLayout { return 86 }
+        return nil
+    }
+
     private var updateStatusText: LocalizedStringKey {
         if isV3Blocked { return "Updates nicht unterstützt" }
         if !bleManager.isConnected { return "Board nicht verbunden" }
@@ -80,21 +86,12 @@ struct AboutView: View {
                 Spacer()
 
                 VStack(spacing: 0) {
-                    if !isSplitLayout {
-                        HStack(spacing: 12) {
-                            capsuleButton("Hinweise", icon: "info.circle", iconSize: 23.5, color: .indigo) { presentedSheet = .instructions }
-                            capsuleButton("Trinkgeld", icon: "cup.and.heat.waves", iconSize: 22, color: .orange) { presentedSheet = .tips }
-                        }
-                        .horizontalPadding()
-                        .padding(.bottom, 20)
-                    } else {
+                    HStack(spacing: 12) {
                         capsuleButton("Hinweise", icon: "info.circle", iconSize: 23.5, color: .indigo) { presentedSheet = .instructions }
-                            .horizontalPadding()
-                            .padding(.bottom, 20)
-                        capsuleButton("Verbindungseinstellungen", icon: "wifi", iconSize: 22, color: .blue) { presentedSheet = .connection }
-                            .horizontalPadding()
-                            .padding(.bottom, 20)
+                        capsuleButton("Trinkgeld", icon: "cup.and.heat.waves", iconSize: 22, color: .orange) { presentedSheet = .tips }
                     }
+                    .horizontalPadding()
+                    .padding(.bottom, 20)
 
                     updateCard
                         .horizontalPadding(includesBottom: isSplitLayout)
@@ -120,9 +117,10 @@ struct AboutView: View {
                     }
                 }
             }
+            // The sidebar ignores the bottom safe area as a whole, see `MainRootView.splitView`.
             .ignoresSafeArea(.keyboard, edges: .bottom)
-            // In the sidebar the card sits as far from the bottom edge as from the sides, past the home indicator inset.
-            .ignoresSafeArea(.container, edges: isSplitLayout ? .bottom : [])
+            .padding(.top, fixedSidebarTopInset ?? 0)
+            .ignoresSafeArea(.container, edges: fixedSidebarTopInset != nil ? .top : [])
         }
         .onAppear { didAppear = true }
         // Checks for new firmware on appear, on every (dis)connect and when the app returns to the foreground.
@@ -238,8 +236,7 @@ struct AboutView: View {
                     .frame(width: 28, height: 28)
                     .foregroundStyle(color)
                 Text(title)
-                Spacer()
-                DisclosureChevron()
+                Spacer(minLength: 0)
             }
             .padding(.horizontal, 12)
             .frame(height: 50)

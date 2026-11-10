@@ -16,18 +16,6 @@
 				<string>respooler</string>
 			</array>
 		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string></string>
-		</dict>
-		<dict/>
-	</array>
-	<key>INIntentsSupported</key>
-	<array>
-		<string>StopMotorIntent</string>
-		<string>StartMotorIntent</string>
 	</array>
 	<key>NSAccessorySetupBluetoothCompanyIdentifiers</key>
 	<array>

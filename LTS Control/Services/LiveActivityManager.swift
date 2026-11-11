@@ -26,8 +26,8 @@ final class LiveActivityManager {
         if !enabled { endCurrentActivity() }
     }
 
-    /// The board sends its status twice a second. The activity only updates when something visible changes:
-    /// the state, the whole percent, or the board's estimate by more than this.
+    /// The board sends its status twice a second, with the remaining time in whole seconds. The end date only moves
+    /// when its estimate shifts by more than this, so the countdown runs evenly through the updates for each percent.
     private let endDateTolerance: TimeInterval = 2
 
     func sync(state: DeviceState, isConnected: Bool, progress: Double?, remainingTime: Int?) {
@@ -35,9 +35,13 @@ final class LiveActivityManager {
             endCurrentActivity()
             return
         }
-        let content = Self.content(state: state, progress: progress, remainingTime: remainingTime)
+        var content = Self.content(state: state, progress: progress, remainingTime: remainingTime)
+        if let lastEnd = lastContent?.endDate, let end = content.endDate,
+           abs(lastEnd.timeIntervalSince(end)) < endDateTolerance {
+            content.endDate = lastEnd
+        }
         if let id = currentActivityID {
-            guard !looksLikeLastContent(content) else { return }
+            guard content != lastContent else { return }
             lastContent = content
             Task { await Self.updateActivity(id, to: content) }
         } else if state == .running, ActivityAuthorizationInfo().areActivitiesEnabled {
@@ -59,17 +63,6 @@ final class LiveActivityManager {
             return ContentState(deviceState: state, progress: percent, remainingTime: remainingTime)
         }
         return ContentState(deviceState: state, progress: percent, endDate: .now.addingTimeInterval(TimeInterval(remainingTime)))
-    }
-
-    /// The end date moves a little with every packet, so it only counts as changed beyond the tolerance.
-    private func looksLikeLastContent(_ content: ContentState) -> Bool {
-        guard let last = lastContent, last.deviceState == content.deviceState,
-              last.progress == content.progress, last.remainingTime == content.remainingTime else { return false }
-        switch (last.endDate, content.endDate) {
-        case (nil, nil): return true
-        case let (lastEnd?, end?): return abs(lastEnd.timeIntervalSince(end)) < endDateTolerance
-        default: return false
-        }
     }
 
     /// A running activity whose end date passed a minute ago without news from the board is out of date.

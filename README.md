@@ -6,6 +6,15 @@ It’s primarily built with SwiftUI to be as platform-native as possible and sup
 
 ➡️ Download [here](https://apps.apple.com/app/lts-control/id6742149969)!
 
+## 📸 Showcase
+
+<p>
+  <img src="Screenshots/Control.png" width="24%" />
+  <img src="Screenshots/Settings.png" width="24%" />
+  <img src="Screenshots/Connection.png" width="24%" />
+  <img src="Screenshots/More.png" width="24%" />
+</p>
+
 ## 📋 License
 
 This project is licensed under the Mozilla Public License 2.0 (MPL 2.0). You’re free to use, modify, and share the code in your own projects. If you make changes and distribute them, just keep those modified files open under the same license.
